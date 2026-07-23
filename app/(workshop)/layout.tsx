@@ -10,12 +10,20 @@ export default function Layout({ children }: { children: ReactNode }) {
       <div className="border-b border-divider bg-surface">
         <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-between gap-3 px-6 py-2">
           <LevelSwitcher />
-          <Link
-            href="/learn/glossary"
-            className="min-h-9 text-sm text-fd-muted-foreground hover:text-accent"
-          >
-            Glossary
-          </Link>
+          <div className="flex items-center gap-4">
+            <Link
+              href="/learn/playground"
+              className="min-h-9 text-sm text-fd-muted-foreground hover:text-accent"
+            >
+              Playground
+            </Link>
+            <Link
+              href="/learn/glossary"
+              className="min-h-9 text-sm text-fd-muted-foreground hover:text-accent"
+            >
+              Glossary
+            </Link>
+          </div>
         </div>
       </div>
       {children}

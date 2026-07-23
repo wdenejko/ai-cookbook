@@ -144,16 +144,37 @@
   --color-fd-ring: var(--color-accent);
 }
 
-/* ---- text-size + comfort controls (CSS hooks; UI toggle lands next) ---- */
+/* ---- Text-size + Comfort controls (ComfortControl sets these on <html>) ---- */
 html {
   font-size: calc(100% * var(--user-font-scale));
   scrollbar-gutter: stable;
 }
-:root[data-text-size='lg'] { --user-font-scale: 1.25; }
-:root[data-text-size='xl'] { --user-font-scale: 1.5; }
+/* Comfort first, so an explicit text-size below still wins the scale. */
 :root[data-comfort='true'] {
   --user-font-scale: 1.25; /* larger base type */
-  --spacing: 0.375rem;     /* roomier 6px density */
+  --spacing: 0.375rem; /* roomier 6px density */
+}
+:root[data-text-size='lg'] {
+  --user-font-scale: 1.25;
+}
+:root[data-text-size='xl'] {
+  --user-font-scale: 1.5;
+}
+/* Comfort calms motion; prefers-reduced-motion is always honoured. */
+:root[data-comfort='true'] *,
+:root[data-comfort='true'] *::before,
+:root[data-comfort='true'] *::after {
+  animation-duration: 0.001ms !important;
+  transition-duration: 0.001ms !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* ---- base typography & themed interaction (from broadsheet) ---- */

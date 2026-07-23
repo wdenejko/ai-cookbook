@@ -1,6 +1,7 @@
 import { RootProvider } from 'fumadocs-ui/provider/next';
 import './global.css';
 import { Source_Serif_4 } from 'next/font/google';
+import { ComfortControl } from '@/components/workshop/comfort-control';
 
 // Broadsheet is set entirely in Source Serif 4 (headings + body), with the
 // true italic at body weight. Exposed as a CSS variable that global.css wires
@@ -21,7 +22,15 @@ export default function Layout({ children }: LayoutProps<'/'>) {
       suppressHydrationWarning
     >
       <body className="flex flex-col min-h-screen">
+        {/* Apply saved comfort / text-size before paint to avoid a flash. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{var d=document.documentElement,s=localStorage.getItem('cook-text-size');if(s==='lg'||s==='xl')d.setAttribute('data-text-size',s);if(localStorage.getItem('cook-comfort')==='true')d.setAttribute('data-comfort','true')}catch(e){}",
+          }}
+        />
         <RootProvider>{children}</RootProvider>
+        <ComfortControl />
       </body>
     </html>
   );
