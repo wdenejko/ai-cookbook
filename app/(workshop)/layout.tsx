@@ -1,32 +1,18 @@
 import { type ReactNode } from 'react';
 import { HomeLayout } from 'fumadocs-ui/layouts/home';
-import Link from 'next/link';
 import { baseOptions } from '@/lib/layout.shared';
 import { LevelSwitcher } from '@/components/workshop/level-switcher';
 import { LocaleSwitcher } from '@/components/workshop/locale';
-import { T } from '@/components/workshop/t';
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
     <HomeLayout {...baseOptions()}>
+      {/* Workshop controls: reading level (left) + language (right). The
+          Playground / Glossary destinations live in the main nav (baseOptions). */}
       <div className="border-b border-divider bg-surface">
         <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-between gap-3 px-6 py-2">
           <LevelSwitcher />
-          <div className="flex flex-wrap items-center gap-4">
-            <LocaleSwitcher />
-            <Link
-              href="/learn/playground"
-              className="min-h-9 text-sm text-fd-muted-foreground hover:text-accent"
-            >
-              <T k="nav.playground" />
-            </Link>
-            <Link
-              href="/learn/glossary"
-              className="min-h-9 text-sm text-fd-muted-foreground hover:text-accent"
-            >
-              <T k="nav.glossary" />
-            </Link>
-          </div>
+          <LocaleSwitcher />
         </div>
       </div>
       {children}

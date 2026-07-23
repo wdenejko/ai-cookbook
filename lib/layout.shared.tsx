@@ -11,6 +11,8 @@ export function baseOptions(): BaseLayoutProps {
       { text: 'Library', url: '/library' },
       { text: 'Learn', url: '/learn' },
       { text: 'Docs', url: '/docs' },
+      { text: 'Playground', url: '/learn/playground' },
+      { text: 'Glossary', url: '/learn/glossary' },
     ],
     githubUrl: `https://github.com/${gitConfig.user}/${gitConfig.repo}`,
   };
