@@ -1,0 +1,42 @@
+---
+title: Design tokens
+description: A visual check of the Broadsheet theme wired into Tailwind v4.
+---
+
+This page exists to confirm the Broadsheet tokens render correctly through
+Fumadocs. Everything is set in Source Serif 4; the accent is cyan.
+
+# Heading one — 42px display
+## Heading two — 32px
+### Heading three — 25px
+
+Body text is set in Source Serif 4 at a comfortable measure. Emphasis takes the
+serif's *true italic voice*, and [links use the cyan accent](/docs). The two
+process accents — cyan (`--color-accent`) and magenta (`--color-accent-2`) —
+each carry a 100–900 tonal ramp generated on a shared perceptual lightness
+scale.
+
+## Spacing & rhythm
+
+Spacing follows Broadsheet's airy 1.25× density (a 5px base), expressed in `rem`
+so the text-size and comfort controls scale the whole interface — not just the
+copy.
+
+## Code
+
+```ts
+// One asset in the unified model (see docs/PROJECT-PLAN.md §4)
+export const asset = {
+  type: 'skill',
+  storageKind: 'folder_bundle',
+  visibility: 'private',
+  targets: ['claude-code', 'claude-api'],
+};
+```
+
+## Callout
+
+<Callout title="Provisional dark mode">
+  Broadsheet ships light-only. The dark palette is a derived starting point —
+  toggle the theme to preview it, then revisit with design.
+</Callout>

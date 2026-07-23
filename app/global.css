@@ -1,0 +1,182 @@
+@import 'tailwindcss';
+@import 'fumadocs-ui/css/neutral.css';
+@import 'fumadocs-ui/css/preset.css';
+
+/* ============================================================================
+   Broadsheet design system → Tailwind v4 theme
+   ----------------------------------------------------------------------------
+   Source of truth: docs/design/broadsheet.css (docs/design/_ds/…). Newsprint
+   set for the web: Source Serif 4 on paper white, near-black ink, with cyan
+   and magenta process accents used small like spot color.
+
+   Two deliberate adaptations for THIS app (see docs/PROJECT-PLAN.md §D6 and
+   docs/DESIGN-BRIEF.md §6 accessibility):
+     1. Sizes are expressed in rem, so the text-size / comfort controls scale
+        the whole UI (broadsheet's static px would not).
+     2. Broadsheet ships LIGHT-ONLY ("no dark surfaces"). The `.dark` palette
+        below is a DERIVED, provisional starting point — revisit with design.
+   ========================================================================= */
+@theme {
+  /* — spacing —
+     Broadsheet's 1.25× density is a clean 5px base (= Tailwind's 4px × 1.25).
+     Set as the Tailwind spacing base in rem, so p-*, m-*, gap-* all inherit
+     the newsprint rhythm and scale with the user font size. */
+  --spacing: 0.3125rem; /* 5px @ 16px root */
+
+  /* — type — the serif is the UI chrome; no sans anywhere */
+  --font-body: var(--font-source-serif), 'Source Serif 4', ui-serif, Georgia, serif;
+  --font-heading: var(--font-source-serif), 'Source Serif 4', ui-serif, Georgia, serif;
+  --font-sans: var(--font-source-serif), 'Source Serif 4', ui-serif, Georgia, serif;
+
+  /* — radii (px: corners don't scale) — */
+  --radius-sm: 1px;
+  --radius-md: 2px;
+  --radius-lg: 4px;
+
+  /* — elevation (tuned to the light ground) — */
+  --shadow-sm: 0 1px 2px color-mix(in srgb, #2d2b2b 14%, transparent);
+  --shadow-md: 0 3px 10px color-mix(in srgb, #2d2b2b 16%, transparent);
+  --shadow-lg: 0 12px 32px color-mix(in srgb, #2d2b2b 22%, transparent);
+
+  /* — role colors — */
+  --color-bg: #f3f2f2;
+  --color-surface: #eae9e9;
+  --color-text: #201e1d;
+  --color-accent: #0088b0;
+  --color-accent-2: #d6006c;
+  --color-divider: color-mix(in srgb, #201e1d 16%, transparent);
+  --color-process-yellow: #edbb00; /* print treatments only — never chrome/body */
+
+  /* — neutral ramp (OKLCH-derived, shared lightness scale) — */
+  --color-neutral-100: #f8f4f4;
+  --color-neutral-200: #eae7e7;
+  --color-neutral-300: #d7d3d3;
+  --color-neutral-400: #bab6b6;
+  --color-neutral-500: #9b9797;
+  --color-neutral-600: #7d7979;
+  --color-neutral-700: #605d5d;
+  --color-neutral-800: #444141;
+  --color-neutral-900: #2d2b2b;
+
+  /* — cyan (accent) ramp — */
+  --color-accent-100: #e9f8ff;
+  --color-accent-200: #cbeeff;
+  --color-accent-300: #99e0ff;
+  --color-accent-400: #62c5ee;
+  --color-accent-500: #38a6cf;
+  --color-accent-600: #1186ac;
+  --color-accent-700: #006786;
+  --color-accent-800: #004961;
+  --color-accent-900: #0a303e;
+
+  /* — magenta (accent-2) ramp — */
+  --color-accent-2-100: #fff1f4;
+  --color-accent-2-200: #ffdee6;
+  --color-accent-2-300: #ffc0d0;
+  --color-accent-2-400: #ff90b1;
+  --color-accent-2-500: #ff458e;
+  --color-accent-2-600: #d82071;
+  --color-accent-2-700: #aa0b56;
+  --color-accent-2-800: #790e3d;
+  --color-accent-2-900: #4b1528;
+
+  /* — Fumadocs UI mapping (light). NOTE: Fumadocs "accent" is a muted hover
+       surface, NOT our brand accent — it maps to a neutral tint. Brand cyan
+       drives `primary` and `ring`. — */
+  --color-fd-background: var(--color-bg);
+  --color-fd-foreground: var(--color-text);
+  --color-fd-muted: var(--color-neutral-200);
+  --color-fd-muted-foreground: var(--color-neutral-600);
+  --color-fd-popover: var(--color-neutral-100);
+  --color-fd-popover-foreground: var(--color-text);
+  --color-fd-card: var(--color-surface);
+  --color-fd-card-foreground: var(--color-text);
+  --color-fd-border: var(--color-divider);
+  --color-fd-primary: var(--color-accent);
+  --color-fd-primary-foreground: var(--color-bg);
+  --color-fd-secondary: var(--color-neutral-200);
+  --color-fd-secondary-foreground: var(--color-text);
+  --color-fd-accent: var(--color-neutral-200);
+  --color-fd-accent-foreground: var(--color-text);
+  --color-fd-ring: var(--color-accent);
+}
+
+/* — broadsheet component-CSS compatibility aliases —
+   mirror --space-1..8 so the .btn/.card/.tag/etc. classes in
+   docs/design/broadsheet.css can be ported later without edits. */
+:root {
+  --space-1: calc(var(--spacing) * 1);
+  --space-2: calc(var(--spacing) * 2);
+  --space-3: calc(var(--spacing) * 3);
+  --space-4: calc(var(--spacing) * 4);
+  --space-6: calc(var(--spacing) * 6);
+  --space-8: calc(var(--spacing) * 8);
+  --font-heading-weight: 600;
+
+  /* text-size / comfort scaling hook (a toggle sets the attrs on <html>) */
+  --user-font-scale: 1;
+}
+
+/* ---- Dark mode — DERIVED / provisional (broadsheet ships no dark palette) ---- */
+.dark {
+  --color-bg: #1b1a19;
+  --color-surface: #262423;
+  --color-text: #ece9e7;
+  --color-accent: #62c5ee;   /* brighter cyan step for a dark ground */
+  --color-accent-2: #ff90b1; /* brighter magenta step */
+  --color-divider: color-mix(in srgb, #ece9e7 16%, transparent);
+
+  --color-fd-background: var(--color-bg);
+  --color-fd-foreground: var(--color-text);
+  --color-fd-muted: #2a2827;
+  --color-fd-muted-foreground: color-mix(in srgb, var(--color-text) 62%, transparent);
+  --color-fd-popover: #211f1e;
+  --color-fd-popover-foreground: var(--color-text);
+  --color-fd-card: var(--color-surface);
+  --color-fd-card-foreground: var(--color-text);
+  --color-fd-border: var(--color-divider);
+  --color-fd-primary: var(--color-accent);
+  --color-fd-primary-foreground: var(--color-bg);
+  --color-fd-secondary: #2a2827;
+  --color-fd-secondary-foreground: var(--color-text);
+  --color-fd-accent: #2f2c2b;
+  --color-fd-accent-foreground: var(--color-text);
+  --color-fd-ring: var(--color-accent);
+}
+
+/* ---- text-size + comfort controls (CSS hooks; UI toggle lands next) ---- */
+html {
+  font-size: calc(100% * var(--user-font-scale));
+  scrollbar-gutter: stable;
+}
+:root[data-text-size='lg'] { --user-font-scale: 1.25; }
+:root[data-text-size='xl'] { --user-font-scale: 1.5; }
+:root[data-comfort='true'] {
+  --user-font-scale: 1.25; /* larger base type */
+  --spacing: 0.375rem;     /* roomier 6px density */
+}
+
+/* ---- base typography & themed interaction (from broadsheet) ---- */
+@layer base {
+  body {
+    font-family: var(--font-body);
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    letter-spacing: -0.015em;
+    line-height: 1.12;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+  ::selection {
+    background: color-mix(in srgb, var(--color-accent) 30%, transparent);
+  }
+}
+
+html > body[data-scroll-locked] {
+  margin-right: 0px !important;
+  --removed-body-scroll-bar-size: 0px !important;
+}
