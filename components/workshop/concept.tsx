@@ -1,8 +1,6 @@
 import { type ReactNode } from 'react';
 
-// Server components. Which <Level> shows is decided purely by CSS from the
-// html[data-level] attribute (set by LevelSwitcher), so there is no hydration
-// mismatch and no-JS readers still see the default (normal) level.
+// A titled section within a lesson. Server component.
 
 export function Concept({ title, children }: { title?: string; children: ReactNode }) {
   return (
@@ -11,19 +9,4 @@ export function Concept({ title, children }: { title?: string; children: ReactNo
       {children}
     </section>
   );
-}
-
-export function Level({
-  simple,
-  normal,
-  technical,
-  children,
-}: {
-  simple?: boolean;
-  normal?: boolean;
-  technical?: boolean;
-  children: ReactNode;
-}) {
-  const level = simple ? 'simple' : technical ? 'technical' : 'normal';
-  return <div data-concept-level={level}>{children}</div>;
 }

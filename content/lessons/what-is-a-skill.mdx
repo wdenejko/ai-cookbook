@@ -7,67 +7,19 @@ A skill is how you teach Claude to do one job well and reuse that know-how every
 
 <Concept title="What is a skill?">
 
-<Level simple>
-
-A skill is like a recipe card you hand a cook. It holds the steps for one job, so instead of explaining from scratch every time, you just say "use that card." Claude keeps a little box of these cards and reaches for the right one.
-
-</Level>
-
-<Level normal>
-
 A <Term name="skill">skill</Term> is a saved bundle of instructions for one kind of task, like filling in a PDF form or tidying up a spreadsheet. Once it exists, Claude can follow those steps whenever a matching job comes up, instead of you re-explaining. Think of it as a reusable how-to that Claude can pick up on its own.
-
-</Level>
-
-<Level technical>
-
-A skill is a folder Claude can load on demand, containing a `SKILL.md` file plus any supporting files or scripts. The instructions are written for the model in plain Markdown, not compiled code. Skills work across Claude Code and the API, and the right one is chosen automatically based on how well the task matches the skill's stated purpose.
-
-</Level>
 
 </Concept>
 
 <Concept title="What is inside a skill folder?">
 
-<Level simple>
-
-Open the folder and you find a main note that says who the skill is for and how to do the job, step by step. Sometimes there are extra pages with fiddly details, kept separate so the main note stays short.
-
-</Level>
-
-<Level normal>
-
 Every skill has a main file called `SKILL.md`. The top of it lists the skill's name and a one-line description of when to use it; the rest is the actual how-to. A skill can also bundle extra files, like a `reference.md` for tricky edge cases, so the core steps stay easy to scan.
-
-</Level>
-
-<Level technical>
-
-At the folder's root sits `SKILL.md`: a block of YAML <Term name="frontmatter">frontmatter</Term> (`name`, `description`, and optionally `allowed-tools`) followed by a Markdown body of instructions. The `description` is what Claude reads to decide when the skill applies. Bundled files such as `reference.md` or a `scripts/` folder sit alongside it and are pulled in only when the body points to them.
-
-</Level>
 
 </Concept>
 
 <Concept title="Why doesn't Claude read everything at once?">
 
-<Level simple>
-
-Imagine a huge cookbook. You do not read every page to make toast; you flip to the toast page. Claude does the same: it peeks at the titles first, then opens only the recipe it needs. That keeps it fast and focused.
-
-</Level>
-
-<Level normal>
-
 Claude could have dozens of skills available, and reading all of them every time would be slow and confusing. So it only keeps the short names and descriptions in mind, then opens a skill's full instructions when a task matches. This "open it only when needed" habit is called progressive disclosure.
-
-</Level>
-
-<Level technical>
-
-This is progressive disclosure, and it protects the <Term name="context-window">context window</Term>. Only each skill's name and `description` stay loaded by default (cheap, and always visible). The full `SKILL.md` body loads when the skill is triggered, and deeper files load only if the body references them. So a large library of skills costs very few tokens until one is actually used.
-
-</Level>
 
 </Concept>
 

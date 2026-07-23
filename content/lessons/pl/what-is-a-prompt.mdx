@@ -7,67 +7,19 @@ Każda rozmowa ze sztuczną inteligencją zaczyna się od promptu. Ta krótka le
 
 <Concept title="Czym jest prompt?">
 
-<Level simple>
-
-Prompt to po prostu to, co mówisz sztucznej inteligencji, żeby coś dla ciebie zrobiła — tak jak słowa, które kierujesz do pomocnej osoby w okienku. Poprosisz jasno, dostaniesz to, czego chcesz. Wymamroczesz coś pod nosem, a w odpowiedzi dostaniesz wzruszenie ramion.
-
-</Level>
-
-<Level normal>
-
 <Term name="prompt">Prompt</Term> to pytanie lub polecenie, które wpisujesz, żeby sztuczna inteligencja wiedziała, czego oczekujesz. „Napisz uprzejme podziękowanie dla właściciela mieszkania za naprawiony grzejnik” to właśnie prompt. Im więcej powiesz o tym, czego potrzebujesz, tym trafniejsza będzie odpowiedź.
-
-</Level>
-
-<Level technical>
-
-Prompt to tekst wejściowy przekazywany do <Term name="llm">dużego modelu językowego</Term>, który kontynuuje go token po tokenie. W interfejsie Messages API modelu Claude jest to treść wiadomości `user` w tablicy `messages`. Model formułuje odpowiedź na podstawie wszystkiego, co ma aktualnie w zasięgu: instrukcji systemowych, wcześniejszych tur rozmowy i twojej ostatniej wiadomości.
-
-</Level>
 
 </Concept>
 
 <Concept title="Dlaczego konkretne słowa mają znaczenie?">
 
-<Level simple>
-
-Wyobraź sobie, że zamawiasz jedzenie. „Coś do jedzenia” może oznaczać cokolwiek. „Zapiekana kanapka z serem, bez masła” da ci dokładnie to. Sztuczna inteligencja działa tak samo: im jaśniej się wyrazisz, tym lepszy efekt.
-
-</Level>
-
-<Level normal>
-
 Sztuczna inteligencja nie czyta w myślach — ma do dyspozycji tylko słowa, które jej podasz. Porównaj „wyjaśnij podatki” z „wyjaśnij, jak działa podatek dochodowy, tak żeby zrozumiał to 15-latek, w mniej więcej pięciu krótkich zdaniach”. To drugie polecenie określa odbiorcę, długość i poziom szczegółowości, więc odpowiedź jest znacznie bardziej przydatna. Pokazanie przykładu dobrej odpowiedzi pomaga jeszcze bardziej.
-
-</Level>
-
-<Level technical>
-
-Model generuje najbardziej prawdopodobną kontynuację twojego tekstu, więc precyzja, kolejność i struktura wymiernie wpływają na wynik. Wskazanie odbiorcy, formatu, długości i ograniczeń (a opcjonalnie także podanie gotowego przykładu, co nazywamy promptowaniem one-shot lub few-shot) zawęża to, co model uznaje za prawdopodobną odpowiedź. Każda dodana instrukcja staje się częścią kontekstu, na podstawie którego przewidywany jest kolejny token; niejasny prompt pozostawia tę przestrzeń nierozstrzygniętą.
-
-</Level>
 
 </Concept>
 
 <Concept title="Prompt systemowy czy twoja wiadomość?">
 
-<Level simple>
-
-Wyobraź sobie sztukę teatralną. Zanim aktorzy zaczną mówić, reżyser po cichu instruuje ich: „jesteś spokojną, życzliwą pielęgniarką”. Ta wskazówka zza kulis to prompt systemowy. To, co słyszy publiczność, gdy o coś pytasz, to twoja wiadomość. Oba elementy kształtują odpowiedź, ale ty widzisz tylko jeden z nich.
-
-</Level>
-
-<Level normal>
-
 Większość aplikacji ze sztuczną inteligencją ma dwie warstwy. <Term name="system-prompt">Prompt systemowy</Term> to ukryte ustawienie („Jesteś cierpliwym nauczycielem, który unika żargonu”), które pozostaje niezmienne przez całą rozmowę. Twoja wiadomość to konkretna rzecz, o którą pytasz za każdym razem. Zwykle prompt systemowy pisze autor aplikacji, a wiadomości piszesz ty.
-
-</Level>
-
-<Level technical>
-
-W interfejsie Messages API modelu Claude są to osobne pola: parametr `system` najwyższego poziomu przechowuje trwałą rolę, ton i zasady, natomiast tablica `messages` zawiera naprzemienne tury `user` i `assistant`. <Term name="system-prompt">Prompt systemowy</Term> obowiązuje w każdej turze, więc to tam umieszcza się trwałe zachowania; tury użytkownika niosą konkretne zadanie. Oba elementy dzielą jedno okno kontekstowe i wliczają się do tego samego budżetu tokenów.
-
-</Level>
 
 </Concept>
 

@@ -222,20 +222,6 @@ html > body[data-scroll-locked] {
   color: var(--shiki-dark);
 }
 
-/* ---- Workshop: detail-level visibility (CSS-driven; LevelSwitcher sets html[data-level]) ---- */
-[data-concept-level] {
-  display: none;
-}
-:root[data-level='simple'] [data-concept-level='simple'],
-:root[data-level='normal'] [data-concept-level='normal'],
-:root[data-level='technical'] [data-concept-level='technical'] {
-  display: block;
-}
-/* Before JS sets the attribute (and for no-JS readers), show the Normal level. */
-:root:not([data-level]) [data-concept-level='normal'] {
-  display: block;
-}
-
 /* ---- Workshop: locale visibility (LocaleSwitcher sets html[data-locale]) ---- */
 [data-lang] {
   display: none;

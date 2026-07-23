@@ -10,12 +10,6 @@ const en = {
   'nav.glossary': 'Glossary',
   'lang.aria': 'Language',
 
-  'detail.label': 'Detail',
-  'detail.aria': 'How much detail?',
-  'detail.simple': 'Simple',
-  'detail.normal': 'Normal',
-  'detail.technical': 'Technical',
-
   'lesson.all': 'All lessons',
   'lesson.prev': 'Previous',
   'lesson.next': 'Next',
@@ -56,12 +50,6 @@ const pl: Record<MsgKey, string> = {
   'nav.playground': 'Piaskownica',
   'nav.glossary': 'Słownik',
   'lang.aria': 'Język',
-
-  'detail.label': 'Poziom',
-  'detail.aria': 'Ile szczegółów?',
-  'detail.simple': 'Prosto',
-  'detail.normal': 'Normalnie',
-  'detail.technical': 'Technicznie',
 
   'lesson.all': 'Wszystkie lekcje',
   'lesson.prev': 'Poprzednia',

@@ -7,67 +7,19 @@ Czasem najlepszym sposobem na zachowanie skupienia jest delegowanie zadań. Ta l
 
 <Concept title="Czym jest subagent?">
 
-<Level simple>
-
-Subagent to pomocnik, którego Claude prosi, żeby wykonał jedno zadanie i wrócił z odpowiedzią — tak jak wysłanie kolegi do archiwum po jeden dokument. Pomocnik samodzielnie przekopuje się przez materiały, a potem zdaje relację, przekazując tylko to, czego potrzebujesz.
-
-</Level>
-
-<Level normal>
-
 <Term name="subagent">Subagent</Term> to druga kopia Claude'a, której główny asystent może powierzyć konkretne zadanie, na przykład „sprawdź ten kod” albo „przeszukaj te pliki”. Pracuje nad zadaniem samodzielnie i zwraca uporządkowane podsumowanie, dzięki czemu główna rozmowa nie jest zaśmiecona wszystkimi chaotycznymi krokami pośrednimi.
-
-</Level>
-
-<Level technical>
-
-Subagent to osobna instancja Claude'a, której główny <Term name="agent">agent</Term> może delegować zadania. Działa z własnym oknem kontekstowym, własnym promptem systemowym oraz własnym zestawem narzędzi i uprawnień, a następnie zwraca wywołującemu jedną końcową wiadomość. Główny agent decyduje o przekazaniu zadania na podstawie deklarowanego przeznaczenia subagenta.
-
-</Level>
 
 </Concept>
 
 <Concept title="Dlaczego warto powierzać pracę subagentowi?">
 
-<Level simple>
-
-Gdyby każdą sprawę trzeba było załatwiać samodzielnie, twoje biurko zapełniłoby się notatkami, których już nie potrzebujesz. Wysłanie pomocnika utrzymuje twoje biurko w porządku: to on zajmuje się bałaganem i przynosi z powrotem tylko wynik. Możesz nawet wysłać kilku pomocników naraz.
-
-</Level>
-
-<Level normal>
-
 Duże zadania, takie jak przejrzenie dwudziestu plików, wymagają mnóstwa wymiany informacji tam i z powrotem. Gdyby Claude robił to wszystko w głównej rozmowie, szybko by się ona zapełniła. Subagent wykonuje tę „głośną” pracę osobno i zwraca tylko wniosek, dzięki czemu główny wątek pozostaje przejrzysty. Subagenci mogą być też specjalistami, a nawet działać równolegle.
-
-</Level>
-
-<Level technical>
-
-Delegowanie chroni główne <Term name="context-window">okno kontekstowe</Term>: subagent pochłania kosztowną tokenowo eksplorację i zwraca tylko swoje ustalenia, dzięki czemu kontekst orkiestratora pozostaje oszczędny. Umożliwia też specjalizację (ukierunkowany prompt systemowy plus ograniczony zestaw narzędzi) oraz równoległość (kilku subagentów wykonujących niezależne zadania jednocześnie). Kompromis polega na tym, że subagent zaczyna od zera, więc na starcie trzeba przekazać mu wystarczający kontekst.
-
-</Level>
 
 </Concept>
 
 <Concept title="Jak definiuje się subagenta?">
 
-<Level simple>
-
-Subagenta tworzy się za pomocą jednej krótkiej notatki, która określa jego nazwę, kiedy go wezwać i jak ma się zachowywać. Napisz tę notatkę raz, a Claude będzie mógł wezwać tego pomocnika, ilekroć nadarzy się odpowiednia chwila.
-
-</Level>
-
-<Level normal>
-
 Subagenta definiujesz w jednym pliku. Na górze znajduje się jego nazwa i krótki opis, kiedy go użyć; reszta to jego osobowość i instrukcje, czyli jego „zakres obowiązków”. Ponieważ to zwykły plik, możesz go zapisać, udostępnić i wykorzystywać ponownie w różnych projektach.
-
-</Level>
-
-<Level technical>
-
-Subagent to jeden plik Markdown (na przykład `.claude/agents/code-reviewer.md`) z frontmatterem YAML: `name`, `description` opisujący, kiedy go użyć, oraz opcjonalne klucze `tools` i `model`. Znajdująca się poniżej treść w Markdownie staje się promptem systemowym subagenta. To właśnie `description` pozwala głównemu agentowi automatycznie kierować do niego pracę.
-
-</Level>
 
 </Concept>
 
