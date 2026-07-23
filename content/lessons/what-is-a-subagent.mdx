@@ -1,0 +1,84 @@
+---
+title: What is a subagent?
+description: A subagent is a separate helper Claude hands a focused job to, then gets back just the result.
+---
+
+Sometimes the best way to stay focused is to delegate. This lesson covers what a subagent is, why Claude hands work to one, and how a subagent is defined in a single small file.
+
+<Concept title="What is a subagent?">
+
+<Level simple>
+
+A subagent is a helper Claude asks to go do one job and come back with the answer, like sending a colleague to the archive to find one file. The helper does the digging on its own, then reports back with just what you need.
+
+</Level>
+
+<Level normal>
+
+A <Term name="subagent">subagent</Term> is a second copy of Claude that the main assistant can hand a specific task to, such as "review this code" or "search these files." It works on that task by itself and returns a tidy summary, so the main conversation is not cluttered with all the messy in-between steps.
+
+</Level>
+
+<Level technical>
+
+A subagent is a separate Claude instance the primary <Term name="agent">agent</Term> can delegate to. It runs with its own context window, its own system prompt, and its own set of tools and permissions, then returns a single final message to the caller. The main agent decides when to hand off based on the subagent's stated purpose.
+
+</Level>
+
+</Concept>
+
+<Concept title="Why hand work to a subagent?">
+
+<Level simple>
+
+If you did every errand yourself, your desk would pile up with notes you no longer need. Sending a helper keeps your own desk clear: they deal with the clutter and bring back only the result. You can even send several helpers at once.
+
+</Level>
+
+<Level normal>
+
+Big jobs, like reading through twenty files, create a lot of back-and-forth. If Claude did it all in the main chat, that chat would fill up fast. A subagent does the noisy work separately and returns only the conclusion, keeping the main thread clean. Subagents can also be specialists, and can even run in parallel.
+
+</Level>
+
+<Level technical>
+
+Delegation protects the main <Term name="context-window">context window</Term>: the subagent absorbs the token-heavy exploration and returns only its findings, so the orchestrator's context stays lean. It also enables specialization (a focused system prompt plus a restricted tool set) and parallelism (several subagents running independent tasks at once). The trade-off is that a subagent starts fresh, so it needs enough context handed to it up front.
+
+</Level>
+
+</Concept>
+
+<Concept title="How is a subagent defined?">
+
+<Level simple>
+
+A subagent is set up with one small note that says its name, when to call it, and how it should behave. Write the note once, and Claude can call that helper whenever the moment fits.
+
+</Level>
+
+<Level normal>
+
+You define a subagent in a single file. The top lists its name and a short description of when to use it; the rest is its personality and instructions, its "job description." Because it is just a file, you can save it, share it, and reuse it across projects.
+
+</Level>
+
+<Level technical>
+
+A subagent is one Markdown file (for example `.claude/agents/code-reviewer.md`) with YAML frontmatter: `name`, a `description` of when to use it, and optional `tools` and `model` keys. The Markdown body below becomes the subagent's system prompt. That `description` is what lets the main agent route work to it automatically.
+
+</Level>
+
+</Concept>
+
+<GoDeeper title="Does the subagent see our whole conversation?">
+
+No. A subagent starts with a clean slate: it gets only the task the main agent hands it, plus its own system prompt. It cannot see the earlier chat unless that context is included in the task. This is exactly why keeping subagents separate protects the main context window, and why a good delegation spells out everything the helper needs.
+
+</GoDeeper>
+
+## See a real subagent in the library
+
+The library includes a code-reviewer subagent. Open it to see the frontmatter (`tools: Read, Grep, Glob, Bash` and `model: sonnet`) and the detailed system prompt that tells it exactly how to review a change.
+
+<Showcase asset="subagent/code-reviewer" />

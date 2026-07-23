@@ -16,6 +16,17 @@ export const docs = defineDocs({
   },
 });
 
+// Workshop lessons — same MDX pipeline, rendered with the workshop component set.
+export const lessons = defineDocs({
+  dir: 'content/lessons',
+  docs: {
+    schema: pageSchema,
+  },
+  meta: {
+    schema: metaSchema,
+  },
+});
+
 export default defineConfig({
   mdxOptions: {
     // MDX options

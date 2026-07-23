@@ -1,0 +1,84 @@
+---
+title: What is a prompt?
+description: A prompt is the text you give an AI, and small changes in wording can change what you get back.
+---
+
+Every conversation with an AI starts with a prompt. This short lesson covers what a prompt actually is, why the exact words you choose matter so much, and the difference between the hidden setup instructions and the request you type.
+
+<Concept title="What is a prompt?">
+
+<Level simple>
+
+A prompt is just what you say to an AI to get it to do something, like the words you would say to a helpful assistant at a desk. Ask clearly and you get what you want. Mumble, and you get a shrug.
+
+</Level>
+
+<Level normal>
+
+A <Term name="prompt">prompt</Term> is the question or instruction you type so the AI knows what you want. "Write a friendly thank-you note to my landlord about the fixed heater" is a prompt. The more you say about what you need, the closer the answer lands.
+
+</Level>
+
+<Level technical>
+
+A prompt is the input text sent to a <Term name="llm">large language model</Term>, which continues it one token at a time. In Claude's Messages API it is the content of a `user` message inside the `messages` array. The model conditions its reply on everything currently in view: the system instructions, earlier turns, and your latest message.
+
+</Level>
+
+</Concept>
+
+<Concept title="Why do the exact words matter?">
+
+<Level simple>
+
+Think of ordering food. "Something to eat" could get you anything. "A toasted cheese sandwich, no butter" gets you exactly that. The AI works the same way: the clearer you are, the better the result.
+
+</Level>
+
+<Level normal>
+
+An AI cannot read your mind; it only has the words you give it. Compare "explain taxes" with "explain how income tax works to a 15-year-old, in about five short sentences." The second names the audience, the length, and the depth, so the answer is far more useful. Showing an example of a good answer helps even more.
+
+</Level>
+
+<Level technical>
+
+A model generates the most likely continuation of your text, so specificity, ordering, and structure measurably steer the output. Naming the audience, format, length, and constraints (and optionally giving a worked example, known as one-shot or few-shot prompting) narrows what the model treats as a probable answer. Every instruction you add becomes part of the context the next token is predicted from; a vague prompt leaves that space underdetermined.
+
+</Level>
+
+</Concept>
+
+<Concept title="System prompt or your message?">
+
+<Level simple>
+
+Picture a play. Before the actors speak, a director quietly tells them "you are a calm, friendly nurse." That backstage note is the system prompt. What the audience hears you ask is your message. Both shape the reply, but you only see one of them.
+
+</Level>
+
+<Level normal>
+
+Most AI apps have two layers. A <Term name="system-prompt">system prompt</Term> is the behind-the-scenes setup ("You are a patient teacher who avoids jargon") that stays fixed for the whole chat. Your message is the specific thing you ask each time. Usually the app's author writes the system prompt and you write the messages.
+
+</Level>
+
+<Level technical>
+
+In Claude's Messages API these are separate fields: the top-level `system` parameter holds persistent role, tone, and rules, while the `messages` array holds the alternating `user` and `assistant` turns. The <Term name="system-prompt">system prompt</Term> applies to every turn, so durable behavior lives there; the user turns carry the specific task. Both share one context window and count toward the same token budget.
+
+</Level>
+
+</Concept>
+
+<GoDeeper title="What actually happens when you press enter?">
+
+Your prompt is split into tokens (small chunks of characters), and the model predicts the next token over and over, feeding each one back in until it decides to stop. Nothing is "looked up" the way a search engine works; the reply is generated fresh. That is why the same prompt can give slightly different answers, and why simply rephrasing can rescue a poor result.
+
+</GoDeeper>
+
+## See a real prompt in the library
+
+The library includes a ready-made system prompt that turns any topic into a plain-language explanation for a chosen audience. Notice how it fixes the AI's role and behavior, then leaves blanks for you to fill in.
+
+<Showcase asset="prompt/eli5-explainer" />

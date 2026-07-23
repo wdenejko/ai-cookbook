@@ -200,3 +200,54 @@ html > body[data-scroll-locked] {
 .dark .cook-code .shiki span {
   color: var(--shiki-dark);
 }
+
+/* ---- Workshop: detail-level visibility (CSS-driven; LevelSwitcher sets html[data-level]) ---- */
+[data-concept-level] {
+  display: none;
+}
+:root[data-level='simple'] [data-concept-level='simple'],
+:root[data-level='normal'] [data-concept-level='normal'],
+:root[data-level='technical'] [data-concept-level='technical'] {
+  display: block;
+}
+/* Before JS sets the attribute (and for no-JS readers), show the Normal level. */
+:root:not([data-level]) [data-concept-level='normal'] {
+  display: block;
+}
+
+/* ---- Lesson prose ---- */
+.cook-lesson {
+  line-height: 1.6;
+}
+.cook-lesson p {
+  margin: 0 0 var(--space-3);
+}
+.cook-lesson ul,
+.cook-lesson ol {
+  margin: 0 0 var(--space-3);
+  padding-left: var(--space-4);
+}
+.cook-lesson ul {
+  list-style: disc;
+}
+.cook-lesson ol {
+  list-style: decimal;
+}
+.cook-lesson li {
+  margin: var(--space-1) 0;
+}
+.cook-lesson a {
+  color: var(--color-accent);
+  text-underline-offset: 3px;
+}
+.cook-lesson strong {
+  font-weight: 600;
+}
+.cook-lesson :not(pre) > code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  color: var(--color-fd-foreground);
+  background: var(--color-fd-muted);
+  padding: 0.1em 0.3em;
+  border-radius: var(--radius-sm);
+}

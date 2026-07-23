@@ -9,6 +9,7 @@ export function baseOptions(): BaseLayoutProps {
     },
     links: [
       { text: 'Library', url: '/library' },
+      { text: 'Learn', url: '/learn' },
       { text: 'Docs', url: '/docs' },
     ],
     githubUrl: `https://github.com/${gitConfig.user}/${gitConfig.repo}`,
