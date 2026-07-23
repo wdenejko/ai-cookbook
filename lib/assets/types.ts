@@ -3,6 +3,7 @@
 
 export const ASSET_TYPES = [
   'skill',
+  'plugin',
   'subagent',
   'command',
   'prompt',
@@ -21,7 +22,7 @@ export const VISIBILITY_LEVELS = [
 ] as const;
 export type Visibility = (typeof VISIBILITY_LEVELS)[number];
 
-export type StorageKind = 'single_file' | 'folder_bundle' | 'json_entry';
+export type StorageKind = 'single_file' | 'folder_bundle' | 'json_entry' | 'container';
 
 export const TARGETS = ['claude-code', 'claude-api', 'claude-ai', 'cowork'] as const;
 export type Target = (typeof TARGETS)[number];
@@ -29,6 +30,7 @@ export type Target = (typeof TARGETS)[number];
 export interface AssetFile {
   path: string; // relative to the asset root
   executable: boolean;
+  content?: string; // text content, for preview + client-side bundling
 }
 
 export interface Asset {
@@ -53,7 +55,8 @@ export interface Asset {
   containsSecrets: boolean;
   usageNotes: string | null;
   filePath: string; // repo-relative primary file path
-  files: AssetFile[]; // bundle files (skills); [] otherwise
+  files: AssetFile[]; // bundle files (skills / plugins); [] otherwise
+  componentRefs: string[]; // child asset ids for containers (plugins); [] otherwise
   install: { destination: string; note: string };
   contentHash: string;
 }
@@ -96,6 +99,7 @@ export const TYPE_META: Record<
   { label: string; plural: string; kind: StorageKind; dir: string }
 > = {
   skill: { label: 'Skill', plural: 'Skills', kind: 'folder_bundle', dir: 'skills' },
+  plugin: { label: 'Plugin', plural: 'Plugins', kind: 'container', dir: 'plugins' },
   subagent: { label: 'Subagent', plural: 'Subagents', kind: 'single_file', dir: 'subagents' },
   command: { label: 'Command', plural: 'Commands', kind: 'single_file', dir: 'commands' },
   prompt: { label: 'Prompt', plural: 'Prompts', kind: 'single_file', dir: 'prompts' },
@@ -144,6 +148,11 @@ export function installFor(type: AssetType, slug: string): { destination: string
       return {
         destination: `.claude/skills/${slug}/`,
         note: "Copy the whole folder into a project's .claude/skills/ (or ~/.claude/skills/ for personal use).",
+      };
+    case 'plugin':
+      return {
+        destination: '(plugin marketplace)',
+        note: 'Add the marketplace, then install: `claude plugin marketplace add <owner/repo>` and `/plugin install ' + slug + '`.',
       };
     case 'subagent':
       return {

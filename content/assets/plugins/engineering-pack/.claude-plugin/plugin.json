@@ -1,0 +1,10 @@
+{
+  "name": "engineering-pack",
+  "displayName": "Engineering Pack",
+  "version": "0.1.0",
+  "description": "A small bundle of everyday engineering helpers: code review, test writing, and changelog generation.",
+  "author": { "name": "Wojtek Denejko" },
+  "keywords": ["engineering", "review", "testing", "changelog"],
+  "agents": ["./agents/code-reviewer.md", "./agents/test-writer.md"],
+  "commands": ["./commands/changelog.md"]
+}

@@ -180,3 +180,23 @@ html > body[data-scroll-locked] {
   margin-right: 0px !important;
   --removed-body-scroll-bar-size: 0px !important;
 }
+
+/* ---- Shiki code blocks (dual-theme via CSS vars; see components/library/code-view) ---- */
+.cook-code .shiki {
+  margin: 0;
+  padding: var(--space-3);
+  background-color: var(--shiki-light-bg);
+  color: var(--shiki-light);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+}
+.cook-code .shiki span {
+  color: var(--shiki-light);
+}
+.dark .cook-code .shiki {
+  background-color: var(--shiki-dark-bg);
+  color: var(--shiki-dark);
+}
+.dark .cook-code .shiki span {
+  color: var(--shiki-dark);
+}

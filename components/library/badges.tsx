@@ -1,6 +1,7 @@
 import { type ReactNode } from 'react';
 import {
   Sparkles,
+  Boxes,
   Bot,
   Terminal,
   MessageSquare,
@@ -19,6 +20,7 @@ import { type AssetType, type Visibility, TYPE_META, VISIBILITY_META } from '@/l
 
 const TYPE_ICON: Record<AssetType, LucideIcon> = {
   skill: Sparkles,
+  plugin: Boxes,
   subagent: Bot,
   command: Terminal,
   prompt: MessageSquare,
