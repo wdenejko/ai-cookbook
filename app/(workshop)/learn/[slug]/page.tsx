@@ -2,28 +2,30 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
-import { getLesson, getOrderedLessons, lessonSource } from '@/lib/lessons';
+import { getLesson, getOrderedLessons } from '@/lib/lessons';
 import { getWorkshopMDXComponents } from '@/components/workshop/mdx';
+import { T } from '@/components/workshop/t';
 
 export function generateStaticParams() {
-  return lessonSource.getPages().map((p) => ({ slug: p.slugs[0] ?? p.slugs.join('/') }));
+  return getOrderedLessons().map((l) => ({ slug: l.slug }));
 }
 
-export async function generateMetadata(
-  props: PageProps<'/learn/[slug]'>,
-): Promise<Metadata> {
+export async function generateMetadata(props: PageProps<'/learn/[slug]'>): Promise<Metadata> {
   const { slug } = await props.params;
-  const page = getLesson(slug);
-  if (!page) return {};
-  return { title: `${page.data.title} — AI Cookbook`, description: page.data.description };
+  const { en } = getLesson(slug);
+  if (!en) return {};
+  return { title: `${en.data.title} — AI Cookbook`, description: en.data.description };
 }
 
 export default async function LessonPage(props: PageProps<'/learn/[slug]'>) {
   const { slug } = await props.params;
-  const page = getLesson(slug);
-  if (!page) notFound();
+  const { en, pl } = getLesson(slug);
+  if (!en) notFound();
 
-  const MDX = page.data.body;
+  const EN = en.data.body;
+  const PL = pl?.data.body;
+  const components = getWorkshopMDXComponents();
+
   const ordered = getOrderedLessons();
   const idx = ordered.findIndex((l) => l.slug === slug);
   const prev = idx > 0 ? ordered[idx - 1] : null;
@@ -35,16 +37,29 @@ export default async function LessonPage(props: PageProps<'/learn/[slug]'>) {
         href="/learn"
         className="mb-6 inline-flex min-h-9 items-center gap-1.5 text-sm text-fd-muted-foreground hover:text-accent"
       >
-        <ArrowLeft className="size-4" aria-hidden /> All lessons
+        <ArrowLeft className="size-4" aria-hidden /> <T k="lesson.all" />
       </Link>
 
-      <h1 className="font-heading text-4xl">{page.data.title}</h1>
-      {page.data.description && (
-        <p className="mt-2 text-lg text-fd-muted-foreground">{page.data.description}</p>
+      <h1 className="font-heading text-4xl">
+        <span data-lang="en">{en.data.title}</span>
+        {pl && <span data-lang="pl">{pl.data.title}</span>}
+      </h1>
+      {(en.data.description || pl?.data.description) && (
+        <p className="mt-2 text-lg text-fd-muted-foreground">
+          <span data-lang="en">{en.data.description}</span>
+          {pl?.data.description && <span data-lang="pl">{pl.data.description}</span>}
+        </p>
       )}
 
       <div className="cook-lesson mt-8">
-        <MDX components={getWorkshopMDXComponents()} />
+        <div data-lang="en">
+          <EN components={components} />
+        </div>
+        {PL && (
+          <div data-lang="pl">
+            <PL components={components} />
+          </div>
+        )}
       </div>
 
       <nav
@@ -56,7 +71,9 @@ export default async function LessonPage(props: PageProps<'/learn/[slug]'>) {
             href={`/learn/${prev.slug}`}
             className="flex flex-1 flex-col rounded-md bg-surface p-3 transition-colors hover:bg-neutral-200"
           >
-            <span className="text-xs text-fd-muted-foreground">← Previous</span>
+            <span className="text-xs text-fd-muted-foreground">
+              ← <T k="lesson.prev" />
+            </span>
             <span className="font-heading">{prev.title}</span>
           </Link>
         ) : (
@@ -67,7 +84,9 @@ export default async function LessonPage(props: PageProps<'/learn/[slug]'>) {
             href={`/learn/${next.slug}`}
             className="flex flex-1 flex-col items-end rounded-md bg-surface p-3 text-right transition-colors hover:bg-neutral-200"
           >
-            <span className="text-xs text-fd-muted-foreground">Next →</span>
+            <span className="text-xs text-fd-muted-foreground">
+              <T k="lesson.next" /> →
+            </span>
             <span className="font-heading">{next.title}</span>
           </Link>
         ) : (

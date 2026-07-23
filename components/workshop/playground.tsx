@@ -3,10 +3,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { Play, Loader2, RadioTower, Clapperboard } from 'lucide-react';
 import { REPLAY, OFFLINE_FALLBACK } from '@/lib/workshop/replay';
+import { useLocale, useT } from './locale';
 
 type Mode = 'replay' | 'live' | 'fallback' | 'rate-limited' | null;
 
 function ModeBadge({ mode }: { mode: Mode }) {
+  const t = useT();
   if (!mode || mode === 'rate-limited') return null;
   const live = mode === 'live';
   return (
@@ -16,12 +18,14 @@ function ModeBadge({ mode }: { mode: Mode }) {
       }`}
     >
       {live ? <RadioTower className="size-3.5" aria-hidden /> : <Clapperboard className="size-3.5" aria-hidden />}
-      {live ? 'Live' : mode === 'fallback' ? 'Replay (fallback)' : 'Replay'}
+      {live ? t('pg.badge.live') : mode === 'fallback' ? t('pg.badge.fallback') : t('pg.badge.replay')}
     </span>
   );
 }
 
 export function Playground() {
+  const { locale } = useLocale();
+  const t = useT();
   const [prompt, setPrompt] = useState('');
   const [output, setOutput] = useState('');
   const [mode, setMode] = useState<Mode>(null);
@@ -55,10 +59,10 @@ export function Playground() {
     setMode(null);
 
     // Scripted prompts answer instantly from client-side replay — works offline.
-    const scripted = REPLAY.find((r) => r.prompt === p);
+    const scripted = REPLAY.find((r) => r.prompt.en === p || r.prompt.pl === p);
     if (scripted) {
       setMode('replay');
-      reveal(scripted.response);
+      reveal(scripted.response[locale]);
       setBusy(false);
       return;
     }
@@ -67,7 +71,7 @@ export function Playground() {
       const res = await fetch('/api/demo', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt: text }),
+        body: JSON.stringify({ prompt: text, locale }),
       });
       const data = (await res.json()) as { reply?: string; mode?: Mode };
       if (res.status === 429) {
@@ -78,9 +82,8 @@ export function Playground() {
       setMode(data.mode ?? 'replay');
       reveal(data.reply ?? '');
     } catch {
-      // The demo never dies: fall back to a canned reply offline.
       setMode('fallback');
-      reveal(OFFLINE_FALLBACK);
+      reveal(OFFLINE_FALLBACK[locale]);
     } finally {
       setBusy(false);
     }
@@ -88,23 +91,23 @@ export function Playground() {
 
   return (
     <div className="my-6 rounded-md border border-divider bg-surface p-4">
-      <p className="mb-2 text-sm text-fd-muted-foreground">Try one of these:</p>
+      <p className="mb-2 text-sm text-fd-muted-foreground">{t('pg.tryThese')}</p>
       <div className="mb-4 flex flex-wrap gap-2">
         {REPLAY.map((r) => (
           <button
             key={r.id}
             type="button"
-            onClick={() => run(r.prompt)}
+            onClick={() => run(r.prompt[locale])}
             disabled={busy}
             className="min-h-9 rounded-md border border-divider bg-bg px-3 text-sm transition-colors hover:bg-neutral-200 disabled:opacity-45"
           >
-            {r.label}
+            {r.label[locale]}
           </button>
         ))}
       </div>
 
       <label htmlFor="pg-input" className="mb-1.5 block text-sm text-fd-muted-foreground">
-        Or type your own prompt
+        {t('pg.orOwn')}
       </label>
       <div className="flex flex-col gap-2 sm:flex-row">
         <textarea
@@ -112,7 +115,7 @@ export function Playground() {
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
           rows={2}
-          placeholder="Ask anything…"
+          placeholder={t('pg.placeholder')}
           className="min-h-11 flex-1 resize-y rounded-md border border-divider bg-bg px-3 py-2 text-sm outline-none focus-visible:border-accent"
         />
         <button
@@ -122,13 +125,13 @@ export function Playground() {
           className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-accent px-4 font-heading text-sm text-bg transition-colors hover:bg-accent-600 disabled:opacity-45"
         >
           {busy ? <Loader2 className="size-4 animate-spin" aria-hidden /> : <Play className="size-4" aria-hidden />}
-          Run
+          {t('pg.run')}
         </button>
       </div>
 
       <div className="mt-4">
         <div className="mb-1.5 flex items-center gap-2">
-          <span className="text-sm text-fd-muted-foreground">Response</span>
+          <span className="text-sm text-fd-muted-foreground">{t('pg.response')}</span>
           <ModeBadge mode={mode} />
         </div>
         <div
@@ -140,7 +143,7 @@ export function Playground() {
           ) : output ? (
             output
           ) : (
-            <span className="text-fd-muted-foreground">The reply appears here.</span>
+            <span className="text-fd-muted-foreground">{t('pg.appearsHere')}</span>
           )}
         </div>
       </div>

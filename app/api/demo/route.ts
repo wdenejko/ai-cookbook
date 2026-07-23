@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from 'next/server';
 import { DEMO_FALLBACK, findReplay } from '@/lib/workshop/replay';
+import type { Locale } from '@/lib/workshop/i18n';
 
 export const runtime = 'nodejs';
 
@@ -25,8 +26,11 @@ function sessionKey(req: NextRequest): string {
 // --- Handler ------------------------------------------------------------------
 export async function POST(req: NextRequest) {
   let prompt = '';
+  let locale: Locale = 'en';
   try {
-    prompt = String(((await req.json()) as { prompt?: unknown })?.prompt ?? '').slice(0, 2000);
+    const body = (await req.json()) as { prompt?: unknown; locale?: unknown };
+    prompt = String(body?.prompt ?? '').slice(0, 2000);
+    if (body?.locale === 'pl' || body?.locale === 'en') locale = body.locale;
   } catch {
     // ignore malformed body
   }
@@ -42,7 +46,7 @@ export async function POST(req: NextRequest) {
   }
 
   // Scripted prompts always answer from replay data — deterministic and free.
-  const scripted = findReplay(prompt);
+  const scripted = findReplay(prompt, locale);
   if (scripted) return NextResponse.json({ reply: scripted, mode: 'replay' });
 
   const mode = process.env.DEMO_MODE ?? 'replay';
@@ -57,13 +61,13 @@ export async function POST(req: NextRequest) {
         messages: [{ role: 'user', content: prompt }],
       });
       const text = message.content.map((b) => (b.type === 'text' ? b.text : '')).join('');
-      return NextResponse.json({ reply: text || DEMO_FALLBACK, mode: 'live' });
+      return NextResponse.json({ reply: text || DEMO_FALLBACK[locale], mode: 'live' });
     } catch {
       // Never break the demo: any live failure (key, network, quota) → fallback.
-      return NextResponse.json({ reply: DEMO_FALLBACK, mode: 'fallback' });
+      return NextResponse.json({ reply: DEMO_FALLBACK[locale], mode: 'fallback' });
     }
   }
 
   // Replay mode, free-text prompt.
-  return NextResponse.json({ reply: DEMO_FALLBACK, mode: 'replay' });
+  return NextResponse.json({ reply: DEMO_FALLBACK[locale], mode: 'replay' });
 }

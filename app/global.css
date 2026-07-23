@@ -236,6 +236,19 @@ html > body[data-scroll-locked] {
   display: block;
 }
 
+/* ---- Workshop: locale visibility (LocaleSwitcher sets html[data-locale]) ---- */
+[data-lang] {
+  display: none;
+}
+:root[data-locale='en'] [data-lang='en'],
+:root[data-locale='pl'] [data-lang='pl'] {
+  display: revert;
+}
+/* Before JS sets the attribute (and for no-JS readers), show English. */
+:root:not([data-locale]) [data-lang='en'] {
+  display: revert;
+}
+
 /* ---- Lesson prose ---- */
 .cook-lesson {
   line-height: 1.6;

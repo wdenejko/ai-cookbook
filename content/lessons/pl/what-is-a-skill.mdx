@@ -1,0 +1,84 @@
+---
+title: Czym jest umiejętność?
+description: Umiejętność to folder z instrukcjami wielokrotnego użytku, który Claude otwiera tylko wtedy, gdy zadanie naprawdę tego wymaga.
+---
+
+Umiejętność to sposób, w jaki uczysz Claude'a dobrze wykonywać jedno zadanie i wykorzystywać tę wiedzę wszędzie. Ta lekcja wyjaśnia, czym jest umiejętność, co znajduje się w jej folderze oraz na czym polega sprytna sztuczka, dzięki której Claude nie czyta wszystkiego naraz.
+
+<Concept title="Czym jest umiejętność?">
+
+<Level simple>
+
+Umiejętność jest jak karta z przepisem, którą wręczasz kucharzowi. Zawiera kroki potrzebne do jednego zadania, więc zamiast tłumaczyć wszystko od nowa za każdym razem, mówisz po prostu „użyj tej karty". Claude trzyma pudełko z takimi kartami i sięga po właściwą.
+
+</Level>
+
+<Level normal>
+
+<Term name="skill">Umiejętność</Term> to zapisany zestaw instrukcji do jednego rodzaju zadania, na przykład wypełnienia formularza PDF albo uporządkowania arkusza kalkulacyjnego. Gdy już istnieje, Claude może wykonać te kroki, ilekroć pojawi się pasujące zadanie, bez ponownego tłumaczenia z twojej strony. Potraktuj to jak poradnik wielokrotnego użytku, po który Claude może sięgnąć samodzielnie.
+
+</Level>
+
+<Level technical>
+
+Umiejętność to folder, który Claude może wczytać na żądanie, zawierający plik `SKILL.md` oraz ewentualne pliki pomocnicze lub skrypty. Instrukcje są napisane dla modelu w zwykłym Markdownie, a nie w skompilowanym kodzie. Umiejętności działają zarówno w Claude Code, jak i w API, a właściwa z nich jest wybierana automatycznie na podstawie tego, jak dobrze zadanie pasuje do jej deklarowanego przeznaczenia.
+
+</Level>
+
+</Concept>
+
+<Concept title="Co znajduje się w folderze umiejętności?">
+
+<Level simple>
+
+Otwórz folder, a znajdziesz w nim główną notatkę, która mówi, do czego służy umiejętność i jak krok po kroku wykonać zadanie. Czasem są też dodatkowe kartki z drobiazgowymi szczegółami, trzymane osobno, żeby główna notatka pozostała krótka.
+
+</Level>
+
+<Level normal>
+
+Każda umiejętność ma główny plik o nazwie `SKILL.md`. Na jego początku znajduje się nazwa umiejętności i jednozdaniowy opis, kiedy jej użyć; reszta to właściwa instrukcja. Umiejętność może też dołączać dodatkowe pliki, na przykład `reference.md` na trudne przypadki szczególne, dzięki czemu podstawowe kroki pozostają czytelne.
+
+</Level>
+
+<Level technical>
+
+W katalogu głównym folderu znajduje się `SKILL.md`: blok <Term name="frontmatter">frontmattera</Term> w formacie YAML (`name`, `description`, a opcjonalnie `allowed-tools`), po którym następuje treść instrukcji w Markdownie. To właśnie `description` Claude czyta, aby zdecydować, kiedy dana umiejętność ma zastosowanie. Dołączone pliki, takie jak `reference.md` czy folder `scripts/`, znajdują się obok niego i są wczytywane tylko wtedy, gdy treść się do nich odwołuje.
+
+</Level>
+
+</Concept>
+
+<Concept title="Dlaczego Claude nie czyta wszystkiego naraz?">
+
+<Level simple>
+
+Wyobraź sobie ogromną książkę kucharską. Żeby zrobić grzankę, nie czytasz każdej strony — otwierasz stronę o grzankach. Claude robi tak samo: najpierw zerka na tytuły, a potem otwiera tylko ten przepis, którego potrzebuje. Dzięki temu działa szybko i bez rozpraszania.
+
+</Level>
+
+<Level normal>
+
+Claude może mieć do dyspozycji dziesiątki umiejętności, a czytanie ich wszystkich za każdym razem byłoby wolne i wprowadzałoby zamęt. Dlatego trzyma w pamięci tylko krótkie nazwy i opisy, a pełne instrukcje umiejętności otwiera dopiero wtedy, gdy zadanie do niej pasuje. Ten nawyk „otwieraj tylko wtedy, gdy potrzeba" nazywa się stopniowym ujawnianiem (ang. progressive disclosure).
+
+</Level>
+
+<Level technical>
+
+To właśnie stopniowe ujawnianie (progressive disclosure), które chroni <Term name="context-window">okno kontekstowe</Term>. Domyślnie wczytane pozostają tylko nazwa i `description` każdej umiejętności (tanio i zawsze na widoku). Pełna treść `SKILL.md` wczytuje się, gdy umiejętność zostaje uruchomiona, a głębsze pliki wczytują się tylko wtedy, gdy treść się do nich odwołuje. Dzięki temu duża biblioteka umiejętności kosztuje bardzo niewiele tokenów, dopóki któraś z nich nie zostanie faktycznie użyta.
+
+</Level>
+
+</Concept>
+
+<GoDeeper title="Czy umiejętność może naprawdę uruchamiać kod?">
+
+Niektóre umiejętności to czyste instrukcje, ale inne dostarczają skrypty pomocnicze i deklarują `allowed-tools`, aby Claude mógł je uruchomić. Umiejętność do obsługi plików PDF poniżej wymienia `Read, Write, Bash` i korzysta z biblioteki `pypdf`, żeby wypełnić pola formularza. Deklarowanie narzędzi to również granica bezpieczeństwa: umiejętność może korzystać wyłącznie z tych narzędzi, które zostały jej przyznane.
+
+</GoDeeper>
+
+## Zobacz prawdziwą umiejętność w bibliotece
+
+Oto kompletna, działająca umiejętność. Otwórz ją, a zobaczysz frontmatter pliku `SKILL.md` (name, description, allowed-tools), a po nim jasne, ponumerowane kroki — dokładnie w formie opisanej powyżej.
+
+<Showcase asset="skill/pdf-form-filler" />

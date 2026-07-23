@@ -2,13 +2,15 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { Accessibility, X } from 'lucide-react';
+import { useT } from './locale';
+import type { MsgKey } from '@/lib/workshop/i18n';
 
 type Size = 'default' | 'lg' | 'xl';
 
-const SIZES: { id: Size; label: string; scale: string }[] = [
-  { id: 'default', label: 'Default text size', scale: '1em' },
-  { id: 'lg', label: 'Large text size', scale: '1.15em' },
-  { id: 'xl', label: 'Extra large text size', scale: '1.3em' },
+const SIZES: { id: Size; msg: MsgKey; scale: string }[] = [
+  { id: 'default', msg: 'comfort.sizeDefault', scale: '1em' },
+  { id: 'lg', msg: 'comfort.sizeLg', scale: '1.15em' },
+  { id: 'xl', msg: 'comfort.sizeXl', scale: '1.3em' },
 ];
 
 export function ComfortControl() {
@@ -16,6 +18,7 @@ export function ComfortControl() {
   const [size, setSize] = useState<Size>('default');
   const [comfort, setComfort] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const t = useT();
 
   // Reflect whatever the pre-paint script already applied to <html>.
   useEffect(() => {
@@ -82,11 +85,11 @@ export function ComfortControl() {
           className="mb-2 w-64 rounded-md border border-divider bg-surface p-4 shadow-lg"
         >
           <div className="mb-3 flex items-center justify-between">
-            <span className="font-heading">Comfort</span>
+            <span className="font-heading">{t('comfort.title')}</span>
             <button
               type="button"
               onClick={() => setOpen(false)}
-              aria-label="Close comfort settings"
+              aria-label={t('comfort.close')}
               className="flex min-h-9 min-w-9 items-center justify-center rounded-md hover:bg-neutral-200"
             >
               <X className="size-4" aria-hidden />
@@ -94,7 +97,9 @@ export function ComfortControl() {
           </div>
 
           <fieldset className="mb-4 border-0 p-0">
-            <legend className="mb-1.5 text-sm text-fd-muted-foreground">Text size</legend>
+            <legend className="mb-1.5 text-sm text-fd-muted-foreground">
+              {t('comfort.textSize')}
+            </legend>
             <div className="inline-flex overflow-hidden rounded-md border border-divider">
               {SIZES.map((s, i) => (
                 <button
@@ -102,7 +107,7 @@ export function ComfortControl() {
                   type="button"
                   onClick={() => applySize(s.id)}
                   aria-pressed={size === s.id}
-                  aria-label={s.label}
+                  aria-label={t(s.msg)}
                   className={`flex min-h-11 min-w-11 items-center justify-center px-3 transition-colors ${
                     i > 0 ? 'border-l border-divider' : ''
                   } ${size === s.id ? 'bg-accent text-bg' : 'hover:bg-neutral-200'}`}
@@ -115,10 +120,8 @@ export function ComfortControl() {
 
           <label className="flex cursor-pointer items-center justify-between gap-3">
             <span className="text-sm">
-              Comfort mode
-              <span className="block text-xs text-fd-muted-foreground">
-                Bigger text, roomier layout, calmer motion
-              </span>
+              {t('comfort.mode')}
+              <span className="block text-xs text-fd-muted-foreground">{t('comfort.modeDesc')}</span>
             </span>
             <input
               type="checkbox"
@@ -134,11 +137,11 @@ export function ComfortControl() {
         type="button"
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
-        aria-label="Comfort and text-size settings"
+        aria-label={t('comfort.aria')}
         className="flex min-h-11 items-center gap-2 rounded-full border border-divider bg-surface px-4 shadow-md transition-colors hover:bg-neutral-200"
       >
         <Accessibility className="size-5" aria-hidden />
-        <span className="font-heading text-sm">Comfort</span>
+        <span className="font-heading text-sm">{t('comfort.title')}</span>
       </button>
     </div>
   );

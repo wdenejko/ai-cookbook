@@ -1,17 +1,19 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useT } from './locale';
 
 const LEVELS = [
-  { id: 'simple', label: 'Simple' },
-  { id: 'normal', label: 'Normal' },
-  { id: 'technical', label: 'Technical' },
+  { id: 'simple', msg: 'detail.simple' },
+  { id: 'normal', msg: 'detail.normal' },
+  { id: 'technical', msg: 'detail.technical' },
 ] as const;
 type LevelId = (typeof LEVELS)[number]['id'];
 const KEY = 'cook-level';
 
 export function LevelSwitcher() {
   const [level, setLevel] = useState<LevelId>('normal');
+  const t = useT();
 
   // Load the stored preference and reflect it on <html> after mount.
   useEffect(() => {
@@ -37,8 +39,8 @@ export function LevelSwitcher() {
   };
 
   return (
-    <div role="group" aria-label="How much detail?" className="inline-flex items-center gap-2">
-      <span className="text-sm text-fd-muted-foreground">Detail</span>
+    <div role="group" aria-label={t('detail.aria')} className="inline-flex items-center gap-2">
+      <span className="text-sm text-fd-muted-foreground">{t('detail.label')}</span>
       <div className="inline-flex overflow-hidden rounded-md border border-divider">
         {LEVELS.map((l, i) => (
           <button
@@ -50,7 +52,7 @@ export function LevelSwitcher() {
               level === l.id ? 'bg-accent text-bg' : 'hover:bg-neutral-200'
             }`}
           >
-            {l.label}
+            {t(l.msg)}
           </button>
         ))}
       </div>

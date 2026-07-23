@@ -1,85 +1,117 @@
+import type { Locale } from './i18n';
+
 export interface GlossaryEntry {
-  title: string;
-  definition: string;
+  title: Record<Locale, string>;
+  definition: Record<Locale, string>;
 }
 
-// Plain-language definitions. Keys are lowercase; used by <Term name="…"> and
-// the /learn/glossary page. Keep definitions jargon-light and accurate.
+// Plain-language definitions, EN + PL. The Polish is a first pass — have a
+// native speaker review before a real workshop.
 export const GLOSSARY: Record<string, GlossaryEntry> = {
   prompt: {
-    title: 'Prompt',
-    definition:
-      'The instruction or question you give an AI — the text you type in. A clearer prompt usually gets a better answer.',
+    title: { en: 'Prompt', pl: 'Prompt' },
+    definition: {
+      en: 'The instruction or question you give an AI — the text you type in. A clearer prompt usually gets a better answer.',
+      pl: 'Polecenie lub pytanie, które dajesz sztucznej inteligencji — tekst, który wpisujesz. Jaśniejszy prompt zwykle daje lepszą odpowiedź.',
+    },
   },
   'system-prompt': {
-    title: 'System prompt',
-    definition:
-      "A behind-the-scenes instruction that sets the AI's role and rules for a whole conversation, before you type anything.",
+    title: { en: 'System prompt', pl: 'Prompt systemowy' },
+    definition: {
+      en: "A behind-the-scenes instruction that sets the AI's role and rules for a whole conversation, before you type anything.",
+      pl: 'Ukryta instrukcja, która ustala rolę i zasady działania AI dla całej rozmowy — zanim cokolwiek napiszesz.',
+    },
   },
   skill: {
-    title: 'Skill',
-    definition:
-      'A reusable folder of instructions (a SKILL.md file, plus optional scripts and references) that teaches an AI assistant how to do a specific task well.',
+    title: { en: 'Skill', pl: 'Umiejętność (skill)' },
+    definition: {
+      en: 'A reusable folder of instructions (a SKILL.md file, plus optional scripts and references) that teaches an AI assistant how to do a specific task well.',
+      pl: 'Folder z instrukcjami wielokrotnego użytku (plik SKILL.md oraz opcjonalne skrypty i materiały), który uczy asystenta AI, jak dobrze wykonać konkretne zadanie.',
+    },
   },
   subagent: {
-    title: 'Subagent',
-    definition:
-      'A helper AI the main assistant can hand a focused job to — like a specialist it delegates to and gets results back from.',
+    title: { en: 'Subagent', pl: 'Podagent' },
+    definition: {
+      en: 'A helper AI the main assistant can hand a focused job to — like a specialist it delegates to and gets results back from.',
+      pl: 'Pomocnicza AI, której główny asystent może zlecić wąskie zadanie — jak specjalista, któremu deleguje pracę i od którego dostaje wynik.',
+    },
   },
   agent: {
-    title: 'Agent',
-    definition:
-      'An AI that can take actions on its own to reach a goal — reading files, running tools, and deciding the next step — not just replying once.',
+    title: { en: 'Agent', pl: 'Agent' },
+    definition: {
+      en: 'An AI that can take actions on its own to reach a goal — reading files, running tools, and deciding the next step — not just replying once.',
+      pl: 'AI, która potrafi samodzielnie podejmować działania, by osiągnąć cel — czytać pliki, używać narzędzi i decydować o kolejnym kroku — a nie tylko raz odpowiedzieć.',
+    },
   },
   mcp: {
-    title: 'MCP (Model Context Protocol)',
-    definition:
-      'A standard way to plug an AI into outside tools and data — like a universal adapter that lets it reach things such as your files, a database, or Notion.',
+    title: { en: 'MCP (Model Context Protocol)', pl: 'MCP (Model Context Protocol)' },
+    definition: {
+      en: 'A standard way to plug an AI into outside tools and data — like a universal adapter that lets it reach things such as your files, a database, or Notion.',
+      pl: 'Standardowy sposób podłączania AI do zewnętrznych narzędzi i danych — jak uniwersalna przejściówka, dzięki której sięga np. po Twoje pliki, bazę danych czy Notion.',
+    },
   },
   hook: {
-    title: 'Hook',
-    definition:
-      'A small automation that runs at a set moment — for example, formatting a file right after the AI edits it.',
+    title: { en: 'Hook', pl: 'Hook' },
+    definition: {
+      en: 'A small automation that runs at a set moment — for example, formatting a file right after the AI edits it.',
+      pl: 'Mała automatyzacja uruchamiana w ustalonym momencie — na przykład formatująca plik zaraz po tym, jak AI go zmieni.',
+    },
   },
   memory: {
-    title: 'Memory',
-    definition:
-      'Notes the assistant keeps and re-reads across sessions, so it remembers your preferences and project facts instead of starting fresh each time.',
+    title: { en: 'Memory', pl: 'Pamięć' },
+    definition: {
+      en: 'Notes the assistant keeps and re-reads across sessions, so it remembers your preferences and project facts instead of starting fresh each time.',
+      pl: 'Notatki, które asystent zapisuje i czyta między sesjami, dzięki czemu pamięta Twoje preferencje i fakty o projekcie, zamiast zaczynać za każdym razem od zera.',
+    },
   },
   llm: {
-    title: 'LLM (large language model)',
-    definition:
-      'The kind of AI behind assistants like Claude. It predicts text, which lets it answer questions, write, and reason.',
+    title: { en: 'LLM (large language model)', pl: 'LLM (duży model językowy)' },
+    definition: {
+      en: 'The kind of AI behind assistants like Claude. It predicts text, which lets it answer questions, write, and reason.',
+      pl: 'Rodzaj AI stojący za asystentami takimi jak Claude. Przewiduje tekst, co pozwala mu odpowiadać na pytania, pisać i rozumować.',
+    },
   },
   token: {
-    title: 'Token',
-    definition:
-      'The small chunks of text an AI reads and writes — roughly a short word or part of a word. Usage and limits are measured in tokens.',
+    title: { en: 'Token', pl: 'Token' },
+    definition: {
+      en: 'The small chunks of text an AI reads and writes — roughly a short word or part of a word. Usage and limits are measured in tokens.',
+      pl: 'Małe kawałki tekstu, które AI czyta i zapisuje — mniej więcej krótkie słowo lub jego część. Zużycie i limity liczy się w tokenach.',
+    },
   },
   'context-window': {
-    title: 'Context window',
-    definition:
-      "How much text the AI can consider at once — its short-term memory for the current conversation. Go past it and the earliest parts drop off.",
+    title: { en: 'Context window', pl: 'Okno kontekstu' },
+    definition: {
+      en: 'How much text the AI can consider at once — its short-term memory for the current conversation. Go past it and the earliest parts drop off.',
+      pl: 'Ile tekstu AI może wziąć pod uwagę naraz — jego pamięć krótkotrwała bieżącej rozmowy. Po przekroczeniu limitu najstarsze fragmenty wypadają.',
+    },
   },
   frontmatter: {
-    title: 'Frontmatter',
-    definition:
-      'A small block of settings at the top of a file (between --- lines) that describes it — a name, a description, and other options.',
+    title: { en: 'Frontmatter', pl: 'Frontmatter' },
+    definition: {
+      en: 'A small block of settings at the top of a file (between --- lines) that describes it — a name, a description, and other options.',
+      pl: 'Mały blok ustawień na początku pliku (między liniami ---), który go opisuje — nazwa, opis i inne opcje.',
+    },
   },
   tool: {
-    title: 'Tool',
-    definition:
-      'A capability the AI can call to do something concrete — read a file, search the web, run a command — rather than only producing text.',
+    title: { en: 'Tool', pl: 'Narzędzie' },
+    definition: {
+      en: 'A capability the AI can call to do something concrete — read a file, search the web, run a command — rather than only producing text.',
+      pl: 'Funkcja, którą AI może wywołać, by zrobić coś konkretnego — odczytać plik, przeszukać internet, uruchomić polecenie — a nie tylko wygenerować tekst.',
+    },
   },
   'slash-command': {
-    title: 'Slash command',
-    definition:
-      'A shortcut you trigger by typing /name — it expands into a saved prompt or action. In newer versions these are a flat kind of skill.',
+    title: { en: 'Slash command', pl: 'Komenda ze slashem' },
+    definition: {
+      en: 'A shortcut you trigger by typing /name — it expands into a saved prompt or action. In newer versions these are a flat kind of skill.',
+      pl: 'Skrót uruchamiany przez wpisanie /nazwa — rozwija się w zapisany prompt lub akcję. W nowszych wersjach to prosty rodzaj umiejętności (skill).',
+    },
   },
   plugin: {
-    title: 'Plugin',
-    definition:
-      'A bundle that packages several assets together — skills, subagents, commands, hooks — so they can be shared and installed in one step.',
+    title: { en: 'Plugin', pl: 'Wtyczka (plugin)' },
+    definition: {
+      en: 'A bundle that packages several assets together — skills, subagents, commands, hooks — so they can be shared and installed in one step.',
+      pl: 'Paczka łącząca kilka zasobów naraz — umiejętności, podagentów, komendy, hooki — tak, by można je było udostępnić i zainstalować w jednym kroku.',
+    },
   },
 };
 

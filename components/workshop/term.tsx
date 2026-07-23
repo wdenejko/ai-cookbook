@@ -2,6 +2,7 @@
 
 import { type ReactNode, useEffect, useId, useRef, useState } from 'react';
 import { getGlossaryTerm } from '@/lib/workshop/glossary';
+import { useLocale } from './locale';
 
 // Accessible inline glossary term: a real <button> (keyboard operable),
 // aria-expanded + aria-controls a labelled panel, Escape / outside-click to
@@ -10,6 +11,7 @@ export function Term({ name, children }: { name: string; children: ReactNode }) 
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLSpanElement>(null);
   const panelId = useId();
+  const { locale } = useLocale();
   const entry = getGlossaryTerm(name);
 
   useEffect(() => {
@@ -46,8 +48,8 @@ export function Term({ name, children }: { name: string; children: ReactNode }) 
           id={panelId}
           className="absolute left-0 top-full z-30 mt-1 block w-64 rounded-md border border-divider bg-surface p-3 text-left text-sm font-normal normal-case shadow-md"
         >
-          <span className="block font-heading">{entry.title}</span>
-          <span className="mt-1 block text-fd-muted-foreground">{entry.definition}</span>
+          <span className="block font-heading">{entry.title[locale]}</span>
+          <span className="mt-1 block text-fd-muted-foreground">{entry.definition[locale]}</span>
         </span>
       )}
     </span>
