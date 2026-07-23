@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="broadsheet.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/duotone/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css">
+  <style>
+    .ds-cardbtn { transition: box-shadow .16s ease, transform .16s ease; }
+    .ds-cardbtn:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+    .ds-facet:hover { background: color-mix(in srgb, var(--color-text) 6%, transparent); }
+  </style>
+</helmet>
+<div style="{{ rootStyle }}">
+  <div style="max-width:1180px;margin:0 auto;padding:0 var(--space-6) var(--space-8)">
+
+    <!-- masthead -->
+    <header style="padding-top:var(--space-6)">
+      <div style="height:4px;background:var(--color-text)"></div>
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:var(--space-4);padding:var(--space-3) 0 var(--space-2)">
+        <div>
+          <div style="font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--color-accent)">The AI Cookbook · Design System</div>
+          <h1 style="font-size:clamp(38px,5.5vw,60px);line-height:0.94;margin:2px 0 0;letter-spacing:-0.02em">Broadsheet in use</h1>
+        </div>
+        <button class="btn btn-secondary" onClick="{{ toggleDark }}" aria-label="Toggle dark mode" style="min-width:40px;margin-bottom:6px"><i class="{{ darkIcon }}" style="font-size:18px"></i></button>
+      </div>
+      <div style="height:1px;background:var(--color-text)"></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 0;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:color-mix(in srgb,var(--color-text) 60%,transparent)">
+        <span>Reference sheet</span><span style="font-style:italic;text-transform:none;letter-spacing:0.02em;font-size:13px">Newsprint set for the web — serif, paper, spot color</span><span>v1</span>
+      </div>
+      <div style="height:3px;background:var(--color-text)"></div>
+    </header>
+
+    <p style="font-size:19px;line-height:1.5;max-width:64ch;margin-top:var(--space-6);color:color-mix(in srgb,var(--color-text) 82%,transparent)">Every surface in the app is built from these parts. Hierarchy comes from the serif scale and whitespace — not boxes or dividers. Cyan is the interactive spot color; magenta the rarer second. The one boxed component is the card, reserved for discrete listings.</p>
+
+    <!-- ══ FOUNDATIONS ══ -->
+    <section style="margin-top:var(--space-8)">
+      <div style="display:flex;align-items:baseline;gap:var(--space-3);margin-bottom:var(--space-4)"><span class="cb-num" style="font-family:var(--font-heading);font-size:22px;color:var(--color-accent)">01</span><h2 style="font-size:30px;margin:0">Foundations</h2></div>
+
+      <!-- color -->
+      <h4 style="margin:var(--space-6) 0 var(--space-3)">Color roles</h4>
+      <div style="display:flex;flex-wrap:wrap;gap:var(--space-3)">
+        <sc-for list="{{ roles }}" as="r" hint-placeholder-count="6">
+          <div style="width:150px">
+            <div style="height:56px;border-radius:var(--radius-md);background:{{ r.value }};border:1px solid var(--color-divider)"></div>
+            <div style="font-size:13px;margin-top:6px;font-family:var(--font-heading);font-weight:600">{{ r.name }}</div>
+            <div style="font-size:11px;font-family:ui-monospace,monospace;color:color-mix(in srgb,var(--color-text) 55%,transparent)">{{ r.token }}</div>
+          </div>
+        </sc-for>
+      </div>
+
+      <h4 style="margin:var(--space-6) 0 var(--space-3)">Tonal ramps · 100 → 900</h4>
+      <div style="display:flex;flex-direction:column;gap:var(--space-3)">
+        <sc-for list="{{ ramps }}" as="rp" hint-placeholder-count="3">
+          <div>
+            <div style="font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:color-mix(in srgb,var(--color-text) 55%,transparent);margin-bottom:5px">{{ rp.name }}</div>
+            <div style="display:flex;border-radius:var(--radius-md);overflow:hidden;border:1px solid var(--color-divider)">
+              <sc-for list="{{ rp.steps }}" as="st" hint-placeholder-count="9">
+                <div style="flex:1;height:40px;background:{{ st }}"></div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+
+      <!-- type -->
+      <h4 style="margin:var(--space-8) 0 var(--space-3)">Type · Source Serif 4</h4>
+      <div style="display:flex;flex-direction:column;gap:var(--space-2);border-left:3px solid var(--color-accent);padding-left:var(--space-4)">
+        <div style="display:flex;align-items:baseline;gap:var(--space-4)"><span style="font-size:11px;font-family:ui-monospace,monospace;color:color-mix(in srgb,var(--color-text) 45%,transparent);width:80px">h1 · 42</span><span style="font-family:var(--font-heading);font-weight:600;font-size:42px;line-height:1.1">Headline</span></div>
+        <div style="display:flex;align-items:baseline;gap:var(--space-4)"><span style="font-size:11px;font-family:ui-monospace,monospace;color:color-mix(in srgb,var(--color-text) 45%,transparent);width:80px">h2 · 32</span><span style="font-family:var(--font-heading);font-weight:600;font-size:32px">Section title</span></div>
+        <div style="display:flex;align-items:baseline;gap:var(--space-4)"><span style="font-size:11px;font-family:ui-monospace,monospace;color:color-mix(in srgb,var(--color-text) 45%,transparent);width:80px">h4 · 20</span><span style="font-family:var(--font-heading);font-weight:600;font-size:20px">Subhead</span></div>
+        <div style="display:flex;align-items:baseline;gap:var(--space-4)"><span style="font-size:11px;font-family:ui-monospace,monospace;color:color-mix(in srgb,var(--color-text) 45%,transparent);width:80px">body · 15</span><span style="font-size:15px;max-width:52ch">The measure holds around sixty characters; body copy runs in the same serif as the headings — the serif is the chrome.</span></div>
+        <div style="display:flex;align-items:baseline;gap:var(--space-4)"><span style="font-size:11px;font-family:ui-monospace,monospace;color:color-mix(in srgb,var(--color-text) 45%,transparent);width:80px">italic</span><span style="font-size:15px;font-style:italic">Emphasis takes the true italic, never a synthesized oblique.</span></div>
+        <div style="display:flex;align-items:baseline;gap:var(--space-4)"><span style="font-size:11px;font-family:ui-monospace,monospace;color:color-mix(in srgb,var(--color-text) 45%,transparent);width:80px">kicker</span><span style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-accent)">Kicker label</span></div>
+        <div style="display:flex;align-items:baseline;gap:var(--space-4)"><span style="font-size:11px;font-family:ui-monospace,monospace;color:color-mix(in srgb,var(--color-text) 45%,transparent);width:80px">mono</span><span style="font-size:13px;font-family:ui-monospace,monospace">.claude/skills/ — code &amp; config only</span></div>
+      </div>
+
+      <!-- spacing + radius + elevation -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-8);margin-top:var(--space-8)">
+        <div>
+          <h4 style="margin-bottom:var(--space-3)">Spacing · 1.25× scale</h4>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <sc-for list="{{ spaces }}" as="sp" hint-placeholder-count="6">
+              <div style="display:flex;align-items:center;gap:var(--space-3)"><span style="font-size:11px;font-family:ui-monospace,monospace;width:70px;color:color-mix(in srgb,var(--color-text) 55%,transparent)">{{ sp.token }}</span><div style="height:14px;background:var(--color-accent);border-radius:2px;width:{{ sp.px }}"></div><span style="font-size:11px;color:color-mix(in srgb,var(--color-text) 45%,transparent)">{{ sp.px }}</span></div>
+            </sc-for>
+          </div>
+        </div>
+        <div>
+          <h4 style="margin-bottom:var(--space-3)">Elevation</h4>
+          <div style="display:flex;gap:var(--space-3);flex-wrap:wrap">
+            <div class="elev-sm" style="width:96px;height:64px;border-radius:var(--radius-md);background:var(--color-surface);display:grid;place-items:center;font-size:11px;font-family:ui-monospace,monospace">sm</div>
+            <div class="elev-md" style="width:96px;height:64px;border-radius:var(--radius-md);background:var(--color-surface);display:grid;place-items:center;font-size:11px;font-family:ui-monospace,monospace">md</div>
+            <div class="elev-lg" style="width:96px;height:64px;border-radius:var(--radius-md);background:var(--color-surface);display:grid;place-items:center;font-size:11px;font-family:ui-monospace,monospace">lg</div>
+          </div>
+          <h4 style="margin:var(--space-4) 0 var(--space-3)">Icons · Phosphor duotone</h4>
+          <div style="display:flex;gap:var(--space-3);font-size:26px;color:var(--color-accent);flex-wrap:wrap">
+            <i class="ph-duotone ph-sparkle"></i><i class="ph-duotone ph-robot"></i><i class="ph-duotone ph-terminal-window"></i><i class="ph-duotone ph-chat-teardrop-text"></i><i class="ph-duotone ph-plugs-connected"></i><i class="ph-duotone ph-brackets-curly"></i><i class="ph-duotone ph-brain"></i>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ COMPONENTS ══ -->
+    <section style="margin-top:var(--space-8)">
+      <div style="display:flex;align-items:baseline;gap:var(--space-3);margin-bottom:var(--space-4)"><span style="font-family:var(--font-heading);font-size:22px;color:var(--color-accent)">02</span><h2 style="font-size:30px;margin:0">Components</h2></div>
+
+      <!-- buttons -->
+      <h4 style="margin:var(--space-6) 0 var(--space-3)">Buttons</h4>
+      <div style="display:flex;gap:var(--space-3);flex-wrap:wrap;align-items:center">
+        <button class="btn btn-primary"><i class="ph-duotone ph-copy" style="font-size:16px"></i>Copy</button>
+        <button class="btn btn-secondary"><i class="ph-duotone ph-download-simple" style="font-size:16px"></i>Download bundle</button>
+        <button class="btn btn-ghost">Open the lesson</button>
+        <button class="btn btn-secondary" style="min-width:40px"><i class="ph-duotone ph-moon-stars" style="font-size:18px"></i></button>
+      </div>
+
+      <!-- tags / badges -->
+      <h4 style="margin:var(--space-6) 0 var(--space-3)">Type badges &amp; status tags</h4>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+        <sc-for list="{{ typeBadges }}" as="b" hint-placeholder-count="7"><span class="tag tag-neutral" style="gap:5px"><i class="{{ b.icon }}" style="font-size:13px;margin-right:3px"></i>{{ b.label }}</span></sc-for>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px">
+        <span class="tag tag-accent-2"><i class="ph-fill ph-warning" style="font-size:11px;margin-right:4px"></i>runs code · trust required</span>
+        <span class="tag tag-outline"><i class="ph-duotone ph-key" style="font-size:11px;margin-right:4px"></i>holds credentials</span>
+        <span class="tag tag-accent"><i class="ph-duotone ph-globe" style="font-size:11px;margin-right:4px"></i>public</span>
+        <span style="display:inline-flex;align-items:center;gap:5px;font-size:12px"><i class="ph-fill ph-star" style="font-size:14px;color:var(--color-accent-2)"></i>favorite</span>
+      </div>
+
+      <!-- card + facets + tabs -->
+      <div style="display:grid;grid-template-columns:300px 1fr;gap:var(--space-8);margin-top:var(--space-6)">
+        <div>
+          <h4 style="margin-bottom:var(--space-3)">Asset card</h4>
+          <div class="card elev-sm ds-cardbtn" style="cursor:pointer;gap:var(--space-2)">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
+              <div class="card-kicker" style="display:flex;align-items:center;gap:6px"><i class="ph-duotone ph-sparkle" style="font-size:16px"></i>Skill</div>
+              <i class="ph-fill ph-star" style="font-size:14px;color:var(--color-accent-2)"></i>
+            </div>
+            <div class="card-title">PDF Extractor</div>
+            <p class="card-body">Pull clean text, tables and metadata out of any PDF — including scanned pages, via OCR.</p>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span class="tag tag-neutral">documents</span><span class="tag tag-neutral">parsing</span><span class="tag tag-neutral">ocr</span>
+            </div>
+            <div class="card-meta" style="border-top:1px solid var(--color-divider);padding-top:8px;margin-top:2px">
+              <span>Documents</span><span>·</span><span style="display:flex;align-items:center;gap:4px"><i class="ph-duotone ph-globe" style="font-size:13px"></i>Public</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h4 style="margin-bottom:var(--space-3)">Mode tabs · filter facets</h4>
+          <nav style="display:flex;align-items:center;gap:var(--space-6);border-bottom:0;margin-bottom:var(--space-4)">
+            <span style="font-family:var(--font-heading);font-weight:600;font-size:18px;color:var(--color-accent);border-bottom:3px solid var(--color-accent);padding-bottom:10px"><i class="ph-duotone ph-cards-three" style="font-size:17px;vertical-align:-3px;margin-right:6px"></i>Library</span>
+            <span style="font-family:var(--font-heading);font-weight:600;font-size:18px;padding-bottom:10px;border-bottom:3px solid transparent"><i class="ph-duotone ph-chalkboard-teacher" style="font-size:17px;vertical-align:-3px;margin-right:6px"></i>Workshop</span>
+          </nav>
+          <div style="max-width:240px;display:flex;flex-direction:column;gap:4px">
+            <button class="ds-facet" style="display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;padding:7px 10px;border:0;cursor:pointer;text-align:left;font-family:var(--font-body);font-size:14px;border-radius:var(--radius-md);background:var(--color-accent-100);color:var(--color-accent-800);font-weight:600"><span style="display:flex;align-items:center;gap:8px"><i class="ph-duotone ph-sparkle" style="font-size:16px"></i>Skill</span><span style="font-size:11px;opacity:.6">3</span></button>
+            <button class="ds-facet" style="display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;padding:7px 10px;border:0;cursor:pointer;text-align:left;font-family:var(--font-body);font-size:14px;border-radius:var(--radius-md);background:transparent"><span style="display:flex;align-items:center;gap:8px"><i class="ph-duotone ph-robot" style="font-size:16px"></i>Subagent</span><span style="font-size:11px;opacity:.6">2</span></button>
+            <button class="ds-facet" style="display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;padding:7px 10px;border:0;cursor:pointer;text-align:left;font-family:var(--font-body);font-size:14px;border-radius:var(--radius-md);background:transparent"><span style="display:flex;align-items:center;gap:8px"><i class="ph-duotone ph-plugs-connected" style="font-size:16px"></i>MCP Server</span><span style="font-size:11px;opacity:.6">2</span></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- inputs, segmented controls, glossary -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-8);margin-top:var(--space-6)">
+        <div>
+          <h4 style="margin-bottom:var(--space-3)">Search field</h4>
+          <div style="position:relative;max-width:360px">
+            <i class="ph-duotone ph-magnifying-glass" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:18px;color:var(--color-accent)"></i>
+            <input class="input" placeholder="Search skills, subagents, prompts…" style="padding-left:38px;min-height:44px;font-size:15px">
+          </div>
+          <h4 style="margin:var(--space-6) 0 var(--space-3)">Segmented controls</h4>
+          <div style="display:flex;gap:var(--space-3);flex-wrap:wrap">
+            <div class="seg" aria-label="Detail level">
+              <label class="seg-opt"><input type="radio" name="lvl" defaultChecked>Simple</label>
+              <label class="seg-opt"><input type="radio" name="lvl">Normal</label>
+              <label class="seg-opt"><input type="radio" name="lvl">Technical</label>
+            </div>
+            <div class="seg" aria-label="Language">
+              <label class="seg-opt"><input type="radio" name="lg" defaultChecked>EN</label>
+              <label class="seg-opt"><input type="radio" name="lg">PL</label>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h4 style="margin-bottom:var(--space-3)">Glossary term &amp; popover</h4>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <span class="tag tag-outline" style="border-style:dashed;font-size:12px">SKILL.md</span>
+            <span class="tag tag-outline" style="border-style:dashed;font-size:12px">frontmatter</span>
+          </div>
+          <div style="background:var(--color-surface);border-left:3px solid var(--color-accent);border-radius:0 var(--radius-md) var(--radius-md) 0;padding:var(--space-3);margin-top:var(--space-2);max-width:420px">
+            <strong style="font-family:var(--font-heading)">frontmatter</strong>
+            <p style="margin:6px 0 0;font-size:15px;line-height:1.5">The labelled fields at the top of the file — name, description, when to use it — that tell the AI what the skill is for.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- table + dialog -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-8);margin-top:var(--space-6)">
+        <div>
+          <h4 style="margin-bottom:var(--space-3)">Table · bundle contents</h4>
+          <table class="table">
+            <thead><tr><th>Path</th><th>Kind</th></tr></thead>
+            <tbody>
+              <tr><td style="font-family:ui-monospace,monospace;font-size:12.5px">SKILL.md</td><td>entrypoint</td></tr>
+              <tr><td style="font-family:ui-monospace,monospace;font-size:12.5px">reference/tables.md</td><td>reference</td></tr>
+              <tr><td style="font-family:ui-monospace,monospace;font-size:12.5px">scripts/extract.py</td><td>script · exec</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <h4 style="margin-bottom:var(--space-3)">Dialog surface</h4>
+          <div class="dialog elev-lg" style="max-width:360px">
+            <div class="dialog-title">Import this connector?</div>
+            <div class="dialog-body">Linear runs code and holds a login token. Import it only from a source you trust.</div>
+            <div class="dialog-actions"><button class="btn btn-secondary">Cancel</button><button class="btn btn-primary">Import</button></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ PATTERNS ══ -->
+    <section style="margin-top:var(--space-8)">
+      <div style="display:flex;align-items:baseline;gap:var(--space-3);margin-bottom:var(--space-4)"><span style="font-family:var(--font-heading);font-size:22px;color:var(--color-accent)">03</span><h2 style="font-size:30px;margin:0">Patterns</h2></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--space-6)">
+        <div><h4>Whitespace over rules</h4><p style="font-size:14px;max-width:38ch">Sections are separated by space and the serif scale — no boxes, no dividers. The card is the only boxed component, used for discrete listings.</p></div>
+        <div><h4>Cyan first, magenta rare</h4><p style="font-size:14px;max-width:38ch">Cyan carries every interactive element; magenta is the second spot color for warnings and favorites — never both in one small component.</p></div>
+        <div><h4>Ink mode</h4><p style="font-size:14px;max-width:38ch">Dark mode inverts the press: near-black ground, paper-white ink, the same two spot colors nudged lighter for contrast. Toggle it in the masthead.</p></div>
+        <div><h4>Adaptive &amp; accessible</h4><p style="font-size:14px;max-width:38ch">Level switcher, glossary popovers on focus, 44px targets and a bilingual toggle — one artifact that serves IT pros, teenagers, office staff and seniors.</p></div>
+      </div>
+    </section>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1180,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { dark: false };
+  componentDidMount() { try { const d = localStorage.getItem('cb_dark'); if (d !== null) this.setState({ dark: d === '1' }); } catch (e) {} }
+  renderVals() {
+    const dark = this.state.dark;
+    const rootStyle = { minHeight: '100vh', background: 'var(--color-bg)', color: 'var(--color-text)', transition: 'background .25s ease, color .25s ease' };
+    if (dark) Object.assign(rootStyle, {
+      '--color-bg': '#1b1a19', '--color-surface': '#26241f', '--color-text': '#f3f2f2',
+      '--color-divider': 'rgba(243,242,242,0.15)', '--color-accent': '#4fb8dd', '--color-accent-2': '#ff5f9c',
+      '--color-accent-100': '#1f3a44', '--color-accent-800': '#bfe8f6', '--color-accent-2-100': '#3d1b2a', '--color-accent-2-800': '#ffc6db',
+      '--shadow-sm': '0 1px 2px rgba(0,0,0,.5)', '--shadow-md': '0 4px 14px rgba(0,0,0,.55)', '--shadow-lg': '0 16px 40px rgba(0,0,0,.6)',
+    });
+    return {
+      rootStyle, darkIcon: dark ? 'ph-duotone ph-sun' : 'ph-duotone ph-moon-stars',
+      toggleDark: () => this.setState(st => { const nd = !st.dark; try { localStorage.setItem('cb_dark', nd ? '1' : '0'); } catch (e) {} return { dark: nd }; }),
+      roles: [
+        { name: 'Ground', token: '--color-bg', value: '#f3f2f2' },
+        { name: 'Surface', token: '--color-surface', value: '#eae9e9' },
+        { name: 'Ink', token: '--color-text', value: '#201e1d' },
+        { name: 'Accent · cyan', token: '--color-accent', value: '#0088b0' },
+        { name: 'Accent 2 · magenta', token: '--color-accent-2', value: '#d6006c' },
+        { name: 'Process yellow', token: '--color-process-yellow', value: '#edbb00' },
+      ],
+      ramps: [
+        { name: 'Neutral', steps: ['#f8f4f4','#eae7e7','#d7d3d3','#bab6b6','#9b9797','#7d7979','#605d5d','#444141','#2d2b2b'] },
+        { name: 'Accent · cyan', steps: ['#e9f8ff','#cbeeff','#99e0ff','#62c5ee','#38a6cf','#1186ac','#006786','#004961','#0a303e'] },
+        { name: 'Accent 2 · magenta', steps: ['#fff1f4','#ffdee6','#ffc0d0','#ff90b1','#ff458e','#d82071','#aa0b56','#790e3d','#4b1528'] },
+      ],
+      spaces: [
+        { token: '--space-1', px: '5px' }, { token: '--space-2', px: '10px' }, { token: '--space-3', px: '15px' },
+        { token: '--space-4', px: '20px' }, { token: '--space-6', px: '30px' }, { token: '--space-8', px: '40px' },
+      ],
+      typeBadges: [
+        { label: 'Skill', icon: 'ph-duotone ph-sparkle' }, { label: 'Subagent', icon: 'ph-duotone ph-robot' },
+        { label: 'Command', icon: 'ph-duotone ph-terminal-window' }, { label: 'Prompt', icon: 'ph-duotone ph-chat-teardrop-text' },
+        { label: 'MCP Server', icon: 'ph-duotone ph-plugs-connected' }, { label: 'Hook', icon: 'ph-duotone ph-brackets-curly' },
+        { label: 'Memory', icon: 'ph-duotone ph-brain' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

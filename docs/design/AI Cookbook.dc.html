@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="broadsheet.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/duotone/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css">
+  <style>
+    @keyframes cb-fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+    .cb-view { animation: cb-fade 0.28s ease both; }
+    .cb-cardbtn { transition: box-shadow .16s ease, transform .16s ease; }
+    .cb-cardbtn:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+    .cb-cardbtn:hover .cb-cardtitle { color: var(--color-accent); }
+    .cb-facet:hover { background: color-mix(in srgb, var(--color-text) 6%, transparent); }
+    .cb-crumb:hover { color: var(--color-accent); }
+    ::-webkit-scrollbar { width: 10px; height: 10px; }
+    ::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--color-text) 22%, transparent); border-radius: 6px; }
+  </style>
+</helmet>
+<div style="{{ rootStyle }}">
+  <div style="max-width:1280px;margin:0 auto;padding:0 var(--space-6) var(--space-8)">
+
+    <!-- ══ MASTHEAD ══ -->
+    <header style="padding-top:var(--space-6)">
+      <div style="height:4px;background:var(--color-text)"></div>
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:var(--space-4);padding:var(--space-3) 0 var(--space-2)">
+        <div style="cursor:pointer" onClick="{{ goHome }}">
+          <div style="font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--color-accent)">{{ t.tagline }}</div>
+          <h1 style="font-size:clamp(40px,6vw,68px);line-height:0.94;margin:2px 0 0;letter-spacing:-0.02em">The AI&nbsp;Cookbook</h1>
+        </div>
+        <div style="display:flex;align-items:center;gap:var(--space-2);padding-bottom:6px">
+          <div class="seg" aria-label="Language">
+            <label class="seg-opt"><input type="radio" name="lang" checked="{{ langEn }}" onChange="{{ setEn }}">EN</label>
+            <label class="seg-opt"><input type="radio" name="lang" checked="{{ langPl }}" onChange="{{ setPl }}">PL</label>
+          </div>
+          <button class="btn btn-secondary" onClick="{{ toggleDark }}" aria-label="Toggle dark mode" style="min-width:40px">
+            <i class="{{ darkIcon }}" style="font-size:18px"></i>
+          </button>
+        </div>
+      </div>
+      <div style="height:1px;background:var(--color-text)"></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);padding:7px 0;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:color-mix(in srgb,var(--color-text) 60%,transparent)">
+        <span>{{ t.vol }}</span>
+        <span style="font-style:italic;text-transform:none;letter-spacing:0.02em;font-size:13px">{{ dateline }}</span>
+        <span>{{ assetCountLabel }}</span>
+      </div>
+      <div style="height:3px;background:var(--color-text)"></div>
+
+      <nav style="display:flex;align-items:center;gap:var(--space-6);padding:var(--space-3) 0 0">
+        <a onClick="{{ goLibrary }}" aria-current="{{ libCurrent }}" style="{{ libTabStyle }}"><i class="ph-duotone ph-cards-three" style="font-size:17px;vertical-align:-3px;margin-right:6px"></i>{{ t.library }}</a>
+        <a onClick="{{ goWorkshop }}" aria-current="{{ wsCurrent }}" style="{{ wsTabStyle }}"><i class="ph-duotone ph-chalkboard-teacher" style="font-size:17px;vertical-align:-3px;margin-right:6px"></i>{{ t.workshop }}</a>
+        <span style="margin-left:auto;font-size:12px;font-style:italic;color:color-mix(in srgb,var(--color-text) 55%,transparent)">{{ t.oneRepo }}</span>
+      </nav>
+    </header>
+
+    <!-- ══ LIBRARY INDEX ══ -->
+    <sc-if value="{{ isLibrary }}" hint-placeholder-val="{{ true }}">
+      <main class="cb-view" style="display:grid;grid-template-columns:236px 1fr;gap:var(--space-8);padding-top:var(--space-6)">
+        <aside style="align-self:start;position:sticky;top:var(--space-3)">
+          <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:var(--space-6)">
+            <h6 style="margin:0 0 4px">{{ t.type }}</h6>
+            <sc-for list="{{ typeFacets }}" as="f" hint-placeholder-count="6">
+              <button class="cb-facet" onClick="{{ f.onClick }}" style="{{ f.style }}">
+                <span style="display:flex;align-items:center;gap:8px"><i class="{{ f.iconCls }}" style="font-size:16px"></i>{{ f.label }}</span>
+                <span style="font-size:11px;opacity:.6">{{ f.count }}</span>
+              </button>
+            </sc-for>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:var(--space-6)">
+            <h6 style="margin:0 0 4px">{{ t.category }}</h6>
+            <sc-for list="{{ catFacets }}" as="f" hint-placeholder-count="6">
+              <button class="cb-facet" onClick="{{ f.onClick }}" style="{{ f.style }}">
+                <span>{{ f.label }}</span><span style="font-size:11px;opacity:.6">{{ f.count }}</span>
+              </button>
+            </sc-for>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:var(--space-6)">
+            <h6 style="margin:0 0 4px">{{ t.visibility }}</h6>
+            <sc-for list="{{ visFacets }}" as="f" hint-placeholder-count="3">
+              <button class="cb-facet" onClick="{{ f.onClick }}" style="{{ f.style }}">
+                <span style="display:flex;align-items:center;gap:8px"><i class="{{ f.iconCls }}" style="font-size:15px"></i>{{ f.label }}</span><span style="font-size:11px;opacity:.6">{{ f.count }}</span>
+              </button>
+            </sc-for>
+          </div>
+          <button class="cb-facet" onClick="{{ toggleFav }}" style="{{ favStyle }}">
+            <span style="display:flex;align-items:center;gap:8px"><i class="ph-fill ph-star" style="font-size:15px;color:var(--color-accent-2)"></i>{{ t.favOnly }}</span>
+          </button>
+        </aside>
+
+        <section>
+          <div style="display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-4)">
+            <div style="position:relative;flex:1">
+              <i class="ph-duotone ph-magnifying-glass" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:18px;color:var(--color-accent)"></i>
+              <input class="input" placeholder="{{ t.searchPh }}" value="{{ query }}" onInput="{{ onSearch }}" style="padding-left:38px;min-height:44px;font-size:15px">
+            </div>
+            <span style="font-size:12px;white-space:nowrap;color:color-mix(in srgb,var(--color-text) 60%,transparent)">{{ resultLabel }}</span>
+          </div>
+
+          <sc-if value="{{ hasResults }}" hint-placeholder-val="{{ true }}">
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:var(--space-3)">
+              <sc-for list="{{ assets }}" as="a" hint-placeholder-count="9">
+                <div class="card elev-sm cb-cardbtn" role="button" tabindex="0" onClick="{{ a.onSelect }}" style="cursor:pointer;gap:var(--space-2)">
+                  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
+                    <div class="card-kicker" style="display:flex;align-items:center;gap:6px"><i class="{{ a.iconCls }}" style="font-size:16px"></i>{{ a.typeLabel }}</div>
+                    <sc-if value="{{ a.favorite }}" hint-placeholder-val="{{ false }}"><i class="ph-fill ph-star" style="font-size:14px;color:var(--color-accent-2)"></i></sc-if>
+                  </div>
+                  <div class="card-title cb-cardtitle" style="transition:color .16s">{{ a.title }}</div>
+                  <p class="card-body">{{ a.description }}</p>
+                  <div style="display:flex;flex-wrap:wrap;gap:5px">
+                    <sc-for list="{{ a.tagsShown }}" as="t" hint-placeholder-count="3"><span class="tag tag-neutral">{{ t }}</span></sc-for>
+                    <sc-if value="{{ a.trustRequired }}" hint-placeholder-val="{{ false }}"><span class="tag tag-accent-2"><i class="ph-fill ph-warning" style="font-size:11px;margin-right:4px"></i>{{ runsCode }}</span></sc-if>
+                  </div>
+                  <div class="card-meta" style="border-top:1px solid var(--color-divider);padding-top:8px;margin-top:2px">
+                    <span>{{ a.category }}</span><span>·</span>
+                    <span style="display:flex;align-items:center;gap:4px"><i class="{{ a.visIcon }}" style="font-size:13px"></i>{{ a.visLabel }}</span>
+                    <sc-if value="{{ a.containsSecrets }}" hint-placeholder-val="{{ false }}"><span style="margin-left:auto"><i class="ph-duotone ph-key" style="font-size:13px;color:var(--color-accent)"></i></span></sc-if>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+          <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:var(--space-8) 0;text-align:center;color:color-mix(in srgb,var(--color-text) 55%,transparent)">
+              <i class="ph-duotone ph-file-dashed" style="font-size:40px;color:var(--color-accent)"></i>
+              <p style="font-size:18px;margin-top:var(--space-2)">{{ t.noMatch }}</p>
+              <button class="btn btn-ghost" onClick="{{ clearFilters }}">{{ t.clearFilters }}</button>
+            </div>
+          </sc-if>
+        </section>
+      </main>
+    </sc-if>
+
+    <!-- ══ ASSET DETAIL ══ -->
+    <sc-if value="{{ isDetail }}" hint-placeholder-val="{{ false }}">
+      <main class="cb-view" style="padding-top:var(--space-4);max-width:900px">
+        <div style="font-size:12px;margin-bottom:var(--space-4);color:color-mix(in srgb,var(--color-text) 55%,transparent)">
+          <span class="cb-crumb" style="cursor:pointer" onClick="{{ goLibrary }}">{{ t.library }}</span>
+          <span style="margin:0 8px">›</span><span>{{ sel.typeLabel }}</span>
+          <span style="margin:0 8px">›</span><span style="color:var(--color-text)">{{ sel.slug }}</span>
+        </div>
+
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:var(--space-4)">
+          <div>
+            <div class="card-kicker" style="display:flex;align-items:center;gap:7px;font-size:12px"><i class="{{ sel.iconCls }}" style="font-size:19px"></i>{{ sel.typeLabel }}</div>
+            <h2 style="font-size:38px;margin:6px 0 8px">{{ sel.title }}</h2>
+            <p style="font-size:18px;line-height:1.45;max-width:60ch;color:color-mix(in srgb,var(--color-text) 82%,transparent)">{{ sel.description }}</p>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;flex:none">
+            <button class="btn btn-primary" onClick="{{ sel.onCopy }}" style="min-width:160px">
+              <i class="{{ copyIcon }}" style="font-size:16px"></i>{{ copyLabel }}
+            </button>
+            <button class="btn btn-secondary" onClick="{{ sel.onCopy }}"><i class="ph-duotone ph-download-simple" style="font-size:16px"></i>{{ t.download }}</button>
+            <button class="btn btn-ghost" onClick="{{ sel.onFav }}"><i class="{{ sel.favIcon }}" style="font-size:16px;color:var(--color-accent-2)"></i>{{ sel.favLabel }}</button>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin:var(--space-4) 0">
+          <sc-for list="{{ sel.tags }}" as="t" hint-placeholder-count="3"><span class="tag tag-neutral">{{ t }}</span></sc-for>
+          <sc-if value="{{ sel.trustRequired }}" hint-placeholder-val="{{ false }}"><span class="tag tag-accent-2"><i class="ph-fill ph-warning" style="font-size:11px;margin-right:4px"></i>{{ t.trustReq }}</span></sc-if>
+          <sc-if value="{{ sel.containsSecrets }}" hint-placeholder-val="{{ false }}"><span class="tag tag-outline"><i class="ph-duotone ph-key" style="font-size:11px;margin-right:4px"></i>{{ t.holdsCreds }}</span></sc-if>
+        </div>
+
+        <div style="height:1px;background:var(--color-divider);margin:var(--space-2) 0 var(--space-6)"></div>
+
+        <div style="display:grid;grid-template-columns:1fr 260px;gap:var(--space-8)">
+          <div>
+            <h4 style="margin-bottom:var(--space-3)">{{ sel.bodyLabel }}</h4>
+            <pre style="background:var(--color-surface);border-radius:var(--radius-md);padding:var(--space-3);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;line-height:1.6;white-space:pre-wrap;overflow:auto;margin:0">{{ sel.body }}</pre>
+
+            <sc-if value="{{ sel.hasConfig }}" hint-placeholder-val="{{ false }}">
+              <h4 style="margin:var(--space-6) 0 var(--space-3)">{{ t.configuration }}</h4>
+              <pre style="background:var(--color-surface);border-radius:var(--radius-md);padding:var(--space-3);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;line-height:1.6;white-space:pre-wrap;overflow:auto;margin:0">{{ sel.config }}</pre>
+            </sc-if>
+
+            <sc-if value="{{ sel.hasFiles }}" hint-placeholder-val="{{ false }}">
+              <h4 style="margin:var(--space-6) 0 var(--space-3)">{{ t.bundleContents }}</h4>
+              <table class="table">
+                <thead><tr><th>{{ t.path }}</th><th>{{ t.kind }}</th></tr></thead>
+                <tbody>
+                  <sc-for list="{{ sel.files }}" as="f" hint-placeholder-count="3">
+                    <tr><td style="font-family:ui-monospace,monospace;font-size:12.5px">{{ f.path }}</td><td>{{ f.kind }}</td></tr>
+                  </sc-for>
+                </tbody>
+              </table>
+            </sc-if>
+          </div>
+
+          <aside style="align-self:start">
+            <h6 style="margin-bottom:var(--space-2)">{{ t.howTo }}</h6>
+            <p style="font-size:13.5px;line-height:1.55;margin-bottom:var(--space-2)">{{ sel.install }}</p>
+            <div style="background:var(--color-surface);border-radius:var(--radius-md);padding:8px 10px;font-family:ui-monospace,monospace;font-size:12px;margin-bottom:var(--space-4);color:var(--color-accent-700);overflow:auto">{{ sel.installPath }}</div>
+            <h6 style="margin-bottom:var(--space-2)">{{ t.reaches }}</h6>
+            <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:var(--space-6)">
+              <sc-for list="{{ sel.targetsList }}" as="tg" hint-placeholder-count="2">
+                <span style="font-size:13px;display:flex;align-items:center;gap:7px"><i class="ph-duotone ph-check-circle" style="font-size:15px;color:var(--color-accent)"></i>{{ tg }}</span>
+              </sc-for>
+            </div>
+            <sc-if value="{{ sel.hasLesson }}" hint-placeholder-val="{{ false }}">
+              <div style="border-top:2px solid var(--color-text);padding-top:var(--space-2)">
+                <div class="card-kicker">{{ t.featuredWs }}</div>
+                <p style="font-size:14px;font-style:italic;margin:4px 0 8px">{{ sel.lessonTitle }}</p>
+                <button class="btn btn-secondary btn-block" onClick="{{ sel.onLesson }}"><i class="ph-duotone ph-chalkboard-teacher" style="font-size:15px"></i>{{ t.openLesson }}</button>
+              </div>
+            </sc-if>
+          </aside>
+        </div>
+      </main>
+    </sc-if>
+
+    <!-- ══ WORKSHOP LANDING ══ -->
+    <sc-if value="{{ isWorkshop }}" hint-placeholder-val="{{ false }}">
+      <main class="cb-view" style="padding-top:var(--space-6)">
+        <div style="max-width:66ch;margin-bottom:var(--space-8)">
+          <div class="card-kicker" style="font-size:12px">{{ t.wsKicker }}</div>
+          <h2 style="font-size:44px;margin:8px 0 var(--space-3);line-height:1.02">{{ t.wsHeading }}</h2>
+          <p style="font-size:19px;line-height:1.5;color:color-mix(in srgb,var(--color-text) 82%,transparent)">{{ t.wsPara }}</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:var(--space-4)">
+          <sc-for list="{{ lessons }}" as="l" hint-placeholder-count="4">
+            <div class="card elev-sm cb-cardbtn" role="button" tabindex="0" onClick="{{ l.onOpen }}" style="cursor:pointer;gap:var(--space-2);padding:var(--space-4)">
+              <div style="display:flex;align-items:center;justify-content:space-between">
+                <div class="card-kicker" style="font-size:11px">{{ l.lessonLabel }}</div>
+                <span style="font-size:11px;color:color-mix(in srgb,var(--color-text) 55%,transparent)"><i class="ph-duotone ph-clock" style="font-size:13px;vertical-align:-2px;margin-right:3px"></i>{{ l.estLabel }}</span>
+              </div>
+              <div class="card-title cb-cardtitle" style="font-size:24px;transition:color .16s">{{ l.title }}</div>
+              <p class="card-body" style="font-size:14px">{{ l.description }}</p>
+              <div style="display:flex;align-items:center;gap:7px;border-top:1px solid var(--color-divider);padding-top:10px;margin-top:2px">
+                <i class="{{ l.assetIcon }}" style="font-size:16px"></i>
+                <span style="font-size:12.5px;font-style:italic;color:color-mix(in srgb,var(--color-text) 70%,transparent)">{{ l.featuresLabel }}</span>
+                <i class="ph-duotone ph-arrow-right" style="font-size:16px;margin-left:auto;color:var(--color-accent)"></i>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </main>
+    </sc-if>
+
+    <!-- ══ LESSON ══ -->
+    <sc-if value="{{ isLesson }}" hint-placeholder-val="{{ false }}">
+      <main class="cb-view" style="display:grid;grid-template-columns:220px 1fr;gap:var(--space-8);padding-top:var(--space-4)">
+        <aside style="align-self:start;position:sticky;top:var(--space-3)">
+          <button class="btn btn-ghost" onClick="{{ goWorkshop }}" style="padding-left:0;margin-bottom:var(--space-4)"><i class="ph-duotone ph-arrow-left" style="font-size:15px"></i>{{ t.allLessons }}</button>
+          <div class="card-kicker" style="margin-bottom:var(--space-2)">{{ lessonTitle }}</div>
+          <div style="display:flex;flex-direction:column;gap:2px">
+            <sc-for list="{{ conceptNav }}" as="c" hint-placeholder-count="3">
+              <button class="cb-facet" onClick="{{ c.onClick }}" style="{{ c.style }}">
+                <span style="display:flex;align-items:center;gap:9px"><i class="{{ c.icon }}" style="font-size:15px;color:var(--color-accent)"></i>{{ c.title }}</span>
+              </button>
+            </sc-for>
+          </div>
+        </aside>
+
+        <section style="max-width:64ch">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);margin-bottom:var(--space-4);flex-wrap:wrap">
+            <div class="card-kicker" style="font-size:12px">{{ conceptCounter }}</div>
+            <div class="seg" aria-label="Detail level">
+              <label class="seg-opt"><input type="radio" name="lvl" checked="{{ lvlSimple }}" onChange="{{ setSimple }}">{{ t.simple }}</label>
+              <label class="seg-opt"><input type="radio" name="lvl" checked="{{ lvlNormal }}" onChange="{{ setNormal }}">{{ t.normal }}</label>
+              <label class="seg-opt"><input type="radio" name="lvl" checked="{{ lvlTech }}" onChange="{{ setTech }}">{{ t.technical }}</label>
+            </div>
+          </div>
+
+          <h2 style="font-size:34px;margin-bottom:var(--space-3)">{{ conceptTitle }}</h2>
+          <p style="font-size:20px;line-height:1.55;text-wrap:pretty">{{ conceptBody }}</p>
+
+          <sc-if value="{{ hasTerms }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:var(--space-4)">
+              <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:color-mix(in srgb,var(--color-text) 55%,transparent);margin-bottom:8px">{{ t.terms }}</div>
+              <div style="display:flex;flex-wrap:wrap;gap:8px">
+                <sc-for list="{{ terms }}" as="tm" hint-placeholder-count="2">
+                  <button class="tag tag-outline" onClick="{{ tm.onClick }}" style="cursor:pointer;font-size:12px;border-style:dashed">{{ tm.term }}</button>
+                </sc-for>
+              </div>
+              <sc-if value="{{ hasOpenTerm }}" hint-placeholder-val="{{ false }}">
+                <div style="background:var(--color-surface);border-left:3px solid var(--color-accent);border-radius:0 var(--radius-md) var(--radius-md) 0;padding:var(--space-3);margin-top:var(--space-2)">
+                  <strong style="font-family:var(--font-heading)">{{ openTermName }}</strong>
+                  <p style="margin:6px 0 0;font-size:15px;line-height:1.5">{{ openTermDef }}</p>
+                </div>
+              </sc-if>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ hasEmbed }}" hint-placeholder-val="{{ false }}">
+            <div style="border-top:2px solid var(--color-text);margin-top:var(--space-6);padding-top:var(--space-3)">
+              <div class="card-kicker">{{ t.liveFromLib }}</div>
+              <div class="card elev-sm" style="margin-top:8px;flex-direction:row;align-items:center;gap:var(--space-3)">
+                <i class="{{ embed.iconCls }}" style="font-size:30px;color:var(--color-accent)"></i>
+                <div style="flex:1">
+                  <div class="card-title" style="font-size:17px">{{ embed.title }}</div>
+                  <p class="card-body" style="margin:2px 0 0">{{ embed.description }}</p>
+                </div>
+                <button class="btn btn-secondary" onClick="{{ embed.onOpen }}" style="flex:none">{{ t.open }}<i class="ph-duotone ph-arrow-up-right" style="font-size:14px"></i></button>
+              </div>
+            </div>
+          </sc-if>
+
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);margin-top:var(--space-8);border-top:1px solid var(--color-divider);padding-top:var(--space-4)">
+            <button class="btn btn-secondary" onClick="{{ prevConcept }}" disabled="{{ prevDisabled }}"><i class="ph-duotone ph-arrow-left" style="font-size:16px"></i>{{ t.back }}</button>
+            <span style="font-size:12px;color:color-mix(in srgb,var(--color-text) 55%,transparent)">{{ conceptNum }} / {{ conceptTotal }}</span>
+            <button class="btn btn-primary" onClick="{{ nextConcept }}">{{ nextLabel }}<i class="ph-duotone ph-arrow-right" style="font-size:16px"></i></button>
+          </div>
+        </section>
+      </main>
+    </sc-if>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = {
+    view: 'library', query: '', typeFilter: 'all', catFilter: 'all', visFilter: 'all',
+    favOnly: false, selectedSlug: null, dark: false, favs: {}, lang: 'en',
+    lessonSlug: null, conceptIdx: 0, level: 'normal', openTermIdx: null, copied: false,
+  };
+
+  STR = {
+    en: { tagline:'Your personal store of AI assets', library:'Library', workshop:'Workshop',
+      oneRepo:'One repo · two modes · $0 idle', vol:'Vol. I · Serverless Edition',
+      type:'Type', category:'Category', visibility:'Visibility', allTypes:'All types', all:'All',
+      favOnly:'Favorites only', searchPh:'Search skills, subagents, prompts, MCP servers…',
+      clearFilters:'Clear filters', noMatch:'Nothing on file matches that.',
+      copy:'Copy', copied:'Copied', download:'Download bundle', addFav:'Add to favorites', faved:'Favorited',
+      runsCode:'runs code', trustReq:'runs code · trust required', holdsCreds:'holds credentials',
+      configuration:'Configuration', bundleContents:'Bundle contents', path:'Path', kind:'Kind',
+      howTo:'How to use this', reaches:'Reaches', featuredWs:'Featured in the workshop', openLesson:'Open the lesson',
+      wsKicker:'Adaptive lessons · one artifact for everyone', wsHeading:'Learn AI at your own level',
+      wsPara:'Every lesson reads three ways — Simple, Normal and Technical — and teaches with real assets pulled straight from the library. Built for a mixed room: IT pros, teenagers, office staff and seniors alike.',
+      lesson:'Lesson', allLessons:'All lessons', simple:'Simple', normal:'Normal', technical:'Technical',
+      terms:'Terms on this page', liveFromLib:'Live from your library', open:'Open',
+      back:'Back', next:'Next', finish:'Finish', bodyPrompt:'Prompt', bodySystem:'System prompt', bodyContents:'Contents' },
+    pl: { tagline:'Twój osobisty zbiór zasobów AI', library:'Biblioteka', workshop:'Warsztat',
+      oneRepo:'Jedno repozytorium · dwa tryby · 0 zł w spoczynku', vol:'Rok I · Wydanie Serverless',
+      type:'Typ', category:'Kategoria', visibility:'Widoczność', allTypes:'Wszystkie typy', all:'Wszystkie',
+      favOnly:'Tylko ulubione', searchPh:'Szukaj umiejętności, subagentów, promptów, serwerów MCP…',
+      clearFilters:'Wyczyść filtry', noMatch:'Nic w kartotece nie pasuje.',
+      copy:'Kopiuj', copied:'Skopiowano', download:'Pobierz paczkę', addFav:'Dodaj do ulubionych', faved:'W ulubionych',
+      runsCode:'uruchamia kod', trustReq:'uruchamia kod · wymaga zaufania', holdsCreds:'przechowuje poświadczenia',
+      configuration:'Konfiguracja', bundleContents:'Zawartość paczki', path:'Ścieżka', kind:'Rodzaj',
+      howTo:'Jak tego użyć', reaches:'Działa w', featuredWs:'W warsztacie', openLesson:'Otwórz lekcję',
+      wsKicker:'Lekcje adaptacyjne · jeden materiał dla wszystkich', wsHeading:'Ucz się AI na swoim poziomie',
+      wsPara:'Każda lekcja czyta się na trzy sposoby — Prosto, Normalnie i Technicznie — i uczy na prawdziwych zasobach wprost z biblioteki. Stworzona dla różnorodnej sali: specjalistów IT, nastolatków, pracowników biura i seniorów.',
+      lesson:'Lekcja', allLessons:'Wszystkie lekcje', simple:'Prosto', normal:'Normalnie', technical:'Technicznie',
+      terms:'Pojęcia na tej stronie', liveFromLib:'Na żywo z biblioteki', open:'Otwórz',
+      back:'Wstecz', next:'Dalej', finish:'Zakończ', bodyPrompt:'Prompt', bodySystem:'Prompt systemowy', bodyContents:'Zawartość' },
+  };
+
+  catLabels = {
+    Documents:{en:'Documents',pl:'Dokumenty'}, Media:{en:'Media',pl:'Media'},
+    Engineering:{en:'Engineering',pl:'Inżynieria'}, Research:{en:'Research',pl:'Badania'},
+    Integrations:{en:'Integrations',pl:'Integracje'}, Productivity:{en:'Productivity',pl:'Produktywność'},
+  };
+  typeMeta = {
+    skill:      { label:{en:'Skill',pl:'Umiejętność'},   icon:'ph-duotone ph-sparkle' },
+    subagent:   { label:{en:'Subagent',pl:'Subagent'},   icon:'ph-duotone ph-robot' },
+    command:    { label:{en:'Command',pl:'Komenda'},     icon:'ph-duotone ph-terminal-window' },
+    prompt:     { label:{en:'Prompt',pl:'Prompt'},       icon:'ph-duotone ph-chat-teardrop-text' },
+    mcp_server: { label:{en:'MCP Server',pl:'Serwer MCP'},icon:'ph-duotone ph-plugs-connected' },
+    hook:       { label:{en:'Hook',pl:'Hook'},           icon:'ph-duotone ph-brackets-curly' },
+    memory:     { label:{en:'Memory',pl:'Pamięć'},       icon:'ph-duotone ph-brain' },
+  };
+  visMeta = {
+    public:  { label:{en:'Public',pl:'Publiczny'},  icon:'ph-duotone ph-globe' },
+    project: { label:{en:'Project',pl:'Projekt'},   icon:'ph-duotone ph-folder-open' },
+    private: { label:{en:'Private',pl:'Prywatny'},  icon:'ph-duotone ph-lock-simple' },
+  };
+
+  ASSETS = [
+    { type:'skill', slug:'pdf-extractor', title:'PDF Extractor', category:'Documents', visibility:'public',
+      description:{en:'Pull clean text, tables and metadata out of any PDF — including scanned pages, via OCR.',
+        pl:'Wyciągnij czysty tekst, tabele i metadane z dowolnego PDF — także ze skanów, dzięki OCR.'},
+      tags:['documents','parsing','ocr'], favorite:true, trustRequired:false, containsSecrets:false,
+      targets:['Claude Code','Claude API'], lesson:'what-is-a-skill',
+      install:{en:'A folder bundle — drop it whole into your project so the SKILL.md and its scripts travel together.',
+        pl:'Paczka-folder — skopiuj ją w całości do projektu, aby SKILL.md i skrypty podróżowały razem.'},
+      installPath:'.claude/skills/pdf-extractor/',
+      files:[{path:'SKILL.md',kind:'entrypoint'},{path:'reference/tables.md',kind:'reference'},{path:'scripts/extract.py',kind:'script · exec'}],
+      body:`---
+name: pdf-extractor
+description: Pull clean text, tables and metadata out of any PDF, including scanned pages via OCR.
+when_to_use: The user attaches or references a PDF and needs its contents as text or structured data.
+allowed-tools: [Read, Bash]
+---
+
+# PDF Extractor
+
+Turn any PDF into clean, structured text.
+
+## Steps
+1. Detect whether the PDF carries a text layer or is a scan.
+2. Digital PDFs: read the text layer directly, preserving reading order.
+3. Scans: OCR page by page, then reconcile columns.
+4. Emit tables as CSV blocks and prose as Markdown.` },
+
+    { type:'skill', slug:'picture-generator', title:'Picture Generator', category:'Media', visibility:'public',
+      description:{en:'Generate and refine images from a written brief, with reusable style presets.',
+        pl:'Twórz i dopracowuj obrazy na podstawie opisu, z gotowymi presetami stylów.'},
+      tags:['images','generation','media'], favorite:true, trustRequired:false, containsSecrets:false,
+      targets:['Claude Code','Claude API'], lesson:null,
+      install:{en:'A folder bundle. Copy it into your skills directory; the presets live alongside SKILL.md.',
+        pl:'Paczka-folder. Skopiuj do katalogu umiejętności; presety leżą obok SKILL.md.'},
+      installPath:'.claude/skills/picture-generator/',
+      files:[{path:'SKILL.md',kind:'entrypoint'},{path:'reference/presets.md',kind:'reference'}],
+      body:`---
+name: picture-generator
+description: Generate and refine images from a written brief, with reusable style presets.
+when_to_use: The user asks for an illustration, mockup, icon or other image from a description.
+argument-hint: "<subject> [--style preset]"
+---
+
+# Picture Generator
+
+Take a brief, propose a composition, then render.
+
+## Style presets
+- editorial   — flat, muted, print-leaning
+- product     — clean studio light on white
+- storybook   — warm, painterly, for younger audiences` },
+
+    { type:'subagent', slug:'code-reviewer', title:'Code Reviewer', category:'Engineering', visibility:'project',
+      description:{en:'A focused agent that reads a diff and flags bugs, risky patterns and style drift before you merge.',
+        pl:'Skupiony agent, który czyta diff i wychwytuje błędy, ryzykowne wzorce i odstępstwa od stylu przed scaleniem.'},
+      tags:['code','review','security'], favorite:true, trustRequired:false, containsSecrets:false,
+      targets:['Claude Code'], lesson:'what-is-an-agent',
+      install:{en:'A single Markdown file — its frontmatter defines the tools and model, the body is the system prompt.',
+        pl:'Pojedynczy plik Markdown — frontmatter definiuje narzędzia i model, treść to prompt systemowy.'},
+      installPath:'.claude/agents/code-reviewer.md',
+      body:`---
+name: code-reviewer
+description: Reviews a diff for correctness, security and style.
+tools: [Read, Grep, Bash]
+model: claude-sonnet
+---
+
+You are a meticulous senior reviewer. Given a diff:
+
+1. Correctness first — logic errors, edge cases, off-by-ones.
+2. Security — injection, secrets, unsafe shell, auth gaps.
+3. Style — only where it hurts readability; cite the house rules.
+
+Group findings by severity. Quote the exact lines. Never nitpick
+formatting a linter already owns.` },
+
+    { type:'command', slug:'commit-message', title:'Commit Message', category:'Engineering', visibility:'project',
+      description:{en:'Draft a Conventional Commit from your staged changes, subject and body, in one step.',
+        pl:'Napisz Conventional Commit na podstawie zmian w staging — temat i treść w jednym kroku.'},
+      tags:['git','workflow'], favorite:false, trustRequired:false, containsSecrets:false,
+      targets:['Claude Code'], lesson:null,
+      install:{en:'A flat command — one Markdown file invoked by its slash name.',
+        pl:'Płaska komenda — jeden plik Markdown wywoływany po nazwie slash.'},
+      installPath:'.claude/commands/commit-message.md',
+      body:`---
+name: commit-message
+argument-hint: "[--scope <area>]"
+allowed-tools: [Bash]
+---
+
+Read the staged diff (\`git diff --cached\`) and write a Conventional
+Commit: a \`type(scope): summary\` subject under 72 chars, then a body
+explaining *why*. Never invent changes that aren't in the diff.` },
+
+    { type:'subagent', slug:'web-researcher', title:'Web Researcher', category:'Research', visibility:'project',
+      description:{en:'Researches a question across the live web and returns findings with inline citations.',
+        pl:'Bada pytanie w sieci na żywo i zwraca ustalenia z przypisami.'},
+      tags:['research','web','citations'], favorite:false, trustRequired:false, containsSecrets:false,
+      targets:['Claude Code','Claude API'], lesson:null,
+      install:{en:'A single Markdown subagent file. Its frontmatter preloads the web tools it may call.',
+        pl:'Pojedynczy plik subagenta. Frontmatter wczytuje z góry narzędzia sieciowe.'},
+      installPath:'.claude/agents/web-researcher.md',
+      body:`---
+name: web-researcher
+description: Answers a question from live web sources, with citations.
+tools: [WebSearch, WebFetch]
+maxTurns: 8
+---
+
+Break the question into distinct searches. Prefer primary sources.
+Every claim carries a citation. Note where sources disagree rather
+than papering over it. End with a two-line synthesis, not a wall.` },
+
+    { type:'mcp_server', slug:'linear', title:'Linear', category:'Integrations', visibility:'private',
+      description:{en:'Connect Claude to your Linear issues, cycles and projects over an authenticated HTTP connector.',
+        pl:'Połącz Claude z zadaniami, cyklami i projektami w Linear przez uwierzytelniony konektor HTTP.'},
+      tags:['mcp','project-mgmt','connector'], favorite:false, trustRequired:true, containsSecrets:true,
+      targets:['Claude Code','Claude Desktop'], lesson:'what-is-an-mcp',
+      install:{en:'A JSON entry inside your .mcp.json. Store the token as a reference — never paste the secret in plaintext.',
+        pl:'Wpis JSON w .mcp.json. Token przechowuj przez referencję — nigdy nie wklejaj sekretu jawnie.'},
+      installPath:'.mcp.json → mcpServers.linear',
+      body:`# Linear MCP server
+
+A connector: it runs code and holds an OAuth token, so import it only
+from a source you trust. Secrets are stored by reference (\${LINEAR_TOKEN}),
+resolved from your environment at run time — never committed.`,
+      config:`{
+  "mcpServers": {
+    "linear": {
+      "transport": "http",
+      "url": "https://mcp.linear.app/sse",
+      "headers": { "Authorization": "Bearer \${LINEAR_TOKEN}" },
+      "scope": "user"
+    }
+  }
+}` },
+
+    { type:'mcp_server', slug:'github', title:'GitHub', category:'Integrations', visibility:'private',
+      description:{en:'Read repositories, pull requests and issues directly from inside a conversation.',
+        pl:'Czytaj repozytoria, pull requesty i zgłoszenia bezpośrednio z rozmowy.'},
+      tags:['mcp','git','connector'], favorite:false, trustRequired:true, containsSecrets:true,
+      targets:['Claude Code','Claude Desktop'], lesson:null,
+      install:{en:'A JSON entry inside .mcp.json launched over stdio. Keep the PAT in your environment.',
+        pl:'Wpis JSON w .mcp.json uruchamiany przez stdio. Trzymaj PAT w środowisku.'},
+      installPath:'.mcp.json → mcpServers.github',
+      body:`# GitHub MCP server
+
+Runs the official server over stdio and authenticates with a personal
+access token. Grant it the narrowest scopes the workflow needs.`,
+      config:`{
+  "mcpServers": {
+    "github": {
+      "transport": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": { "GITHUB_TOKEN": "\${GITHUB_PAT}" }
+    }
+  }
+}` },
+
+    { type:'hook', slug:'format-on-save', title:'Format on Save', category:'Engineering', visibility:'project',
+      description:{en:'Run your formatter after every file write, so nothing lands unformatted.',
+        pl:'Uruchom formatter po każdym zapisie pliku, aby nic nie trafiło niesformatowane.'},
+      tags:['hooks','workflow','automation'], favorite:false, trustRequired:true, containsSecrets:false,
+      targets:['Claude Code'], lesson:null,
+      install:{en:'A JSON block inside settings.json. It runs a shell command, so review it before enabling.',
+        pl:'Blok JSON w settings.json. Uruchamia polecenie powłoki, więc sprawdź go przed włączeniem.'},
+      installPath:'.claude/settings.json → hooks',
+      body:`# Format on Save
+
+A PostToolUse hook matched to file writes. Runs your formatter on the
+touched path with a short timeout, then lets the turn continue.`,
+      config:`{
+  "hooks": {
+    "PostToolUse": [{
+      "matcher": "Write|Edit",
+      "hooks": [{ "type": "command", "command": "prettier --write $CLAUDE_FILE", "timeout": 15 }]
+    }]
+  }
+}` },
+
+    { type:'prompt', slug:'meeting-summary', title:'Meeting Summary', category:'Productivity', visibility:'public',
+      description:{en:'Turn a raw transcript into decisions, owners and dated action items.',
+        pl:'Zamień surową transkrypcję w decyzje, właścicieli i zadania z terminami.'},
+      tags:['prompt','productivity','writing'], favorite:false, trustRequired:false, containsSecrets:false,
+      targets:['Claude API','Claude.ai'], lesson:'what-is-a-prompt',
+      install:{en:'A reusable prompt with a {{transcript}} variable — fill it in and send.',
+        pl:'Prompt wielokrotnego użytku ze zmienną {{transcript}} — uzupełnij i wyślij.'},
+      installPath:'content/assets/prompts/meeting-summary.mdx',
+      body:`Summarise the meeting transcript below.
+
+Return three sections:
+- Decisions — what was actually settled.
+- Action items — owner, task, due date. Skip anything without an owner.
+- Open questions — unresolved, with who should answer.
+
+Be terse. Quote a name only when it changes the meaning.
+
+Transcript:
+{{transcript}}` },
+
+    { type:'memory', slug:'coding-standards', title:'Coding Standards', category:'Engineering', visibility:'project',
+      description:{en:'The house rules Claude keeps in mind across this repo — style, testing and review conventions.',
+        pl:'Zasady domowe, które Claude ma na uwadze w tym repozytorium — styl, testy i konwencje przeglądu.'},
+      tags:['memory','rules','conventions'], favorite:false, trustRequired:false, containsSecrets:false,
+      targets:['Claude Code'], lesson:null,
+      install:{en:'A CLAUDE.md at the repo root — loaded automatically for every conversation in the project.',
+        pl:'CLAUDE.md w katalogu głównym repo — wczytywany automatycznie w każdej rozmowie w projekcie.'},
+      installPath:'CLAUDE.md',
+      body:`# Coding standards
+
+- TypeScript strict; no \`any\` without a written reason.
+- Tests live beside the file they cover.
+- Prefer small, composable functions over clever ones.
+- Never log secrets; read them from the environment.
+- A PR is not done until the reviewer subagent is green.` },
+
+    { type:'skill', slug:'slide-designer', title:'Slide Designer', category:'Media', visibility:'public',
+      description:{en:'Turn an outline into a clean, on-brand slide deck with consistent layouts.',
+        pl:'Zamień konspekt w schludną, spójną prezentację z jednolitymi układami.'},
+      tags:['slides','design','media'], favorite:false, trustRequired:false, containsSecrets:false,
+      targets:['Claude Code','Claude API'], lesson:null,
+      install:{en:'A folder bundle with layout references. Copy it into your skills directory.',
+        pl:'Paczka-folder z referencjami układów. Skopiuj do katalogu umiejętności.'},
+      installPath:'.claude/skills/slide-designer/',
+      files:[{path:'SKILL.md',kind:'entrypoint'},{path:'reference/layouts.md',kind:'reference'}],
+      body:`---
+name: slide-designer
+description: Turn an outline into an on-brand slide deck with consistent layouts.
+when_to_use: The user asks for a presentation, deck or slides from notes.
+---
+
+# Slide Designer
+
+Commit to a layout system first — a template per slide class — then
+fill it. Vary rhythm; never let two content slides look identical.` },
+  ];
+
+  LESSONS = [
+    { slug:'what-is-a-prompt', est:6, asset:'meeting-summary',
+      title:{en:'What is a prompt?',pl:'Czym jest prompt?'},
+      description:{en:'The simplest AI asset there is — and the one every other asset is built out of.',
+        pl:'Najprostszy zasób AI, jaki istnieje — i ten, z którego zbudowane są wszystkie inne.'},
+      concepts:[
+        { id:'idea', icon:'ph-duotone ph-lightbulb', title:{en:'The idea',pl:'Pomysł'},
+          terms:[{term:{en:'prompt',pl:'prompt'},def:{en:'The text you give an AI to tell it what you want. Everything else is a fancier, reusable prompt.',pl:'Tekst, który dajesz AI, aby powiedzieć, czego chcesz. Wszystko inne to bardziej rozbudowany, wielokrotnego użytku prompt.'}}],
+          levels:{
+            simple:{en:'A prompt is just what you ask. Like leaving a note for a very fast, very literal assistant: the clearer the note, the better the result.',pl:'Prompt to po prostu to, o co prosisz. Jak notatka zostawiona bardzo szybkiemu, bardzo dosłownemu asystentowi: im jaśniejsza notatka, tym lepszy wynik.'},
+            normal:{en:'A prompt is the instruction you give an AI. Good prompts say what you want, give an example or two, and describe the shape of the answer you expect back.',pl:'Prompt to instrukcja, którą dajesz AI. Dobre prompty mówią, czego chcesz, dają przykład lub dwa i opisują oczekiwany kształt odpowiedzi.'},
+            technical:{en:'A prompt is the input token sequence conditioning the model. Structure matters: role framing, few-shot examples, and an explicit output contract measurably improve reliability.',pl:'Prompt to sekwencja tokenów wejściowych warunkująca model. Struktura ma znaczenie: określenie roli, przykłady few-shot i jawny kontrakt wyjścia mierzalnie poprawiają niezawodność.'}} },
+        { id:'reuse', icon:'ph-duotone ph-repeat', title:{en:'Making it reusable',pl:'Uczynić go wielokrotnym'},
+          terms:[{term:{en:'variable',pl:'zmienna'},def:{en:'A labelled blank in a prompt — like {{transcript}} — that you fill in each time, so the same prompt works on new material.',pl:'Oznaczone puste pole w prompcie — jak {{transcript}} — które wypełniasz za każdym razem, aby ten sam prompt działał na nowym materiale.'}}],
+          levels:{
+            simple:{en:'If you write the same kind of note over and over, save it once and leave a blank to fill in. That saved note is a reusable prompt.',pl:'Jeśli piszesz wciąż tę samą notatkę, zapisz ją raz i zostaw miejsce do uzupełnienia. Ta zapisana notatka to prompt wielokrotnego użytku.'},
+            normal:{en:'Save a prompt that works and leave blanks for the parts that change — the {{variables}}. Now anyone can run it on new input without rewriting it.',pl:'Zapisz działający prompt i zostaw puste pola na to, co się zmienia — {{zmienne}}. Teraz każdy może uruchomić go na nowych danych bez przepisywania.'},
+            technical:{en:'Parameterise the stable scaffolding and expose only the changing slots as {{double_brace}} variables. Version the template; the variables are its interface.',pl:'Sparametryzuj stały szkielet i wystaw tylko zmieniające się miejsca jako zmienne {{double_brace}}. Wersjonuj szablon; zmienne są jego interfejsem.'}} },
+        { id:'library', icon:'ph-duotone ph-books', title:{en:'From note to asset',pl:'Od notatki do zasobu'}, asset:'meeting-summary', terms:[],
+          levels:{
+            simple:{en:'Once a prompt is saved and reusable, it becomes an asset — something you keep, share and grab again next time.',pl:'Gdy prompt jest zapisany i wielokrotnego użytku, staje się zasobem — czymś, co zachowujesz, udostępniasz i sięgasz po to następnym razem.'},
+            normal:{en:'A saved, named, reusable prompt is a first-class asset in your library — searchable, taggable, and ready to drop into any project.',pl:'Zapisany, nazwany, wielokrotny prompt to pełnoprawny zasób w bibliotece — wyszukiwalny, tagowalny i gotowy do użycia w każdym projekcie.'},
+            technical:{en:'Promote the template into the content pipeline: frontmatter for metadata, body for the prompt, and it is indexed and reusable exactly like a skill or subagent.',pl:'Awansuj szablon do potoku treści: frontmatter na metadane, treść na prompt — i jest indeksowany oraz wielokrotny dokładnie jak umiejętność czy subagent.'}} },
+      ] },
+    { slug:'what-is-a-skill', est:8, asset:'pdf-extractor',
+      title:{en:'What is a skill?',pl:'Czym jest umiejętność (skill)?'},
+      description:{en:'A folder of instructions Claude picks up on its own, exactly when it is useful.',
+        pl:'Folder z instrukcjami, po który Claude sięga sam, dokładnie wtedy, gdy jest przydatny.'},
+      concepts:[
+        { id:'idea', icon:'ph-duotone ph-lightbulb', title:{en:'The idea',pl:'Pomysł'},
+          terms:[{term:{en:'skill',pl:'umiejętność'},def:{en:'A packaged capability — a folder with instructions (and sometimes scripts) that the AI reaches for automatically when the moment fits.',pl:'Spakowana zdolność — folder z instrukcjami (a czasem skryptami), po który AI sięga automatycznie, gdy pasuje chwila.'}}],
+          levels:{
+            simple:{en:'A skill is a little how-to the AI keeps on a shelf. When a job matches, it grabs the how-to and follows it — no reminder needed.',pl:'Umiejętność to mały poradnik, który AI trzyma na półce. Gdy zadanie pasuje, chwyta poradnik i go wykonuje — bez przypominania.'},
+            normal:{en:'A skill is a folder of instructions Claude loads on its own when a task matches its description. You write the recipe once; Claude decides when to use it.',pl:'Umiejętność to folder instrukcji, który Claude wczytuje sam, gdy zadanie pasuje do jego opisu. Piszesz przepis raz; Claude decyduje, kiedy go użyć.'},
+            technical:{en:'A skill is a folder-bundle: a SKILL.md with frontmatter (name, description, when_to_use, allowed-tools) plus optional references and scripts, matched by description and progressively disclosed into context.',pl:'Umiejętność to paczka-folder: SKILL.md z frontmatterem (name, description, when_to_use, allowed-tools) plus opcjonalne referencje i skrypty, dopasowywana po opisie i stopniowo ujawniana do kontekstu.'}} },
+        { id:'inside', icon:'ph-duotone ph-package', title:{en:'What is inside one',pl:'Co jest w środku'}, asset:'pdf-extractor',
+          terms:[
+            {term:{en:'SKILL.md',pl:'SKILL.md'},def:{en:'The entry file of a skill: a bit of metadata at the top (the frontmatter) and the instructions below it.',pl:'Plik wejściowy umiejętności: odrobina metadanych na górze (frontmatter) i instrukcje poniżej.'}},
+            {term:{en:'frontmatter',pl:'frontmatter'},def:{en:'The labelled fields at the top of the file — name, description, when to use it — that tell the AI what the skill is for.',pl:'Oznaczone pola na górze pliku — nazwa, opis, kiedy używać — które mówią AI, do czego służy umiejętność.'}} ],
+          levels:{
+            simple:{en:'Open a skill and you find a note that says what it does, when to use it, and step-by-step what to do. Sometimes a helper script rides along.',pl:'Otwórz umiejętność, a znajdziesz notatkę: co robi, kiedy jej użyć i krok po kroku co zrobić. Czasem dołącza skrypt pomocniczy.'},
+            normal:{en:'Inside is a SKILL.md: frontmatter naming the skill and describing when to use it, then the instructions. Bundled skills also carry reference files and scripts.',pl:'W środku jest SKILL.md: frontmatter nadający nazwę i opisujący, kiedy użyć, potem instrukcje. Spakowane umiejętności niosą też pliki referencyjne i skrypty.'},
+            technical:{en:'The frontmatter drives invocation (description, when_to_use, allowed-tools); the body is the procedure. files[] manifests reference material and executables, with the entrypoint held for preview and search.',pl:'Frontmatter steruje wywołaniem (description, when_to_use, allowed-tools); treść to procedura. Manifest files[] wskazuje materiały i pliki wykonywalne, a plik wejściowy jest trzymany do podglądu i wyszukiwania.'}} },
+        { id:'reach', icon:'ph-duotone ph-target', title:{en:'Where it works',pl:'Gdzie działa'},
+          terms:[{term:{en:'target',pl:'cel'},def:{en:'Where an asset can actually run — Claude Code, the API, or the desktop app. A skill only reaches a place you have installed it.',pl:'Miejsce, w którym zasób faktycznie działa — Claude Code, API lub aplikacja desktopowa. Umiejętność sięga tylko tam, gdzie ją zainstalujesz.'}}],
+          levels:{
+            simple:{en:'A skill only works where you put it. Drop it in your project and it helps there; it will not magically appear everywhere.',pl:'Umiejętność działa tylko tam, gdzie ją umieścisz. Wrzuć ją do projektu, a pomaga tam; nie pojawi się magicznie wszędzie.'},
+            normal:{en:'A skill reaches wherever you install it — your project, or the API if you ship it along. The library tells you which targets each asset covers.',pl:'Umiejętność sięga wszędzie, gdzie ją zainstalujesz — do projektu lub do API, jeśli ją dołączysz. Biblioteka pokazuje, które cele obejmuje każdy zasób.'},
+            technical:{en:'targets[] is explicit: a ~/.claude/skills asset does not reach cloud surfaces unless committed to a repo or shipped in a plugin. The detail view surfaces this so "where can I use this?" is answerable.',pl:'targets[] jest jawne: zasób z ~/.claude/skills nie sięga chmury, o ile nie zostanie zatwierdzony w repo lub dostarczony w pluginie. Widok szczegółów to pokazuje, więc na „gdzie mogę tego użyć?” da się odpowiedzieć.'}} },
+      ] },
+    { slug:'what-is-an-agent', est:7, asset:'code-reviewer',
+      title:{en:'What is an agent?',pl:'Czym jest agent?'},
+      description:{en:'A skill that can act on its own — take steps, use tools, and come back with a result.',
+        pl:'Umiejętność, która potrafi działać sama — wykonać kroki, użyć narzędzi i wrócić z wynikiem.'},
+      concepts:[
+        { id:'idea', icon:'ph-duotone ph-lightbulb', title:{en:'The idea',pl:'Pomysł'},
+          terms:[{term:{en:'subagent',pl:'subagent'},def:{en:'A specialised assistant with its own instructions and its own set of tools, sent off to handle one kind of job.',pl:'Wyspecjalizowany asystent z własnymi instrukcjami i własnym zestawem narzędzi, wysyłany do jednego rodzaju zadania.'}}],
+          levels:{
+            simple:{en:'An agent is a helper you can send off with a job. It works through the steps itself and brings back the result, instead of waiting for you at every turn.',pl:'Agent to pomocnik, którego wysyłasz z zadaniem. Sam przechodzi przez kroki i przynosi wynik, zamiast czekać na ciebie na każdym etapie.'},
+            normal:{en:'An agent is a subagent: its own system prompt, its own allowed tools, and permission to take several steps toward a goal before reporting back.',pl:'Agent to subagent: własny prompt systemowy, własne dozwolone narzędzia i zgoda na wykonanie kilku kroków do celu, zanim zda raport.'},
+            technical:{en:'A subagent is a single .md defining a system prompt plus frontmatter (tools, model, maxTurns, permissionMode). It runs an autonomous loop within those bounds and returns a result to the caller.',pl:'Subagent to pojedynczy .md definiujący prompt systemowy oraz frontmatter (tools, model, maxTurns, permissionMode). Uruchamia autonomiczną pętlę w tych granicach i zwraca wynik do wywołującego.'}} },
+        { id:'tools', icon:'ph-duotone ph-wrench', title:{en:'Giving it tools',pl:'Dawanie mu narzędzi'}, asset:'code-reviewer',
+          terms:[{term:{en:'tool',pl:'narzędzie'},def:{en:'An action the AI is allowed to take — read a file, run a command, search the web. An agent can only use the tools you grant it.',pl:'Działanie, które AI może wykonać — odczytać plik, uruchomić polecenie, przeszukać sieć. Agent użyje tylko narzędzi, które mu przyznasz.'}}],
+          levels:{
+            simple:{en:'An agent is only as capable as the tools you hand it. Give the reviewer the ability to read files, and it can actually check your work.',pl:'Agent jest tak zdolny, jak narzędzia, które mu dasz. Daj recenzentowi możliwość czytania plików, a naprawdę sprawdzi twoją pracę.'},
+            normal:{en:'You decide which tools an agent may use. The Code Reviewer gets read, search and shell — enough to inspect a diff, and nothing that could change your code.',pl:'Ty decydujesz, których narzędzi agent może użyć. Code Reviewer dostaje odczyt, wyszukiwanie i powłokę — dość, by obejrzeć diff, i nic, co mogłoby zmienić kod.'},
+            technical:{en:'tools[] and disallowedTools[] scope the agent\u2019s capability surface. Least privilege is the rule: grant read/grep/bash to a reviewer, withhold write, and the isolation holds.',pl:'tools[] i disallowedTools[] wyznaczają powierzchnię zdolności agenta. Zasada to najmniejsze uprawnienia: przyznaj recenzentowi read/grep/bash, odmów write, a izolacja się utrzyma.'}} },
+      ] },
+    { slug:'what-is-an-mcp', est:7, asset:'linear',
+      title:{en:'What is an MCP server?',pl:'Czym jest serwer MCP?'},
+      description:{en:'How Claude plugs into the tools you already use — Linear, GitHub and the rest.',
+        pl:'Jak Claude podłącza się do narzędzi, których już używasz — Linear, GitHub i reszty.'},
+      concepts:[
+        { id:'idea', icon:'ph-duotone ph-lightbulb', title:{en:'The idea',pl:'Pomysł'},
+          terms:[{term:{en:'MCP',pl:'MCP'},def:{en:'Model Context Protocol — a shared standard that lets Claude connect to outside tools and data through small "server" adapters.',pl:'Model Context Protocol — wspólny standard pozwalający Claude łączyć się z zewnętrznymi narzędziami i danymi przez małe adaptery „serwery”.'}}],
+          levels:{
+            simple:{en:'An MCP server is a plug. It connects the AI to something you already use — your issues, your files — so it can look things up for you.',pl:'Serwer MCP to wtyczka. Łączy AI z czymś, czego już używasz — twoimi zgłoszeniami, plikami — aby mogło coś dla ciebie sprawdzić.'},
+            normal:{en:'An MCP server is an adapter that exposes an outside system (like Linear) to Claude through a shared protocol, so it can read and act there.',pl:'Serwer MCP to adapter, który udostępnia Claude zewnętrzny system (jak Linear) przez wspólny protokół, aby mogło tam czytać i działać.'},
+            technical:{en:'MCP is an open protocol; a server exposes tools/resources over stdio, HTTP or SSE. Claude discovers and calls them within the transport and scope you configure.',pl:'MCP to otwarty protokół; serwer udostępnia narzędzia/zasoby przez stdio, HTTP lub SSE. Claude wykrywa je i wywołuje w ramach skonfigurowanego transportu i zakresu.'}} },
+        { id:'trust', icon:'ph-duotone ph-shield-check', title:{en:'Trust and secrets',pl:'Zaufanie i sekrety'}, asset:'linear',
+          terms:[
+            {term:{en:'connector',pl:'konektor'},def:{en:'An MCP server that talks to a live service on your behalf, usually holding a login token to do it.',pl:'Serwer MCP, który rozmawia z żywą usługą w twoim imieniu, zwykle trzymając token logowania, by to robić.'}},
+            {term:{en:'secret',pl:'sekret'},def:{en:'A password or token. Assets store a reference to it, never the value itself, so it never ends up in a shared file.',pl:'Hasło lub token. Zasoby przechowują referencję do niego, nigdy samą wartość, więc nie trafia do współdzielonego pliku.'}} ],
+          levels:{
+            simple:{en:'A plug that reaches your real accounts needs a key, and it can run code. Only add ones you trust, and never write the key down where others can see it.',pl:'Wtyczka sięgająca twoich prawdziwych kont potrzebuje klucza i może uruchamiać kod. Dodawaj tylko te, którym ufasz, i nigdy nie zapisuj klucza tam, gdzie inni go zobaczą.'},
+            normal:{en:'Connectors run code and hold a login token. Import them only from sources you trust; the library stores the token by reference and flags "runs code" so nothing surprises you.',pl:'Konektory uruchamiają kod i trzymają token logowania. Importuj je tylko ze źródeł, którym ufasz; biblioteka przechowuje token przez referencję i oznacza „uruchamia kod”, by nic cię nie zaskoczyło.'},
+            technical:{en:'Connectors carry trustRequired and containsSecrets. Credentials are stored as references (\${TOKEN}) resolved at run time; the UI raises a trust warning on import and renders a "runs code" badge.',pl:'Konektory niosą trustRequired i containsSecrets. Poświadczenia są przechowywane jako referencje (\${TOKEN}) rozwiązywane w czasie działania; UI podnosi ostrzeżenie o zaufaniu przy imporcie i pokazuje odznakę „uruchamia kod”.'}} },
+      ] },
+  ];
+
+  componentDidMount() {
+    try {
+      const d = localStorage.getItem('cb_dark'), lv = localStorage.getItem('cb_level'), lg = localStorage.getItem('cb_lang');
+      const patch = {};
+      if (d !== null) patch.dark = d === '1';
+      if (lv) patch.level = lv;
+      if (lg) patch.lang = lg;
+      if (Object.keys(patch).length) this.setState(patch);
+    } catch (e) {}
+  }
+
+  L(x) { const lg = this.state.lang; return (x && typeof x === 'object' && !Array.isArray(x)) ? (x[lg] ?? x.en) : x; }
+  bySlug(slug) { return this.ASSETS.find(a => a.slug === slug) || null; }
+  isFav(a) { return this.state.favs[a.slug] ?? a.favorite; }
+
+  renderVals() {
+    const s = this.state, lg = s.lang;
+    const T = this.typeMeta, V = this.visMeta, t = this.STR[lg];
+    const L = (x) => this.L(x);
+    const cat = (k) => L(this.catLabels[k]);
+
+    const dark = s.dark;
+    const rootStyle = { minHeight: '100vh', background: 'var(--color-bg)', color: 'var(--color-text)', transition: 'background .25s ease, color .25s ease' };
+    if (dark) Object.assign(rootStyle, {
+      '--color-bg': '#1b1a19', '--color-surface': '#26241f', '--color-text': '#f3f2f2',
+      '--color-divider': 'rgba(243,242,242,0.15)', '--color-accent': '#4fb8dd', '--color-accent-2': '#ff5f9c',
+      '--color-accent-700': '#8fd6ef', '--color-accent-800': '#bfe8f6',
+      '--color-neutral-100': '#33302c', '--color-neutral-800': '#e6e3e0',
+      '--color-accent-100': '#1f3a44', '--color-accent-2-100': '#3d1b2a', '--color-accent-2-800': '#ffc6db',
+      '--shadow-sm': '0 1px 2px rgba(0,0,0,.5)', '--shadow-md': '0 4px 14px rgba(0,0,0,.55)', '--shadow-lg': '0 16px 40px rgba(0,0,0,.6)',
+    });
+
+    const q = s.query.trim().toLowerCase();
+    const match = (a) => {
+      if (s.typeFilter !== 'all' && a.type !== s.typeFilter) return false;
+      if (s.catFilter !== 'all' && a.category !== s.catFilter) return false;
+      if (s.visFilter !== 'all' && a.visibility !== s.visFilter) return false;
+      if (s.favOnly && !this.isFav(a)) return false;
+      if (q) { const hay = (a.title + ' ' + L(a.description) + ' ' + a.slug + ' ' + a.category + ' ' + a.tags.join(' ')).toLowerCase(); if (!hay.includes(q)) return false; }
+      return true;
+    };
+    const filtered = this.ASSETS.filter(match);
+    const decorate = (a) => ({
+      ...a, favorite: this.isFav(a), title: a.title, description: L(a.description),
+      typeLabel: L(T[a.type].label), iconCls: T[a.type].icon, category: cat(a.category),
+      visLabel: L(V[a.visibility].label), visIcon: V[a.visibility].icon, tagsShown: a.tags.slice(0, 3),
+      onSelect: () => this.setState({ view: 'detail', selectedSlug: a.slug, copied: false }),
+    });
+
+    const baseForType = this.ASSETS.filter(a => (s.catFilter === 'all' || a.category === s.catFilter) && (s.visFilter === 'all' || a.visibility === s.visFilter) && (!s.favOnly || this.isFav(a)) && (!q || (a.title + L(a.description) + a.slug + a.tags.join(' ')).toLowerCase().includes(q)));
+    const facet = (items, axisKey, current, setter, metaFn, allLabel, allIcon) => {
+      const keys = [...new Set(items.map(i => i[axisKey]))];
+      const mk = (key, label, iconCls) => { const active = current === key;
+        return { key, label, iconCls, count: key === 'all' ? items.length : items.filter(i => i[axisKey] === key).length,
+          onClick: () => setter(active && key !== 'all' ? 'all' : key), style: this.facetStyle(active) }; };
+      const out = [mk('all', allLabel, allIcon)];
+      keys.forEach(k => { const m = metaFn(k); out.push(mk(k, m.label, m.icon)); });
+      return out;
+    };
+    const typeFacets = facet(baseForType, 'type', s.typeFilter, (v) => this.setState({ typeFilter: v }), (k) => ({ label: L(T[k].label), icon: T[k].icon }), t.allTypes, 'ph-duotone ph-stack');
+    const catFacets = facet(baseForType, 'category', s.catFilter, (v) => this.setState({ catFilter: v }), (k) => ({ label: cat(k), icon: '' }), t.all, 'ph-duotone ph-circles-three');
+    const visFacets = facet(baseForType, 'visibility', s.visFilter, (v) => this.setState({ visFilter: v }), (k) => ({ label: L(V[k].label), icon: V[k].icon }), t.all, 'ph-duotone ph-circles-three');
+
+    const raw = this.bySlug(s.selectedSlug);
+    let sel = null;
+    if (raw) {
+      const fav = this.isFav(raw);
+      const lessonObj = raw.lesson ? this.LESSONS.find(l => l.slug === raw.lesson) : null;
+      sel = { ...raw, favorite: fav, title: raw.title, description: L(raw.description), install: L(raw.install),
+        typeLabel: L(T[raw.type].label), iconCls: T[raw.type].icon,
+        bodyLabel: raw.type === 'prompt' ? t.bodyPrompt : (raw.type === 'subagent' || raw.type === 'command') ? t.bodySystem : t.bodyContents,
+        hasConfig: !!raw.config, config: raw.config || '',
+        hasFiles: !!(raw.files && raw.files.length), files: (raw.files || []).map(f => ({ path: f.path, kind: f.kind })),
+        targetsList: raw.targets,
+        favIcon: fav ? 'ph-fill ph-star' : 'ph-duotone ph-star', favLabel: fav ? t.faved : t.addFav,
+        onFav: () => this.setState(st => ({ favs: { ...st.favs, [raw.slug]: !fav } })),
+        onCopy: () => this.doCopy(raw.body),
+        hasLesson: !!lessonObj, lessonTitle: lessonObj ? L(lessonObj.title) : '',
+        onLesson: () => lessonObj && this.setState({ view: 'lesson', lessonSlug: lessonObj.slug, conceptIdx: 0, openTermIdx: null }),
+      };
+    }
+
+    const lessons = this.LESSONS.map((l, i) => { const a = this.bySlug(l.asset);
+      return { ...l, title: L(l.title), description: L(l.description),
+        lessonLabel: t.lesson + ' ' + String(i + 1).padStart(2, '0'),
+        estLabel: l.est + ' min', assetTitle: a ? a.title : '', assetIcon: a ? T[a.type].icon : '',
+        featuresLabel: (lg === 'pl' ? 'wykorzystuje ' : 'features ') + (a ? a.title : ''),
+        onOpen: () => this.setState({ view: 'lesson', lessonSlug: l.slug, conceptIdx: 0, openTermIdx: null }) }; });
+
+    const lesson = this.LESSONS.find(l => l.slug === s.lessonSlug) || this.LESSONS[0];
+    const idx = Math.min(s.conceptIdx, lesson.concepts.length - 1);
+    const concept = lesson.concepts[idx];
+    const conceptNav = lesson.concepts.map((c, i) => ({ title: L(c.title), icon: c.icon, style: this.facetStyle(i === idx),
+      onClick: () => this.setState({ conceptIdx: i, openTermIdx: null }) }));
+    const embedRaw = concept.asset ? this.bySlug(concept.asset) : null;
+    const embed = embedRaw ? { ...embedRaw, title: embedRaw.title, description: L(embedRaw.description), iconCls: T[embedRaw.type].icon,
+      onOpen: () => this.setState({ view: 'detail', selectedSlug: embedRaw.slug, copied: false }) } : null;
+    const rawTerms = concept.terms || [];
+    const terms = rawTerms.map((tm, i) => ({ term: L(tm.term), onClick: () => this.setState(st => ({ openTermIdx: st.openTermIdx === i ? null : i })) }));
+    const openT = (s.openTermIdx != null) ? rawTerms[s.openTermIdx] : null;
+    const total = lesson.concepts.length;
+
+    return {
+      t, rootStyle,
+      langEn: lg === 'en', langPl: lg === 'pl',
+      setEn: () => this.setLang('en'), setPl: () => this.setLang('pl'),
+      dateline: new Date('2026-07-23').toLocaleDateString(lg === 'pl' ? 'pl-PL' : 'en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
+      assetCountLabel: lg === 'pl' ? ('zasobów w kartotece: ' + this.ASSETS.length) : (this.ASSETS.length + ' assets on file'),
+      darkIcon: dark ? 'ph-duotone ph-sun' : 'ph-duotone ph-moon-stars',
+      toggleDark: () => this.setState(st => { const nd = !st.dark; try { localStorage.setItem('cb_dark', nd ? '1' : '0'); } catch (e) {} return { dark: nd }; }),
+      goHome: () => this.setState({ view: 'library' }), goLibrary: () => this.setState({ view: 'library' }), goWorkshop: () => this.setState({ view: 'workshop' }),
+      libCurrent: (s.view === 'library' || s.view === 'detail') ? 'page' : 'false', wsCurrent: (s.view === 'workshop' || s.view === 'lesson') ? 'page' : 'false',
+      libTabStyle: this.tabStyle(s.view === 'library' || s.view === 'detail'), wsTabStyle: this.tabStyle(s.view === 'workshop' || s.view === 'lesson'),
+      isLibrary: s.view === 'library', isDetail: s.view === 'detail', isWorkshop: s.view === 'workshop', isLesson: s.view === 'lesson',
+
+      typeFacets, catFacets, visFacets, favStyle: this.facetStyle(s.favOnly), toggleFav: () => this.setState(st => ({ favOnly: !st.favOnly })),
+      query: s.query, onSearch: (e) => this.setState({ query: e.target.value }),
+      assets: filtered.map(decorate), hasResults: filtered.length > 0, noResults: filtered.length === 0,
+      runsCode: t.runsCode,
+      resultLabel: lg === 'pl' ? (filtered.length === 1 ? '1 wynik' : ('wyników: ' + filtered.length)) : (filtered.length + (filtered.length === 1 ? ' result' : ' results')),
+      clearFilters: () => this.setState({ query: '', typeFilter: 'all', catFilter: 'all', visFilter: 'all', favOnly: false }),
+
+      sel, copyIcon: s.copied ? 'ph-fill ph-check' : 'ph-duotone ph-copy', copyLabel: s.copied ? t.copied : t.copy,
+
+      lessons, lessonTitle: L(lesson.title), conceptNav,
+      conceptCounter: (lg === 'pl' ? 'Pojęcie ' : 'Concept ') + String(idx + 1).padStart(2, '0') + (lg === 'pl' ? ' z ' : ' of ') + String(total).padStart(2, '0'),
+      conceptNum: String(idx + 1).padStart(2, '0'), conceptTotal: String(total).padStart(2, '0'),
+      conceptTitle: L(concept.title), conceptBody: L(concept.levels[s.level]),
+      lvlSimple: s.level === 'simple', lvlNormal: s.level === 'normal', lvlTech: s.level === 'technical',
+      setSimple: () => this.setLevel('simple'), setNormal: () => this.setLevel('normal'), setTech: () => this.setLevel('technical'),
+      hasTerms: terms.length > 0, terms, hasOpenTerm: !!openT, openTermName: openT ? L(openT.term) : '', openTermDef: openT ? L(openT.def) : '',
+      hasEmbed: !!embed, embed,
+      prevConcept: () => this.setState(st => ({ conceptIdx: Math.max(0, st.conceptIdx - 1), openTermIdx: null })),
+      nextConcept: () => { if (idx >= total - 1) this.setState({ view: 'workshop' }); else this.setState(st => ({ conceptIdx: st.conceptIdx + 1, openTermIdx: null })); },
+      prevDisabled: idx === 0, nextLabel: idx >= total - 1 ? t.finish : t.next,
+    };
+  }
+
+  setLang(lg) { try { localStorage.setItem('cb_lang', lg); } catch (e) {} this.setState({ lang: lg }); }
+  setLevel(lv) { try { localStorage.setItem('cb_level', lv); } catch (e) {} this.setState({ level: lv }); }
+  doCopy(text) { try { navigator.clipboard && navigator.clipboard.writeText(text); } catch (e) {} this.setState({ copied: true }); clearTimeout(this._ct); this._ct = setTimeout(() => this.setState({ copied: false }), 1600); }
+  facetStyle(active) {
+    return { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px', width: '100%', padding: '7px 10px', border: '0', cursor: 'pointer', textAlign: 'left', fontFamily: 'var(--font-body)', fontSize: '14px', borderRadius: 'var(--radius-md)', transition: 'background .12s', background: active ? 'var(--color-accent-100)' : 'transparent', color: active ? 'var(--color-accent-800)' : 'var(--color-text)', fontWeight: active ? '600' : '400' };
+  }
+  tabStyle(active) {
+    return { fontFamily: 'var(--font-heading)', fontWeight: '600', fontSize: '18px', cursor: 'pointer', textDecoration: 'none', paddingBottom: '10px', color: active ? 'var(--color-accent)' : 'var(--color-text)', borderBottom: active ? '3px solid var(--color-accent)' : '3px solid transparent' };
+  }
+}
+</script>
+</body>
+</html>
