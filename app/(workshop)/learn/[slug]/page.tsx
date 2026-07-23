@@ -14,7 +14,7 @@ export async function generateMetadata(props: PageProps<'/learn/[slug]'>): Promi
   const { slug } = await props.params;
   const { en } = getLesson(slug);
   if (!en) return {};
-  return { title: `${en.data.title} — AI Cookbook`, description: en.data.description };
+  return { title: en.data.title, description: en.data.description };
 }
 
 export default async function LessonPage(props: PageProps<'/learn/[slug]'>) {
@@ -41,22 +41,34 @@ export default async function LessonPage(props: PageProps<'/learn/[slug]'>) {
       </Link>
 
       <h1 className="font-heading text-4xl">
-        <span data-lang="en">{en.data.title}</span>
-        {pl && <span data-lang="pl">{pl.data.title}</span>}
+        <span data-lang="en" lang="en">
+          {en.data.title}
+        </span>
+        {pl && (
+          <span data-lang="pl" lang="pl">
+            {pl.data.title}
+          </span>
+        )}
       </h1>
       {(en.data.description || pl?.data.description) && (
         <p className="mt-2 text-lg text-fd-muted-foreground">
-          <span data-lang="en">{en.data.description}</span>
-          {pl?.data.description && <span data-lang="pl">{pl.data.description}</span>}
+          <span data-lang="en" lang="en">
+            {en.data.description}
+          </span>
+          {pl?.data.description && (
+            <span data-lang="pl" lang="pl">
+              {pl.data.description}
+            </span>
+          )}
         </p>
       )}
 
       <div className="cook-lesson mt-8">
-        <div data-lang="en">
+        <div data-lang="en" lang="en">
           <EN components={components} />
         </div>
         {PL && (
-          <div data-lang="pl">
+          <div data-lang="pl" lang="pl">
             <PL components={components} />
           </div>
         )}

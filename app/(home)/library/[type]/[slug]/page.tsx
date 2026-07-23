@@ -22,7 +22,7 @@ export async function generateMetadata(
   const { type, slug } = await props.params;
   const asset = await getAsset(type, slug);
   if (!asset) return {};
-  return { title: `${asset.title} — AI Cookbook`, description: asset.description };
+  return { title: asset.title, description: asset.description };
 }
 
 interface PromptVar {

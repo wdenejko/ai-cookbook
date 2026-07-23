@@ -4,7 +4,7 @@ import { toSummary } from '@/lib/assets/types';
 import { LibraryBrowser } from '@/components/library/library-browser';
 
 export const metadata: Metadata = {
-  title: 'Library — AI Cookbook',
+  title: 'Library',
   description: 'Browse and reuse Claude skills, subagents, prompts, and configs.',
 };
 

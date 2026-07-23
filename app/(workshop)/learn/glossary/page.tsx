@@ -3,7 +3,7 @@ import { allGlossaryTerms } from '@/lib/workshop/glossary';
 import { T } from '@/components/workshop/t';
 
 export const metadata: Metadata = {
-  title: 'Glossary — AI Cookbook',
+  title: 'Glossary',
   description: 'Plain-language definitions of the AI terms used in the lessons.',
 };
 
@@ -28,12 +28,20 @@ export default function GlossaryPage() {
         {terms.map((term) => (
           <div key={term.key} className="py-4">
             <dt className="font-heading text-lg">
-              <span data-lang="en">{term.title.en}</span>
-              <span data-lang="pl">{term.title.pl}</span>
+              <span data-lang="en" lang="en">
+                {term.title.en}
+              </span>
+              <span data-lang="pl" lang="pl">
+                {term.title.pl}
+              </span>
             </dt>
             <dd className="mt-1 text-fd-muted-foreground">
-              <span data-lang="en">{term.definition.en}</span>
-              <span data-lang="pl">{term.definition.pl}</span>
+              <span data-lang="en" lang="en">
+                {term.definition.en}
+              </span>
+              <span data-lang="pl" lang="pl">
+                {term.definition.pl}
+              </span>
             </dd>
           </div>
         ))}
