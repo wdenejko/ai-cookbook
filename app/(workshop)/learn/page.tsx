@@ -28,8 +28,8 @@ export default function LearnPage() {
         </p>
         <p data-lang="pl" lang="pl" className="mt-2 max-w-prose text-fd-muted-foreground">
           Krótkie lekcje o podstawowych elementach asystentów AI. Użyj przełącznika{' '}
-          <strong>Poziom</strong> powyżej, aby czytać każdą myśl <em>Prosto</em>, <em>Normalnie</em>{' '}
-          lub <em>Technicznie</em> — ta sama lekcja dopasuje się do Ciebie.
+          <strong>Poziom</strong> powyżej, aby czytać każde zagadnienie <em>Prosto</em>, <em>Normalnie</em>{' '}
+          lub <em>Technicznie</em> — ta sama lekcja dopasuje się do ciebie.
         </p>
       </header>
 

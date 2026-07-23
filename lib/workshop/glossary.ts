@@ -30,7 +30,7 @@ export const GLOSSARY: Record<string, GlossaryEntry> = {
     },
   },
   subagent: {
-    title: { en: 'Subagent', pl: 'Podagent' },
+    title: { en: 'Subagent', pl: 'Subagent' },
     definition: {
       en: 'A helper AI the main assistant can hand a focused job to — like a specialist it delegates to and gets results back from.',
       pl: 'Pomocnicza AI, której główny asystent może zlecić wąskie zadanie — jak specjalista, któremu deleguje pracę i od którego dostaje wynik.',
@@ -47,7 +47,7 @@ export const GLOSSARY: Record<string, GlossaryEntry> = {
     title: { en: 'MCP (Model Context Protocol)', pl: 'MCP (Model Context Protocol)' },
     definition: {
       en: 'A standard way to plug an AI into outside tools and data — like a universal adapter that lets it reach things such as your files, a database, or Notion.',
-      pl: 'Standardowy sposób podłączania AI do zewnętrznych narzędzi i danych — jak uniwersalna przejściówka, dzięki której sięga np. po Twoje pliki, bazę danych czy Notion.',
+      pl: 'Standardowy sposób podłączania AI do zewnętrznych narzędzi i danych — jak uniwersalna przejściówka, dzięki której sięga np. po twoje pliki, bazę danych czy Notion.',
     },
   },
   hook: {
@@ -61,7 +61,7 @@ export const GLOSSARY: Record<string, GlossaryEntry> = {
     title: { en: 'Memory', pl: 'Pamięć' },
     definition: {
       en: 'Notes the assistant keeps and re-reads across sessions, so it remembers your preferences and project facts instead of starting fresh each time.',
-      pl: 'Notatki, które asystent zapisuje i czyta między sesjami, dzięki czemu pamięta Twoje preferencje i fakty o projekcie, zamiast zaczynać za każdym razem od zera.',
+      pl: 'Notatki, które asystent zapisuje i czyta między sesjami, dzięki czemu pamięta twoje preferencje i fakty o projekcie, zamiast zaczynać za każdym razem od zera.',
     },
   },
   llm: {
@@ -100,7 +100,7 @@ export const GLOSSARY: Record<string, GlossaryEntry> = {
     },
   },
   'slash-command': {
-    title: { en: 'Slash command', pl: 'Komenda ze slashem' },
+    title: { en: 'Slash command', pl: 'Polecenie ze slashem' },
     definition: {
       en: 'A shortcut you trigger by typing /name — it expands into a saved prompt or action. In newer versions these are a flat kind of skill.',
       pl: 'Skrót uruchamiany przez wpisanie /nazwa — rozwija się w zapisany prompt lub akcję. W nowszych wersjach to prosty rodzaj umiejętności (skill).',

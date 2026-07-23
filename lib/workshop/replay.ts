@@ -33,7 +33,7 @@ export const REPLAY: ReplayItem[] = [
     },
     response: {
       en: 'Here is a warmer version:\n\n"Hi — when you have a moment, could you send over the report? I would like to review it before our next step. Thanks so much!"\n\nWhat changed: a greeting, a softer request, a reason, and a thank-you. Same ask, friendlier tone.',
-      pl: 'Oto cieplejsza wersja:\n\n„Cześć — czy gdy znajdziesz chwilę, mógłbyś/mogłabyś przesłać raport? Chciał(a)bym go przejrzeć przed kolejnym krokiem. Bardzo dziękuję!”\n\nCo się zmieniło: powitanie, łagodniejsza prośba, uzasadnienie i podziękowanie. Ta sama prośba, milszy ton.',
+      pl: 'Oto cieplejsza wersja:\n\n„Cześć — czy mógłbyś/mogłabyś przesłać raport, gdy znajdziesz chwilę? Chciał(a)bym go przejrzeć przed kolejnym krokiem. Bardzo dziękuję!”\n\nCo się zmieniło: powitanie, łagodniejsza prośba, uzasadnienie i podziękowanie. Ta sama prośba, milszy ton.',
     },
   },
   {
