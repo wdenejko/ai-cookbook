@@ -1,5 +1,4 @@
-// Workshop UI strings, EN + PL. The Polish is a first pass — have a native
-// speaker review before a real workshop. Library/docs stay English.
+// Workshop UI strings, EN + PL. Library/docs stay English.
 
 export const LOCALES = ['en', 'pl'] as const;
 export type Locale = (typeof LOCALES)[number];

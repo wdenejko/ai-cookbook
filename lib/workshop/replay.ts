@@ -1,8 +1,8 @@
 import type { Locale } from './i18n';
 
-// Canned prompt -> response pairs for the playground's Replay mode. Bilingual;
-// the Polish is a first pass — have a native speaker review. Scripted demos
-// never touch the network and double as the offline / failure fallback.
+// Canned prompt -> response pairs for the playground's Replay mode. Bilingual.
+// Scripted demos never touch the network and double as the offline / failure
+// fallback.
 
 export interface ReplayItem {
   id: string;

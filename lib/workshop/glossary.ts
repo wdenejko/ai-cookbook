@@ -5,8 +5,7 @@ export interface GlossaryEntry {
   definition: Record<Locale, string>;
 }
 
-// Plain-language definitions, EN + PL. The Polish is a first pass — have a
-// native speaker review before a real workshop.
+// Plain-language definitions, EN + PL.
 export const GLOSSARY: Record<string, GlossaryEntry> = {
   prompt: {
     title: { en: 'Prompt', pl: 'Prompt' },
