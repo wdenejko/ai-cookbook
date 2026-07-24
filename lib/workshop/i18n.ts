@@ -6,8 +6,6 @@ export const DEFAULT_LOCALE: Locale = 'en';
 export const LOCALE_STORAGE_KEY = 'cook-locale';
 
 const en = {
-  'nav.playground': 'Playground',
-  'nav.glossary': 'Glossary',
   'lang.aria': 'Language',
 
   'lesson.all': 'All lessons',
@@ -47,8 +45,6 @@ const en = {
 export type MsgKey = keyof typeof en;
 
 const pl: Record<MsgKey, string> = {
-  'nav.playground': 'Piaskownica',
-  'nav.glossary': 'Słownik',
   'lang.aria': 'Język',
 
   'lesson.all': 'Wszystkie lekcje',
