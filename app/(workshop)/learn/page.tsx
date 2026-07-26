@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { getOrderedLessons } from '@/lib/lessons';
@@ -6,7 +7,7 @@ import { T } from '@/components/workshop/t';
 
 export const metadata: Metadata = {
   title: 'Learn',
-  description: 'Short, adaptive lessons on the building blocks of AI assistants.',
+  description: 'Practical, bilingual lessons for learning how to work well with ChatGPT.',
 };
 
 export default function LearnPage() {
@@ -22,14 +23,14 @@ export default function LearnPage() {
           <T k="learn.title" />
         </h1>
         <p data-lang="en" lang="en" className="mt-2 max-w-prose text-fd-muted-foreground">
-          Short lessons on the building blocks of AI assistants. Use the <strong>Detail</strong>{' '}
-          control above to read each idea <em>Simple</em>, <em>Normal</em>, or <em>Technical</em> —
-          the same lesson meets you where you are.
+          Practical, step-by-step lessons about working well with ChatGPT. Every topic includes
+          a visual explanation, a worked example, a short exercise and a checklist you can use
+          right away.
         </p>
         <p data-lang="pl" lang="pl" className="mt-2 max-w-prose text-fd-muted-foreground">
-          Krótkie lekcje o podstawowych elementach asystentów AI. Użyj przełącznika{' '}
-          <strong>Poziom</strong> powyżej, aby czytać każde zagadnienie <em>Prosto</em>, <em>Normalnie</em>{' '}
-          lub <em>Technicznie</em> — ta sama lekcja dopasuje się do ciebie.
+          Praktyczne lekcje krok po kroku o dobrej pracy z ChatGPT. Każdy temat zawiera
+          wyjaśnienie wizualne, pełny przykład, krótkie ćwiczenie i listę wskazówek do
+          natychmiastowego wykorzystania.
         </p>
       </header>
 
@@ -48,6 +49,14 @@ export default function LearnPage() {
                 <span className="font-heading text-2xl text-accent" aria-hidden>
                   {i + 1}
                 </span>
+                <Image
+                  src={`/images/learn/${l.slug}.jpg`}
+                  alt=""
+                  width={1536}
+                  height={1024}
+                  sizes="(max-width: 768px) 96px, 128px"
+                  className="h-20 w-24 shrink-0 rounded-sm border border-divider object-cover md:w-32"
+                />
                 <span className="flex-1">
                   <span className="block font-heading text-lg">
                     <span data-lang="en" lang="en">

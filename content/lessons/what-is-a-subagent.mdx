@@ -5,6 +5,8 @@ description: A subagent is a separate helper ChatGPT hands a focused job to, the
 
 Sometimes the best way to stay focused is to delegate. This lesson covers what a subagent is, why ChatGPT hands work to one, and how a subagent is defined in a single small file.
 
+<LessonGuide slug="what-is-a-subagent" locale="en" />
+
 <Concept title="What is a subagent?">
 
 A <Term name="subagent">subagent</Term> is a second copy of ChatGPT that the main assistant can hand a specific task to, such as "review this code" or "search these files." It works on that task by itself and returns a tidy summary, so the main conversation is not cluttered with all the messy in-between steps.
@@ -28,6 +30,8 @@ You define a subagent in a single file. The top lists its name and a short descr
 No. A subagent starts with a clean slate: it gets only the task the main agent hands it, plus its own system prompt. It cannot see the earlier chat unless that context is included in the task. This is exactly why keeping subagents separate protects the main context window, and why a good delegation spells out everything the helper needs.
 
 </GoDeeper>
+
+<LessonWorkbook slug="what-is-a-subagent" locale="en" />
 
 ## See a real subagent in the library
 
