@@ -12,7 +12,7 @@ library:
   tags: [explanation, teaching]
   category: "Teaching"
   visibility: public
-  targets: [claude-api, claude-ai]
+  targets: [openai-api, chatgpt]
   sourceProject: null
 ---
 

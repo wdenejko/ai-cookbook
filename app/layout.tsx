@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
-import { RootProvider } from 'fumadocs-ui/provider/next';
 import './global.css';
 import { Source_Serif_4 } from 'next/font/google';
 import { ComfortControl } from '@/components/workshop/comfort-control';
 import { LocaleProvider } from '@/components/workshop/locale';
+import { FumadocsProvider } from '@/components/workshop/fumadocs-provider';
 
 // metadataBase resolves the relative OG image URLs (e.g. the docs /og route)
 // into absolute ones; set NEXT_PUBLIC_SITE_URL in production, localhost in dev.
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     template: '%s — AI Cookbook',
   },
   description:
-    'A reusable library of Claude assets and an adaptive, bilingual AI workshop.',
+    'A reusable library of ChatGPT assets and an adaptive, bilingual AI workshop.',
 };
 
 // Broadsheet is set entirely in Source Serif 4 (headings + body), with the
@@ -42,11 +42,11 @@ export default function Layout({ children }: LayoutProps<'/'>) {
         <script
           dangerouslySetInnerHTML={{
             __html:
-              "try{var d=document.documentElement,s=localStorage.getItem('cook-text-size');if(s==='lg'||s==='xl')d.setAttribute('data-text-size',s);if(localStorage.getItem('cook-comfort')==='true')d.setAttribute('data-comfort','true');var l=localStorage.getItem('cook-locale');if(l==='en'||l==='pl')d.setAttribute('data-locale',l)}catch(e){}",
+              "try{var d=document.documentElement,s=localStorage.getItem('cook-text-size');if(s==='lg'||s==='xl')d.setAttribute('data-text-size',s);if(localStorage.getItem('cook-comfort')==='true')d.setAttribute('data-comfort','true');var l=localStorage.getItem('cook-locale');if(l!=='en'&&l!=='pl'){var n=(navigator.languages&&navigator.languages[0])||navigator.language||'';l=String(n).toLowerCase().split('-')[0]==='pl'?'pl':'en'}d.setAttribute('data-locale',l);d.lang=l}catch(e){}",
           }}
         />
         <LocaleProvider>
-          <RootProvider>{children}</RootProvider>
+          <FumadocsProvider>{children}</FumadocsProvider>
           <ComfortControl />
         </LocaleProvider>
       </body>

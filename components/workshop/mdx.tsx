@@ -4,7 +4,6 @@ import { Concept } from './concept';
 import { GoDeeper } from './go-deeper';
 import { Term } from './term';
 import { Showcase } from './showcase';
-import { Playground } from './playground';
 
 export function getWorkshopMDXComponents(components?: MDXComponents): MDXComponents {
   return {
@@ -13,7 +12,6 @@ export function getWorkshopMDXComponents(components?: MDXComponents): MDXCompone
     GoDeeper,
     Term,
     Showcase,
-    Playground,
     ...components,
   };
 }

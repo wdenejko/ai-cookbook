@@ -1,18 +1,18 @@
 ---
 name: coding-preferences
-description: "Captures the owner's concrete, cross-project coding-style preferences — language settings, module conventions, testing, and formatting — so Claude writes code their way by default. Use as a personal memory loaded across projects to avoid restating style rules each session."
+description: "Captures the owner's concrete, cross-project coding-style preferences — language settings, module conventions, testing, and formatting — so ChatGPT writes code their way by default. Use as a personal memory loaded across projects to avoid restating style rules each session."
 type: user
 library:
   tags: [preferences, typescript, style]
   category: "Preferences"
   visibility: private
-  targets: [claude-code]
+  targets: [codex]
   sourceProject: null
 ---
 
 # Coding preferences
 
-Personal defaults. Apply these unless a project's own config or CLAUDE.md says
+Personal defaults. Apply these unless a project's own config or AGENTS.md says
 otherwise.
 
 ## Language & typing

@@ -66,8 +66,8 @@ export const GLOSSARY: Record<string, GlossaryEntry> = {
   llm: {
     title: { en: 'LLM (large language model)', pl: 'LLM (duży model językowy)' },
     definition: {
-      en: 'The kind of AI behind assistants like Claude. It predicts text, which lets it answer questions, write, and reason.',
-      pl: 'Rodzaj AI stojący za asystentami takimi jak Claude. Przewiduje tekst, co pozwala mu odpowiadać na pytania, pisać i rozumować.',
+      en: 'The kind of AI behind assistants like ChatGPT. It predicts text, which lets it answer questions, write, and reason.',
+      pl: 'Rodzaj AI stojący za asystentami takimi jak ChatGPT. Przewiduje tekst, co pozwala mu odpowiadać na pytania, pisać i rozumować.',
     },
   },
   hallucination: {

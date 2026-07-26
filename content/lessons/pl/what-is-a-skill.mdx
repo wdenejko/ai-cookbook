@@ -1,13 +1,13 @@
 ---
 title: Czym jest umiejętność?
-description: Umiejętność to folder z instrukcjami wielokrotnego użytku, który Claude otwiera tylko wtedy, gdy zadanie naprawdę tego wymaga.
+description: Umiejętność to folder z instrukcjami wielokrotnego użytku, który ChatGPT otwiera tylko wtedy, gdy zadanie naprawdę tego wymaga.
 ---
 
-Umiejętność to sposób, w jaki uczysz Claude'a dobrze wykonywać jedno zadanie i wykorzystywać tę wiedzę wszędzie. Ta lekcja wyjaśnia, czym jest umiejętność, co znajduje się w jej folderze oraz na czym polega sprytna sztuczka, dzięki której Claude nie czyta wszystkiego naraz.
+Umiejętność to sposób, w jaki uczysz ChatGPT dobrze wykonywać jedno zadanie i wykorzystywać tę wiedzę wszędzie. Ta lekcja wyjaśnia, czym jest umiejętność, co znajduje się w jej folderze oraz na czym polega sprytna sztuczka, dzięki której ChatGPT nie czyta wszystkiego naraz.
 
 <Concept title="Czym jest umiejętność?">
 
-<Term name="skill">Umiejętność</Term> to zapisany zestaw instrukcji do jednego rodzaju zadania, na przykład wypełnienia formularza PDF albo uporządkowania arkusza kalkulacyjnego. Gdy już istnieje, Claude może wykonać te kroki, ilekroć pojawi się pasujące zadanie, bez ponownego tłumaczenia z twojej strony. Potraktuj to jak poradnik wielokrotnego użytku, po który Claude może sięgnąć samodzielnie.
+<Term name="skill">Umiejętność</Term> to zapisany zestaw instrukcji do jednego rodzaju zadania, na przykład wypełnienia formularza PDF albo uporządkowania arkusza kalkulacyjnego. Gdy już istnieje, ChatGPT może wykonać te kroki, ilekroć pojawi się pasujące zadanie, bez ponownego tłumaczenia z twojej strony. Potraktuj to jak poradnik wielokrotnego użytku, po który ChatGPT może sięgnąć samodzielnie.
 
 </Concept>
 
@@ -17,15 +17,15 @@ Każda umiejętność ma główny plik o nazwie `SKILL.md`. Na jego początku zn
 
 </Concept>
 
-<Concept title="Dlaczego Claude nie czyta wszystkiego naraz?">
+<Concept title="Dlaczego ChatGPT nie czyta wszystkiego naraz?">
 
-Claude może mieć do dyspozycji dziesiątki umiejętności, a czytanie ich wszystkich za każdym razem byłoby wolne i wprowadzałoby zamęt. Dlatego trzyma w pamięci tylko krótkie nazwy i opisy, a pełne instrukcje umiejętności otwiera dopiero wtedy, gdy zadanie do niej pasuje. Ten nawyk „otwieraj tylko wtedy, gdy potrzeba” nazywa się stopniowym ujawnianiem (ang. progressive disclosure).
+ChatGPT może mieć do dyspozycji dziesiątki umiejętności, a czytanie ich wszystkich za każdym razem byłoby wolne i wprowadzałoby zamęt. Dlatego trzyma w pamięci tylko krótkie nazwy i opisy, a pełne instrukcje umiejętności otwiera dopiero wtedy, gdy zadanie do niej pasuje. Ten nawyk „otwieraj tylko wtedy, gdy potrzeba” nazywa się stopniowym ujawnianiem (ang. progressive disclosure).
 
 </Concept>
 
 <GoDeeper title="Czy umiejętność może naprawdę uruchamiać kod?">
 
-Niektóre umiejętności to czyste instrukcje, ale inne dostarczają skrypty pomocnicze i deklarują `allowed-tools`, aby Claude mógł je uruchomić. Umiejętność do obsługi plików PDF poniżej wymienia `Read, Write, Bash` i korzysta z biblioteki `pypdf`, żeby wypełnić pola formularza. Deklarowanie narzędzi to również granica bezpieczeństwa: umiejętność może korzystać wyłącznie z tych narzędzi, które zostały jej przyznane.
+Niektóre umiejętności to czyste instrukcje, ale inne dostarczają skrypty pomocnicze i deklarują `allowed-tools`, aby ChatGPT mógł je uruchomić. Umiejętność do obsługi plików PDF poniżej wymienia `Read, Write, Bash` i korzysta z biblioteki `pypdf`, żeby wypełnić pola formularza. Deklarowanie narzędzi to również granica bezpieczeństwa: umiejętność może korzystać wyłącznie z tych narzędzi, które zostały jej przyznane.
 
 </GoDeeper>
 

@@ -2,12 +2,12 @@
 name: test-writer
 description: "Writes focused, high-value unit tests for a specified function or module, covering happy paths, edge cases, and error conditions using the project's existing test framework and conventions. Use when you need tests for new or untested code that match the repo rather than a generic template."
 tools: Read, Grep, Glob, Write, Bash
-model: sonnet
+model: gpt-5
 library:
   tags: [testing, unit-tests, engineering]
   category: "Engineering"
   visibility: public
-  targets: [claude-code]
+  targets: [codex]
   sourceProject: null
 ---
 

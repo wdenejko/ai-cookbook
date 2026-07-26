@@ -6,7 +6,7 @@ library:
   tags: [pdf, documents, forms]
   category: "Documents"
   visibility: public
-  targets: [claude-code, claude-api]
+  targets: [codex, openai-api]
   sourceProject: null
 ---
 

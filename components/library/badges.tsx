@@ -16,7 +16,9 @@ import {
   KeyRound,
   type LucideIcon,
 } from 'lucide-react';
-import { type AssetType, type Visibility, TYPE_META, VISIBILITY_META } from '@/lib/assets/types';
+import { type AssetType, type Visibility } from '@/lib/assets/types';
+import { TYPE_LABEL_KEYS, VISIBILITY_LABEL_KEYS } from '@/lib/assets/i18n';
+import { T } from '@/components/workshop/t';
 
 const TYPE_ICON: Record<AssetType, LucideIcon> = {
   skill: Sparkles,
@@ -43,7 +45,7 @@ export function TypeBadge({ type }: { type: AssetType }) {
   return (
     <span className="inline-flex items-center gap-1.5 rounded-sm bg-neutral-200 px-2 py-0.5 text-xs text-neutral-800">
       <Icon className="size-3.5" aria-hidden />
-      {TYPE_META[type].label}
+      <T k={TYPE_LABEL_KEYS[type].label} />
     </span>
   );
 }
@@ -53,7 +55,7 @@ export function VisibilityBadge({ visibility }: { visibility: Visibility }) {
   return (
     <span className="inline-flex items-center gap-1.5 rounded-sm border border-divider px-2 py-0.5 text-xs text-fd-muted-foreground">
       <Icon className="size-3.5" aria-hidden />
-      {VISIBILITY_META[visibility].label}
+      <T k={VISIBILITY_LABEL_KEYS[visibility]} />
     </span>
   );
 }
@@ -72,13 +74,13 @@ export function SecurityBadges({
       {trustRequired && (
         <span className="inline-flex items-center gap-1.5 rounded-sm bg-accent-2-100 px-2 py-0.5 text-xs text-accent-2-800">
           <ShieldAlert className="size-3.5" aria-hidden />
-          Runs code
+          <T k="asset.runsCode" />
         </span>
       )}
       {containsSecrets && (
         <span className="inline-flex items-center gap-1.5 rounded-sm bg-accent-2-100 px-2 py-0.5 text-xs text-accent-2-800">
           <KeyRound className="size-3.5" aria-hidden />
-          Secrets
+          <T k="asset.secrets" />
         </span>
       )}
     </>

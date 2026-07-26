@@ -6,7 +6,7 @@ library:
   tags: [sqlite, database, data]
   category: "Data"
   visibility: public
-  targets: [claude-code, claude-api]
+  targets: [codex, openai-api]
   sourceProject: null
 ---
 

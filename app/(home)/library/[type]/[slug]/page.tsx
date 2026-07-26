@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowLeft, FileCode } from 'lucide-react';
 import { getAsset, getAssets } from '@/lib/assets/loader';
-import { type Asset, TYPE_META } from '@/lib/assets/types';
+import { type Asset } from '@/lib/assets/types';
 import { summarizeHooks, summarizeMcp } from '@/lib/assets/summarize';
 import { TypeBadge, VisibilityBadge, SecurityBadges, Tag } from '@/components/library/badges';
 import { CopyButton } from '@/components/library/copy-button';
@@ -11,6 +11,13 @@ import { CodeView } from '@/components/library/code-view';
 import { DownloadBundleButton } from '@/components/library/download-bundle-button';
 import { langFor } from '@/lib/assets/highlight';
 import { gitConfig } from '@/lib/shared';
+import {
+  getAssetCopy,
+  getInstallNote,
+  getUsageNotes,
+  getVariableHint,
+} from '@/lib/assets/i18n';
+import { T } from '@/components/workshop/t';
 
 export async function generateStaticParams() {
   return (await getAssets()).map((a) => ({ type: a.type, slug: a.slug }));
@@ -65,6 +72,8 @@ export default async function AssetDetailPage(props: PageProps<'/library/[type]/
     ...previewFiles.map((f) => ({ path: f.path, content: f.content as string })),
   ];
   const canDownload = (asset.type === 'skill' || asset.type === 'plugin') && bundleFiles.length > 1;
+  const enCopy = getAssetCopy(asset, 'en');
+  const plCopy = getAssetCopy(asset, 'pl');
 
   return (
     <main className="mx-auto w-full max-w-4xl px-6 py-12">
@@ -72,7 +81,7 @@ export default async function AssetDetailPage(props: PageProps<'/library/[type]/
         href="/library"
         className="mb-6 inline-flex min-h-9 items-center gap-1.5 text-sm text-fd-muted-foreground hover:text-accent"
       >
-        <ArrowLeft className="size-4" aria-hidden /> Library
+        <ArrowLeft className="size-4" aria-hidden /> <T k="library.title" />
       </Link>
 
       <div className="mb-3 flex flex-wrap items-center gap-1.5">
@@ -84,15 +93,21 @@ export default async function AssetDetailPage(props: PageProps<'/library/[type]/
         />
       </div>
 
-      <h1 className="font-heading text-4xl">{asset.title}</h1>
+      <h1 className="font-heading text-4xl">
+        <Bilingual en={enCopy.title} pl={plCopy.title} />
+      </h1>
       {asset.description && (
-        <p className="mt-2 max-w-prose text-lg text-fd-muted-foreground">{asset.description}</p>
+        <p className="mt-2 max-w-prose text-lg text-fd-muted-foreground">
+          <Bilingual en={enCopy.description} pl={plCopy.description} />
+        </p>
       )}
 
       {asset.tags.length > 0 && (
         <div className="mt-4 flex flex-wrap gap-1.5">
-          {asset.tags.map((t) => (
-            <Tag key={t}>{t}</Tag>
+          {asset.tags.map((tag, index) => (
+            <Tag key={tag}>
+              <Bilingual en={enCopy.tags[index]} pl={plCopy.tags[index]} />
+            </Tag>
           ))}
         </div>
       )}
@@ -101,12 +116,12 @@ export default async function AssetDetailPage(props: PageProps<'/library/[type]/
       {hookSummary.length > 0 && (
         <section className="mt-8 rounded-md bg-surface p-4">
           <h2 className="mb-2 font-heading text-sm uppercase tracking-wide text-accent">
-            At a glance
+            <T k="asset.atGlance" />
           </h2>
           <ul className="flex flex-col gap-1 text-sm">
             {hookSummary.map((h, i) => (
               <li key={i} className="font-mono">
-                <span className="text-accent">{h.event}</span> · matcher{' '}
+                <span className="text-accent">{h.event}</span> · <T k="asset.matcher" />{' '}
                 <span className="text-fd-foreground">{h.matcher}</span>
                 {h.actions.length > 0 && <> · {h.actions.join(', ')}</>}
               </li>
@@ -118,7 +133,7 @@ export default async function AssetDetailPage(props: PageProps<'/library/[type]/
       {mcpSummary.length > 0 && (
         <section className="mt-8 rounded-md bg-surface p-4">
           <h2 className="mb-2 font-heading text-sm uppercase tracking-wide text-accent">
-            At a glance
+            <T k="asset.atGlance" />
           </h2>
           <ul className="flex flex-col gap-1 text-sm">
             {mcpSummary.map((s) => (
@@ -134,13 +149,18 @@ export default async function AssetDetailPage(props: PageProps<'/library/[type]/
       {promptVars.length > 0 && (
         <section className="mt-8 rounded-md bg-surface p-4">
           <h2 className="mb-3 font-heading text-sm uppercase tracking-wide text-accent">
-            Variables
+            <T k="asset.variables" />
           </h2>
           <dl className="grid grid-cols-[max-content_1fr] gap-x-4 gap-y-1 text-sm">
             {promptVars.map((v) => (
               <div key={v.name} className="contents">
                 <dt className="font-mono text-accent">{`{{${v.name}}}`}</dt>
-                <dd className="text-fd-muted-foreground">{v.hint ?? ''}</dd>
+                <dd className="text-fd-muted-foreground">
+                  <Bilingual
+                    en={getVariableHint(asset.id, v.name, v.hint ?? '', 'en')}
+                    pl={getVariableHint(asset.id, v.name, v.hint ?? '', 'pl')}
+                  />
+                </dd>
               </div>
             ))}
           </dl>
@@ -150,56 +170,82 @@ export default async function AssetDetailPage(props: PageProps<'/library/[type]/
       {/* How to use this */}
       <section className="mt-6 rounded-md bg-surface p-4">
         <h2 className="mb-2 font-heading text-sm uppercase tracking-wide text-accent">
-          How to use this
+          <T k="asset.howToUse" />
         </h2>
         <dl className="grid grid-cols-[max-content_1fr] gap-x-4 gap-y-1 text-sm">
-          <dt className="text-fd-muted-foreground">Destination</dt>
+          <dt className="text-fd-muted-foreground">
+            <T k="asset.destination" />
+          </dt>
           <dd className="break-all font-mono">{asset.install.destination}</dd>
-          <dt className="text-fd-muted-foreground">Works in</dt>
+          <dt className="text-fd-muted-foreground">
+            <T k="asset.worksIn" />
+          </dt>
           <dd>{asset.targets.length ? asset.targets.join(', ') : '—'}</dd>
           {asset.category && (
             <>
-              <dt className="text-fd-muted-foreground">Category</dt>
-              <dd>{asset.category}</dd>
+              <dt className="text-fd-muted-foreground">
+                <T k="asset.category" />
+              </dt>
+              <dd>
+                <Bilingual en={enCopy.category ?? ''} pl={plCopy.category ?? ''} />
+              </dd>
             </>
           )}
         </dl>
-        <p className="mt-3 text-sm text-fd-muted-foreground">{asset.install.note}</p>
+        <p className="mt-3 text-sm text-fd-muted-foreground">
+          <Bilingual en={getInstallNote(asset, 'en')} pl={getInstallNote(asset, 'pl')} />
+        </p>
       </section>
 
       {/* Plugin components */}
       {asset.type === 'plugin' && components.length > 0 && (
         <section className="mt-6">
-          <h2 className="mb-2 font-heading text-xl">Bundled assets</h2>
+          <h2 className="mb-2 font-heading text-xl">
+            <T k="asset.bundledAssets" />
+          </h2>
           <ul className="flex flex-col gap-2">
-            {components.map(({ ref, asset: child }) =>
-              child ? (
+            {components.map(({ ref, asset: child }) => {
+              if (child) {
+                const childEn = getAssetCopy(child, 'en');
+                const childPl = getAssetCopy(child, 'pl');
+                return (
                 <li key={ref}>
                   <Link
                     href={`/library/${child.type}/${child.slug}`}
                     className="flex items-center gap-3 rounded-md bg-surface p-3 transition-colors hover:bg-neutral-200"
                   >
                     <TypeBadge type={child.type} />
-                    <span className="font-heading">{child.title}</span>
+                    <span className="font-heading">
+                      <Bilingual en={childEn.title} pl={childPl.title} />
+                    </span>
                     <span className="line-clamp-1 text-sm text-fd-muted-foreground">
-                      {child.description}
+                      <Bilingual en={childEn.description} pl={childPl.description} />
                     </span>
                   </Link>
                 </li>
-              ) : (
+                );
+              }
+              return (
                 <li key={ref} className="rounded-md border border-dashed border-divider p-3 text-sm text-fd-muted-foreground">
-                  <span className="font-mono">{ref}</span> — not in this library
+                  <span className="font-mono">{ref}</span> — <T k="asset.notInLibrary" />
                 </li>
-              ),
-            )}
+              );
+            })}
           </ul>
         </section>
       )}
 
       {asset.usageNotes && (
         <section className="mt-6">
-          <h2 className="mb-2 font-heading text-xl">Notes</h2>
-          <p className="whitespace-pre-wrap text-sm">{asset.usageNotes}</p>
+          <h2 className="mb-2 font-heading text-xl">
+            <T k="asset.notes" />
+          </h2>
+          <p className="whitespace-pre-wrap text-sm">
+            <Bilingual
+              en={getUsageNotes(asset, 'en') ?? ''}
+              pl={getUsageNotes(asset, 'pl') ?? ''}
+            />
+          </p>
         </section>
       )}
 
@@ -207,18 +253,19 @@ export default async function AssetDetailPage(props: PageProps<'/library/[type]/
       <section className="mt-8">
         <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
           <h2 className="font-heading text-xl">
-            Source <span className="font-mono text-sm text-fd-muted-foreground">{sourceName(asset)}</span>
+            <T k="asset.source" />{' '}
+            <span className="font-mono text-sm text-fd-muted-foreground">{sourceName(asset)}</span>
           </h2>
           <div className="flex flex-wrap items-center gap-2">
             {canDownload && (
               <DownloadBundleButton folderName={asset.slug} files={bundleFiles} />
             )}
-            <CopyButton text={asset.raw} label="Copy" />
+            <CopyButton text={asset.raw} />
             <a
               href={githubUrl}
               className="inline-flex min-h-9 items-center rounded-md border border-divider px-3 font-heading text-sm transition-colors hover:bg-neutral-200"
             >
-              View on GitHub
+              <T k="asset.viewGithub" />
             </a>
           </div>
         </div>
@@ -228,7 +275,9 @@ export default async function AssetDetailPage(props: PageProps<'/library/[type]/
       {/* Skill bundle file previews */}
       {asset.type === 'skill' && previewFiles.length > 0 && (
         <section className="mt-8">
-          <h2 className="mb-3 font-heading text-xl">Bundle files</h2>
+          <h2 className="mb-3 font-heading text-xl">
+            <T k="asset.bundleFiles" />
+          </h2>
           <div className="flex flex-col gap-6">
             {previewFiles.map((f) => (
               <div key={f.path}>
@@ -236,9 +285,14 @@ export default async function AssetDetailPage(props: PageProps<'/library/[type]/
                   <span className="flex items-center gap-2 font-mono text-sm">
                     <FileCode className="size-4 text-accent" aria-hidden />
                     {f.path}
-                    {f.executable ? ' · executable' : ''}
+                    {f.executable && (
+                      <>
+                        {' '}
+                        · <T k="asset.executable" />
+                      </>
+                    )}
                   </span>
-                  <CopyButton text={f.content as string} label="Copy" />
+                  <CopyButton text={f.content as string} />
                 </div>
                 <CodeView code={f.content as string} lang={langFor(f.path)} />
               </div>
@@ -250,7 +304,9 @@ export default async function AssetDetailPage(props: PageProps<'/library/[type]/
       {/* Plugin file list */}
       {asset.type === 'plugin' && asset.files.length > 0 && (
         <section className="mt-8">
-          <h2 className="mb-2 font-heading text-xl">Files</h2>
+          <h2 className="mb-2 font-heading text-xl">
+            <T k="asset.files" />
+          </h2>
           <ul className="flex flex-col gap-1 text-sm">
             {asset.files.map((f) => (
               <li
@@ -268,6 +324,19 @@ export default async function AssetDetailPage(props: PageProps<'/library/[type]/
         {asset.filePath} · {asset.contentHash}
       </p>
     </main>
+  );
+}
+
+function Bilingual({ en, pl }: { en: string; pl: string }) {
+  return (
+    <>
+      <span data-lang="en" lang="en">
+        {en}
+      </span>
+      <span data-lang="pl" lang="pl">
+        {pl}
+      </span>
+    </>
   );
 }
 

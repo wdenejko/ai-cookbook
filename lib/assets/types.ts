@@ -24,7 +24,7 @@ export type Visibility = (typeof VISIBILITY_LEVELS)[number];
 
 export type StorageKind = 'single_file' | 'folder_bundle' | 'json_entry' | 'container';
 
-export const TARGETS = ['claude-code', 'claude-api', 'claude-ai', 'chatgpt', 'cowork'] as const;
+export const TARGETS = ['chatgpt', 'chatgpt-work', 'codex', 'openai-api'] as const;
 export type Target = (typeof TARGETS)[number];
 
 export interface AssetFile {
@@ -156,23 +156,23 @@ export function installFor(
         };
       }
       return {
-        destination: `.claude/skills/${slug}/`,
-        note: "Copy the whole folder into a project's .claude/skills/ (or ~/.claude/skills/ for personal use).",
+        destination: `.agents/skills/${slug}/`,
+        note: "Copy the whole folder into a project's .agents/skills/ (or ~/.agents/skills/ for personal use with Codex).",
       };
     case 'plugin':
       return {
-        destination: '(plugin marketplace)',
-        note: 'Add the marketplace, then install: `claude plugin marketplace add <owner/repo>` and `/plugin install ' + slug + '`.',
+        destination: 'ChatGPT / Codex → Plugins',
+        note: 'Install it from the shared plugin directory. For local development, add its marketplace source with Codex and install the plugin there.',
       };
     case 'subagent':
       return {
-        destination: `.claude/agents/${slug}.md`,
-        note: 'Place in .claude/agents/ (project) or ~/.claude/agents/ (personal).',
+        destination: `.codex/agents/${slug}.toml`,
+        note: 'Use these instructions in a project-scoped .codex/agents/ custom-agent file or ask ChatGPT Work to delegate the task to a subagent.',
       };
     case 'command':
       return {
-        destination: `.claude/commands/${slug}.md`,
-        note: `Place in .claude/commands/ to expose it as /${slug}.`,
+        destination: 'ChatGPT prompt / Codex skill',
+        note: `Paste it into ChatGPT as a reusable prompt. In Codex, package it as a skill instead of relying on a custom /${slug} command.`,
       };
     case 'prompt':
       return {
@@ -181,18 +181,18 @@ export function installFor(
       };
     case 'mcp_server':
       return {
-        destination: '.mcp.json',
-        note: 'Merge the entry into .mcp.json (project, version-controlled) or ~/.claude.json (personal).',
+        destination: 'ChatGPT connector / ~/.codex/config.toml',
+        note: 'Connect the MCP server from ChatGPT Plugins or add it to the Codex MCP configuration.',
       };
     case 'hook':
       return {
-        destination: '.claude/settings.json',
-        note: 'Merge the block into your settings.json under "hooks". Review it — hooks run code.',
+        destination: '.codex/hooks.json',
+        note: 'Merge the hook into the project or user Codex hooks file. Review it first — hooks run code.',
       };
     case 'memory':
       return {
-        destination: 'CLAUDE.md',
-        note: 'Add to ./CLAUDE.md (project) or ~/.claude/CLAUDE.md (personal).',
+        destination: 'AGENTS.md / ChatGPT Personalization',
+        note: 'Add project guidance to AGENTS.md or cross-chat preferences to ChatGPT custom instructions.',
       };
   }
 }

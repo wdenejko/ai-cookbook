@@ -1,8 +1,13 @@
 import Link from 'next/link';
 import { type AssetSummary } from '@/lib/assets/types';
+import { getAssetCopy } from '@/lib/assets/i18n';
+import { useLocale } from '@/components/workshop/locale';
 import { TypeBadge, VisibilityBadge, SecurityBadges, Tag } from './badges';
 
 export function AssetCard({ asset }: { asset: AssetSummary }) {
+  const { locale } = useLocale();
+  const copy = getAssetCopy(asset, locale);
+
   return (
     <Link
       href={`/library/${asset.type}/${asset.slug}`}
@@ -16,12 +21,12 @@ export function AssetCard({ asset }: { asset: AssetSummary }) {
         />
       </div>
 
-      <h3 className="font-heading text-lg leading-tight group-hover:text-accent">{asset.title}</h3>
-      <p className="line-clamp-3 flex-1 text-sm text-fd-muted-foreground">{asset.description}</p>
+      <h3 className="font-heading text-lg leading-tight group-hover:text-accent">{copy.title}</h3>
+      <p className="line-clamp-3 flex-1 text-sm text-fd-muted-foreground">{copy.description}</p>
 
       {asset.tags.length > 0 && (
         <div className="mt-1 flex flex-wrap gap-1.5">
-          {asset.tags.slice(0, 3).map((t) => (
+          {copy.tags.slice(0, 3).map((t) => (
             <Tag key={t}>{t}</Tag>
           ))}
         </div>
@@ -29,8 +34,8 @@ export function AssetCard({ asset }: { asset: AssetSummary }) {
 
       <div className="flex items-center justify-between gap-2 pt-1">
         <VisibilityBadge visibility={asset.visibility} />
-        {asset.category && (
-          <span className="text-xs text-fd-muted-foreground">{asset.category}</span>
+        {copy.category && (
+          <span className="text-xs text-fd-muted-foreground">{copy.category}</span>
         )}
       </div>
     </Link>

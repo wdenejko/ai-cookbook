@@ -8,7 +8,7 @@
 
 ## 1. Product in one paragraph
 
-One app, two modes over one content pipeline. **Library mode** is a dense, searchable, filterable catalog of the owner's real Claude assets (skills, subagents, prompts, MCP/hook configs, memories) that can be copied/reused in real projects. **Workshop mode** is a calm, adaptive, accessible teaching surface for a *mixed audience* — IT pros, teenagers, non-technical staff, and seniors — where the *same lesson* serves all four via a detail-level switcher, and can showcase real library assets as live examples. The design must make both feel like one coherent product while respecting their opposite instincts (catalog wants density; lessons want progressive simplicity).
+One app, two modes over one content pipeline. **Library mode** is a dense, searchable, filterable catalog of the owner's real ChatGPT assets (skills, subagents, prompts, MCP/hook configs, memories) that can be copied/reused in real projects. **Workshop mode** is a calm, adaptive, accessible teaching surface for a *mixed audience* — IT pros, teenagers, non-technical staff, and seniors — where the *same lesson* serves all four via a detail-level switcher, and can showcase real library assets as live examples. The design must make both feel like one coherent product while respecting their opposite instincts (catalog wants density; lessons want progressive simplicity).
 
 ---
 
@@ -53,7 +53,7 @@ These are not two designs — they're one design at two settings. Show both for 
 2. **Asset detail** (`/asset/[type]/[slug]`)
    - Rendered body/instructions + **syntax-highlighted config**.
    - **Metadata sidebar/panel:** type, tags, category, version, source, license, visibility, targets, security flags.
-   - **Actions:** Copy · Download bundle · **"How to use this"** (where the file goes: `~/.claude/…` vs `.claude/…`, and which targets it reaches).
+   - **Actions:** Copy · Download bundle · **"How to use this"** (where the file goes: `~/.codex/…` vs `.codex/…`, and which targets it reaches).
    - **Per-`storageKind` variants** (important — these look different):
      - *single_file* (subagent, command, memory, prompt) — one document.
      - *folder_bundle* (skill) — a **file tree** (`SKILL.md` + references + `scripts/`) with a primary-file preview.
@@ -67,13 +67,11 @@ These are not two designs — they're one design at two settings. Show both for 
 4. **Guided lesson view** — one concept per screen; big **Next / Back**; **progress indicator**; the active-level `<Concept>` text; **"Go deeper"** expanders; inline **glossary popovers** (click/focus, never hover-only).
 5. **Explore / concept map** — non-linear index for advanced users to jump around.
 6. **Glossary page** — plain-language, bilingual, searchable.
-7. **Prompt playground** — prompt input; **streaming output region** (announced politely to screen readers); a clear **Replay vs Live** indicator; **rate-limited / blocked** state; optional usage/spend indicator; a facilitator "reset" affordance.
-8. **"What is a skill?" interactive** — a guided, deterministic (replay-backed) walkthrough that reveals a real skill's structure.
 
 ### Shared
 
-9. **Home** — routes to the two modes; sets the brand tone.
-10. **Global nav / header / footer** — hosts the §2 controls; skip link; clear landmarks.
+7. **Home** — routes to the two modes; sets the brand tone.
+8. **Global nav / header / footer** — hosts the §2 controls; skip link; clear landmarks.
 
 ---
 
@@ -86,9 +84,8 @@ Design components against **real data and its limits**, not lorem ipsum.
   - *Type* badges — 9 values; need to be distinguishable **without relying on color alone** (use icon+label).
   - *Visibility* — a **5-tier ladder**: `private → local → project → org_shared → public` (design as a scale, not a binary).
   - *Security* — `runs code` (trustRequired) and `contains secrets` (containsSecrets) — should read as **cautionary** and be unmissable.
-  - *Targets* — where it works: `claude-code`, `claude-api`, `claude-ai`, `cowork`.
+  - *Targets* — where it works: `codex`, `openai-api`, `chatgpt`, `chatgpt-work`.
 - **Detail-level concept block:** the same concept in **three lengths** — Simple (2–3 sentences, analogy), Normal (plain + one example), Technical (precise + links). Design so switching levels feels smooth, not like a page reload, and so headings/anchors stay stable.
-- **Streaming demo output:** design the incremental-text state and a "done" state.
 
 ---
 
@@ -124,7 +121,6 @@ Hand these over as the output of the design pass:
 - Empty library (first run) · empty search results · long descriptions · very long tag lists.
 - Private/secret asset badges; a plugin whose children are private.
 - Detail-level switch mid-scroll (keep position/anchor stable).
-- Playground: idle · streaming · done · rate-limited/blocked · **Replay** (offline/scripted) · error.
 - Comfort mode + dark mode + 150% text, together, on the densest screen (Library index).
 - PL vs EN string-length differences (Polish text is often longer — design for reflow).
 
@@ -135,7 +131,7 @@ Hand these over as the output of the design pass:
 1. Token set (§7) — ideally as named variables that map to Tailwind v4 `@theme` / CSS custom properties.
 2. The **global frame** (§2) with all control states.
 3. Library **index** + **detail** (with the storageKind variants).
-4. Workshop **guided lesson** view (with concept-level + glossary + expander) and the **playground**.
+4. Workshop **guided lesson** view (with concept-level + glossary + expander).
 5. The **badge system** (§5) as a small, reusable set.
 6. One screen shown in the "maximum" accessibility state (comfort + dark + 150%).
 
