@@ -100,5 +100,5 @@ jobs:
             echo
             echo "- URL: https://cookbook.denejko.pl"
             echo "- Image: \`${IMAGE_NAME}:${GITHUB_SHA}\`"
-            echo "- Authentication: enforced by Caddy"
+            echo "- Authentication: disabled (public site)"
           } >> "$GITHUB_STEP_SUMMARY"

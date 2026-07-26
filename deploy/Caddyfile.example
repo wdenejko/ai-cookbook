@@ -1,6 +1,4 @@
 # Cloudflare sends only cookbook.denejko.pl to this independent origin port.
-# Generate the password hash with:
-#   docker run --rm -it caddy:2.11.4-alpine caddy hash-password
 {
 	admin off
 	auto_https disable_redirects
@@ -8,10 +6,6 @@
 
 https://cookbook.denejko.pl:8443 {
 	tls internal
-
-	basic_auth {
-		radabretowo <BCRYPT_HASH>
-	}
 
 	encode zstd gzip
 	reverse_proxy 127.0.0.1:3200
