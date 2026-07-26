@@ -7,7 +7,16 @@ export const lessonSource = loader({
 });
 
 // Explicit order for guided navigation (small, curated set; extras sort after).
-export const LESSON_ORDER = ['what-is-a-prompt', 'what-is-a-skill', 'what-is-a-subagent'];
+export const LESSON_ORDER = [
+  'how-llms-work',
+  'what-is-a-prompt',
+  'prompting-as-dialogue',
+  'critical-thinking-with-ai',
+  'generating-images',
+  'organizing-work-with-ai',
+  'what-is-a-skill',
+  'what-is-a-subagent',
+];
 
 export interface LessonNav {
   slug: string;

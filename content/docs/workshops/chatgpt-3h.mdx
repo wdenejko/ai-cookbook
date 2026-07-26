@@ -1,0 +1,152 @@
+---
+title: ChatGPT w codziennej pracy — warsztat 3h
+description: Gotowy scenariusz trzygodzinnego warsztatu dla nietechnicznej grupy w wieku 40–50 lat.
+---
+
+## Cel warsztatu
+
+Po trzech godzinach uczestnik:
+
+- rozumie w uproszczeniu, czym jest LLM i dlaczego może się mylić;
+- buduje prompt z celu, kontekstu, danych, odbiorcy, formatu i kryteriów;
+- prowadzi pracę jako rozmowę: pytania, szkic, krytyka i poprawa;
+- stosuje adwokata diabła, różne perspektywy i audyt biasu;
+- przygotowuje i iteracyjnie poprawia obraz;
+- rozróżnia nowy czat, projekt, Memory i Skill.
+
+## Założenia
+
+- Grupa: 8–14 osób.
+- Każda osoba pracuje przy własnym komputerze.
+- Uczestnicy korzystają z neutralnych lub zanonimizowanych danych.
+- Proporcja: około 30% prezentacji i 70% demonstracji oraz ćwiczeń.
+- Nie zakładamy wiedzy technicznej.
+
+## Agenda — 180 minut
+
+| Czas | Moduł | Forma |
+|---:|---|---|
+| 0:00–0:10 | Otwarcie i przykłady zastosowań | rozmowa + szybka demonstracja |
+| 0:10–0:30 | Czym jest LLM i dlaczego się myli | analogia + porównanie odpowiedzi |
+| 0:30–0:55 | Brief dobrego promptu | demonstracja + poprawianie promptu |
+| 0:55–1:05 | Przerwa | — |
+| 1:05–1:40 | Wywiad, adwokat diabła i kontrola biasu | ćwiczenia w parach |
+| 1:40–2:05 | Generowanie i edycja obrazów | demonstracja + trzy iteracje |
+| 2:05–2:20 | Czat, projekt, Memory i Skills | mapa decyzyjna |
+| 2:20–2:50 | Zadanie końcowe | praca indywidualna |
+| 2:50–3:00 | Podsumowanie | checklista + zobowiązanie wdrożeniowe |
+
+## Moduł 1: czym jest LLM — 20 minut
+
+Użyj analogii do bardzo oczytanego pracownika tymczasowego:
+
+> Potrafi szybko tworzyć i przekształcać treści, ale zna tylko informacje, które
+> otrzymał, oraz wzorce, których nauczył się wcześniej. Gdy brakuje kontekstu,
+> zaczyna zgadywać.
+
+Pokaż dwa prompty:
+
+1. `Napisz e-mail o zmianie godzin pracy.`
+2. `Napisz spokojny e-mail do pracowników różnych działów o zmianie godzin pracy.
+   Maksymalnie 150 słów. Zakończ trzema najważniejszymi informacjami w punktach.
+   Jeśli brakuje danych, najpierw zadaj pytania.`
+
+Zapytaj grupę, jakie decyzje model musiał podjąć samodzielnie w pierwszym
+przypadku.
+
+## Moduł 2: brief dobrego promptu — 25 minut
+
+Przedstaw sześć elementów:
+
+1. **Cel**
+2. **Kontekst**
+3. **Dane**
+4. **Odbiorca**
+5. **Format**
+6. **Kryteria jakości**
+
+Nie wymagaj używania wszystkich elementów w każdym pytaniu. Zasada brzmi:
+podaj informacje, które zapobiegają ważnemu błędowi lub niepotrzebnemu
+zgadywaniu.
+
+Gotowy szablon znajduje się w
+[Library: Brief dobrego promptu](/library/prompt/prompt-brief-pl).
+
+## Moduł 3: rozmowa i krytyczne myślenie — 35 minut
+
+### Tryb wywiadu
+
+Model zadaje jedno pytanie naraz, podsumowuje brief i czeka na potwierdzenie.
+Uczestnicy przekonują się, że nie muszą samodzielnie projektować idealnego
+promptu.
+
+### Adwokat diabła
+
+Najpierw poproś o najmocniejsze argumenty przeciw, ryzyka i zabezpieczenia.
+Następnie o najmocniejsze argumenty za. Na końcu model ma wskazać informacje
+potrzebne do podjęcia decyzji, a nie wydać arbitralny werdykt.
+
+### Kontrola biasu
+
+Uczestnicy sprawdzają:
+
+- jakie założenia przyjął model;
+- jakich perspektyw brakuje;
+- co jest faktem, a co interpretacją;
+- jakie dowody mogłyby zmienić wniosek;
+- jakich danych brakuje.
+
+Podkreśl, że kontrola nie usuwa biasu całkowicie. Pomaga go zauważyć i
+ograniczyć, a odpowiedzialność za decyzję pozostaje po stronie człowieka.
+
+## Moduł 4: obrazy — 25 minut
+
+Przeprowadź trzy iteracje:
+
+1. ogólny prompt: `Obraz o współpracy człowieka z AI`;
+2. pełny brief wizualny;
+3. jedna kontrolowana poprawka z poleceniem zachowania reszty obrazu.
+
+Przykładowy temat:
+
+> Pozioma ilustracja 16:9 do prezentacji. Grupa osób w wieku 40–50 lat pracuje
+> wspólnie przy stole. Postacie po lewej stronie, około 40% pustej przestrzeni
+> po prawej na tytuł. Naturalna scena, miękkie światło, jasna
+> niebiesko-zielona paleta. Bez napisów, logotypów i futurystycznych robotów.
+
+Pełna instrukcja znajduje się na stronie
+[Generowanie obrazów](./image-generation).
+
+## Moduł 5: gdzie przechowywać kontekst — 15 minut
+
+| Potrzeba | Wybór |
+|---|---|
+| Oddzielne, jednorazowe zadanie | nowy czat |
+| Następny etap tego samego wyniku | ta sama rozmowa |
+| Dłuższy temat z rozmowami i plikami | projekt |
+| Stałe preferencje użytkownika | Memory |
+| Powtarzalna procedura | Skill |
+
+Zapytaj grupę, gdzie umieściliby: plan urlopu, preferowany ton e-maili,
+comiesięczne podsumowanie spotkania i analizę pojedynczej oferty.
+
+## Zadanie końcowe — 30 minut
+
+Uczestnik wybiera realne, niepoufne zadanie i:
+
+1. tworzy brief;
+2. uruchamia tryb wywiadu;
+3. przygotowuje pierwszą wersję;
+4. stosuje adwokata diabła albo audyt biasu;
+5. poprawia wynik według kryteriów;
+6. przygotowuje pasujący obraz lub jego brief;
+7. decyduje, czy zadanie powinno pozostać czatem, projektem czy Skillem.
+
+## Przygotowanie prowadzącego
+
+- Sprawdź wcześniej dostępność funkcji na kontach uczestników.
+- Przygotuj neutralny materiał awaryjny: notatki ze spotkania i opis komunikatu.
+- Otwórz w osobnych kartach wszystkie prompty z Library.
+- Przetestuj generowanie obrazu przed warsztatem.
+- Miej zrzuty ekranów na wypadek problemów z siecią.
+- Nie pokazuj danych klientów, pracowników ani dokumentów poufnych.

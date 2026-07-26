@@ -1,0 +1,56 @@
+---
+title: How language models work
+description: A language model predicts what should come next, which explains both its fluency and its mistakes.
+---
+
+You do not need to understand the engineering behind AI to use it well. One
+simple mental model is enough: an AI assistant is an excellent pattern maker,
+not a person and not a database.
+
+<Concept title="What is an LLM?">
+
+An <Term name="llm">LLM</Term>, or large language model, has learned patterns from
+a very large collection of text and other data. When you send it a message, it
+generates a response one small piece at a time by predicting what should come
+next. This lets it write, summarize, compare and explain with impressive
+fluency.
+
+</Concept>
+
+<Concept title="Why does context matter?">
+
+Imagine asking a talented temporary colleague to prepare a document. If you only
+say “write an email,” they must guess the purpose, audience and tone. The model
+has the same problem. Your prompt, the earlier messages and any attached files
+form its <Term name="context-window">working context</Term>. Better context means
+less guessing.
+
+</Concept>
+
+<Concept title="Why can it be confidently wrong?">
+
+The model is built to produce a plausible continuation, not to guarantee that
+every sentence is true. It can create a convincing but false date, quotation or
+source. This is called a <Term name="hallucination">hallucination</Term>. Use AI
+freely for drafts and ideas, but verify important names, numbers, dates and
+claims.
+
+</Concept>
+
+<GoDeeper title="A useful three-part mental model">
+
+Think of the model as:
+
+1. **a generator** — it creates a likely answer;
+2. **a transformer** — it rewrites material you provide;
+3. **a thinking partner** — it helps examine options.
+
+It is not automatically a source of current facts. When facts matter, give it
+reliable material or ask for sources and check them yourself.
+
+</GoDeeper>
+
+## Try it
+
+Ask the same question twice: first with no context, then with the audience,
+purpose and desired format. Compare what the model had to guess in each version.

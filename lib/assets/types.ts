@@ -24,7 +24,7 @@ export type Visibility = (typeof VISIBILITY_LEVELS)[number];
 
 export type StorageKind = 'single_file' | 'folder_bundle' | 'json_entry' | 'container';
 
-export const TARGETS = ['claude-code', 'claude-api', 'claude-ai', 'cowork'] as const;
+export const TARGETS = ['claude-code', 'claude-api', 'claude-ai', 'chatgpt', 'cowork'] as const;
 export type Target = (typeof TARGETS)[number];
 
 export interface AssetFile {
@@ -142,9 +142,19 @@ export function humanize(slug: string): string {
 }
 
 /** Where an asset of this type belongs in a consuming project, for "How to use this". */
-export function installFor(type: AssetType, slug: string): { destination: string; note: string } {
+export function installFor(
+  type: AssetType,
+  slug: string,
+  targets: readonly Target[] = [],
+): { destination: string; note: string } {
   switch (type) {
     case 'skill':
+      if (targets.includes('chatgpt')) {
+        return {
+          destination: 'ChatGPT → Plugins → Skills',
+          note: 'Create a Skill with chat or upload this folder in the Skills area. Availability can depend on your plan and workspace settings.',
+        };
+      }
       return {
         destination: `.claude/skills/${slug}/`,
         note: "Copy the whole folder into a project's .claude/skills/ (or ~/.claude/skills/ for personal use).",
