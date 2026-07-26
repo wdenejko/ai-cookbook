@@ -9,10 +9,16 @@ export const lessonSource = loader({
 // Explicit order for guided navigation (small, curated set; extras sort after).
 export const LESSON_ORDER = [
   'how-llms-work',
+  'choosing-an-ai-assistant',
+  'privacy-and-safe-ai-use',
   'what-is-a-prompt',
   'prompting-as-dialogue',
+  'learning-with-ai',
+  'working-with-files-and-data',
   'critical-thinking-with-ai',
+  'research-with-ai',
   'generating-images',
+  'recognizing-ai-scams',
   'organizing-work-with-ai',
   'what-is-a-skill',
   'what-is-a-subagent',

@@ -1,3 +1,5 @@
+import { additionalLessonEnrichment } from './lesson-enrichment-additional';
+
 export type LessonLocale = 'en' | 'pl';
 
 interface LessonExample {
@@ -865,6 +867,7 @@ export const lessonEnrichment: Record<string, BilingualLesson> = {
         'Przepisz „zbadaj naszą konkurencję” jako zlecenie, które pomocnik wykona bez dostępu do bieżącej rozmowy.',
     },
   },
+  ...additionalLessonEnrichment,
 };
 
 export function getLessonEnrichment(slug: string, locale: LessonLocale) {

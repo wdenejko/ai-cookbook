@@ -1,0 +1,70 @@
+---
+title: Work with documents, PDFs and spreadsheets
+description: Prepare files, ask traceable questions and inspect the result instead of trusting an automatic summary.
+---
+
+Uploading a file can replace many guesses with real source material. It does not
+guarantee that the assistant read every page, understood a scan or used the
+right calculation. Good file work makes both the source and the method visible.
+
+<LessonGuide slug="working-with-files-and-data" locale="en" />
+
+<Concept title="Prepare the source">
+
+Use descriptive filenames and include only relevant versions. For a spreadsheet,
+keep one row per record, clear column names and no decorative empty rows inside
+the data. For a PDF, check whether text can be selected; a scan or complex table
+may require extra care.
+
+Tell the assistant what each file is and which one is authoritative.
+
+</Concept>
+
+<Concept title="Ask for traceable extraction">
+
+Request a structure that can be checked:
+
+> Create a table with obligation, owner, deadline, exception and source page.
+> Use only the attached policy. Write “not specified” instead of guessing.
+
+For comparisons, define the fields before asking which option is better. For
+summaries, ask separately for facts, decisions, open questions and missing
+information.
+
+</Concept>
+
+<Concept title="Treat scans and tables as risky">
+
+Image-based tables, multi-column PDFs, footnotes and merged spreadsheet cells
+can be read incorrectly or partly skipped. Ask how many pages, sheets, rows and
+columns were inspected. Check totals against a known value and manually review
+the highest-impact entries.
+
+ChatGPT’s official [data analysis guide](https://help.openai.com/en/articles/8437071-data-analysis-with-chatgpt/)
+also warns that scanned files and complex layouts may not be extracted reliably.
+
+</Concept>
+
+<Concept title="Inspect calculations and charts">
+
+State the grouping, filters, date range and unit. Ask for the intermediate table
+before the chart and request a note explaining excluded or missing values. A
+beautiful chart can still encode the wrong measure.
+
+Keep the original file unchanged. Export the result as a separate artifact and
+record the assumptions used to create it.
+
+</Concept>
+
+<GoDeeper title="Use a source-to-result audit">
+
+Select three important cells or claims in the final result. Trace each one back
+to the exact page, row or calculation. If the path cannot be reconstructed, the
+result is not ready for a decision.
+
+When the file is too large, split the job into inventory, extraction, checking
+and synthesis rather than asking for one giant summary.
+
+</GoDeeper>
+
+<LessonWorkbook slug="working-with-files-and-data" locale="en" />
