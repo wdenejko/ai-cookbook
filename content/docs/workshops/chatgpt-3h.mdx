@@ -1,152 +1,85 @@
 ---
-title: ChatGPT w codziennej pracy — warsztat 3h
-description: Gotowy scenariusz trzygodzinnego warsztatu dla nietechnicznej grupy w wieku 40–50 lat.
+title: ChatGPT for everyday work — a 3-hour workshop
+description: A complete three-hour workshop plan for a non-technical audience aged 40–50.
 ---
 
-## Cel warsztatu
+## Workshop goal
 
-Po trzech godzinach uczestnik:
+After three hours, participants can:
 
-- rozumie w uproszczeniu, czym jest LLM i dlaczego może się mylić;
-- buduje prompt z celu, kontekstu, danych, odbiorcy, formatu i kryteriów;
-- prowadzi pracę jako rozmowę: pytania, szkic, krytyka i poprawa;
-- stosuje adwokata diabła, różne perspektywy i audyt biasu;
-- przygotowuje i iteracyjnie poprawia obraz;
-- rozróżnia nowy czat, projekt, Memory i Skill.
+- explain in simple terms what an LLM is and why it can be wrong;
+- build a prompt from a goal, context, data, audience, format, and quality criteria;
+- work through dialogue: questions, draft, critique, and revision;
+- use a devil’s advocate, multiple perspectives, and a bias audit;
+- create and iteratively improve an image;
+- distinguish a new chat, Project, Memory, and Skill.
 
-## Założenia
+## Assumptions
 
-- Grupa: 8–14 osób.
-- Każda osoba pracuje przy własnym komputerze.
-- Uczestnicy korzystają z neutralnych lub zanonimizowanych danych.
-- Proporcja: około 30% prezentacji i 70% demonstracji oraz ćwiczeń.
-- Nie zakładamy wiedzy technicznej.
+- Group: 8–14 people, each working at their own computer.
+- Participants use neutral or anonymized data.
+- About 30% presentation and 70% demonstrations and exercises.
+- No technical knowledge is assumed.
 
-## Agenda — 180 minut
+## Before the workshop
 
-| Czas | Moduł | Forma |
-|---:|---|---|
-| 0:00–0:10 | Otwarcie i przykłady zastosowań | rozmowa + szybka demonstracja |
-| 0:10–0:30 | Czym jest LLM i dlaczego się myli | analogia + porównanie odpowiedzi |
-| 0:30–0:55 | Brief dobrego promptu | demonstracja + poprawianie promptu |
-| 0:55–1:05 | Przerwa | — |
-| 1:05–1:40 | Wywiad, adwokat diabła i kontrola biasu | ćwiczenia w parach |
-| 1:40–2:05 | Generowanie i edycja obrazów | demonstracja + trzy iteracje |
-| 2:05–2:20 | Czat, projekt, Memory i Skills | mapa decyzyjna |
-| 2:20–2:50 | Zadanie końcowe | praca indywidualna |
-| 2:50–3:00 | Podsumowanie | checklista + zobowiązanie wdrożeniowe |
+Ask participants to sign in to ChatGPT, bring one harmless work task and a short
+piece of sample text, and avoid personal, confidential, financial, or medical
+data. Open the prompt cards and image brief from the Library in separate tabs.
 
-## Moduł 1: czym jest LLM — 20 minut
+## Agenda
 
-Użyj analogii do bardzo oczytanego pracownika tymczasowego:
+### 0:00–0:15 — Opening and safety
 
-> Potrafi szybko tworzyć i przekształcać treści, ale zna tylko informacje, które
-> otrzymał, oraz wzorce, których nauczył się wcześniej. Gdy brakuje kontekstu,
-> zaczyna zgadywać.
+Explain the goal, show the interface, and agree on the rule: never paste data
+that should not leave the organization. Run one intentionally vague prompt and
+compare it with a prompt that contains a clear goal and audience.
 
-Pokaż dwa prompty:
+### 0:15–0:40 — How a language model works
 
-1. `Napisz e-mail o zmianie godzin pracy.`
-2. `Napisz spokojny e-mail do pracowników różnych działów o zmianie godzin pracy.
-   Maksymalnie 150 słów. Zakończ trzema najważniejszymi informacjami w punktach.
-   Jeśli brakuje danych, najpierw zadaj pytania.`
+Use the “How language models work” lesson. Emphasize that the model predicts a
+useful continuation; it does not automatically verify truth. Demonstrate one
+fluent but uncertain answer and ask the group how it could be checked.
 
-Zapytaj grupę, jakie decyzje model musiał podjąć samodzielnie w pierwszym
-przypadku.
+### 0:40–1:10 — A six-part prompt brief
 
-## Moduł 2: brief dobrego promptu — 25 minut
+Introduce goal, context, source data, audience, output format, and quality
+criteria. Participants rewrite a vague request using the
+[six-part prompt brief](/library/prompt/prompt-brief-pl), then compare results
+in pairs.
 
-Przedstaw sześć elementów:
+### 1:10–1:20 — Break
 
-1. **Cel**
-2. **Kontekst**
-3. **Dane**
-4. **Odbiorca**
-5. **Format**
-6. **Kryteria jakości**
+### 1:20–1:50 — Prompting as dialogue
 
-Nie wymagaj używania wszystkich elementów w każdym pytaniu. Zasada brzmi:
-podaj informacje, które zapobiegają ważnemu błędowi lub niepotrzebnemu
-zgadywaniu.
+Show why one perfect prompt is not required. Use a five-step loop: ask,
+clarify, draft, critique, revise. Demonstrate
+[step-by-step interview mode](/library/prompt/guided-interview-pl) and let
+participants improve one real task through two iterations.
 
-Gotowy szablon znajduje się w
-[Library: Brief dobrego promptu](/library/prompt/prompt-brief-pl).
+### 1:50–2:15 — Critical thinking
 
-## Moduł 3: rozmowa i krytyczne myślenie — 35 minut
+Separate facts from interpretation. Use the
+[devil’s advocate](/library/prompt/devils-advocate-pl) and
+[bias audit](/library/prompt/bias-audit-pl). Ask participants to identify
+assumptions, missing perspectives, and claims that need a source.
 
-### Tryb wywiadu
+### 2:15–2:25 — Break
 
-Model zadaje jedno pytanie naraz, podsumowuje brief i czeka na potwierdzenie.
-Uczestnicy przekonują się, że nie muszą samodzielnie projektować idealnego
-promptu.
+### 2:25–2:50 — Generating images
 
-### Adwokat diabła
+Build a visual brief from purpose, subject, setting, composition, style,
+lighting, format, and exclusions. Generate a first image, then change one thing
+at a time. Check hands, text, logos, stereotypes, and consistency before use.
 
-Najpierw poproś o najmocniejsze argumenty przeciw, ryzyka i zabezpieczenia.
-Następnie o najmocniejsze argumenty za. Na końcu model ma wskazać informacje
-potrzebne do podjęcia decyzji, a nie wydać arbitralny werdykt.
+### 2:50–3:00 — Organizing future work
 
-### Kontrola biasu
+Explain when to use a new chat, Project, Memory, or Skill. Participants choose
+one repeated task they could turn into a reusable prompt or Skill and finish
+with the [participant checklist](/docs/workshops/participant-checklist).
 
-Uczestnicy sprawdzają:
+## Facilitator notes
 
-- jakie założenia przyjął model;
-- jakich perspektyw brakuje;
-- co jest faktem, a co interpretacją;
-- jakie dowody mogłyby zmienić wniosek;
-- jakich danych brakuje.
-
-Podkreśl, że kontrola nie usuwa biasu całkowicie. Pomaga go zauważyć i
-ograniczyć, a odpowiedzialność za decyzję pozostaje po stronie człowieka.
-
-## Moduł 4: obrazy — 25 minut
-
-Przeprowadź trzy iteracje:
-
-1. ogólny prompt: `Obraz o współpracy człowieka z AI`;
-2. pełny brief wizualny;
-3. jedna kontrolowana poprawka z poleceniem zachowania reszty obrazu.
-
-Przykładowy temat:
-
-> Pozioma ilustracja 16:9 do prezentacji. Grupa osób w wieku 40–50 lat pracuje
-> wspólnie przy stole. Postacie po lewej stronie, około 40% pustej przestrzeni
-> po prawej na tytuł. Naturalna scena, miękkie światło, jasna
-> niebiesko-zielona paleta. Bez napisów, logotypów i futurystycznych robotów.
-
-Pełna instrukcja znajduje się na stronie
-[Generowanie obrazów](./image-generation).
-
-## Moduł 5: gdzie przechowywać kontekst — 15 minut
-
-| Potrzeba | Wybór |
-|---|---|
-| Oddzielne, jednorazowe zadanie | nowy czat |
-| Następny etap tego samego wyniku | ta sama rozmowa |
-| Dłuższy temat z rozmowami i plikami | projekt |
-| Stałe preferencje użytkownika | Memory |
-| Powtarzalna procedura | Skill |
-
-Zapytaj grupę, gdzie umieściliby: plan urlopu, preferowany ton e-maili,
-comiesięczne podsumowanie spotkania i analizę pojedynczej oferty.
-
-## Zadanie końcowe — 30 minut
-
-Uczestnik wybiera realne, niepoufne zadanie i:
-
-1. tworzy brief;
-2. uruchamia tryb wywiadu;
-3. przygotowuje pierwszą wersję;
-4. stosuje adwokata diabła albo audyt biasu;
-5. poprawia wynik według kryteriów;
-6. przygotowuje pasujący obraz lub jego brief;
-7. decyduje, czy zadanie powinno pozostać czatem, projektem czy Skillem.
-
-## Przygotowanie prowadzącego
-
-- Sprawdź wcześniej dostępność funkcji na kontach uczestników.
-- Przygotuj neutralny materiał awaryjny: notatki ze spotkania i opis komunikatu.
-- Otwórz w osobnych kartach wszystkie prompty z Library.
-- Przetestuj generowanie obrazu przed warsztatem.
-- Miej zrzuty ekranów na wypadek problemów z siecią.
-- Nie pokazuj danych klientów, pracowników ani dokumentów poufnych.
+Keep examples concrete and short. Ask “What evidence supports this?” more often
+than “Is this answer good?”. End every exercise by naming what the participant
+changed and why it improved the result.

@@ -9,7 +9,7 @@ library:
   tags: [meetings, productivity, summarization]
   category: "Productivity"
   visibility: public
-  targets: [claude-api, claude-ai]
+  targets: [openai-api, chatgpt]
   sourceProject: null
 ---
 

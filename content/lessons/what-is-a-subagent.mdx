@@ -1,19 +1,19 @@
 ---
 title: What is a subagent?
-description: A subagent is a separate helper Claude hands a focused job to, then gets back just the result.
+description: A subagent is a separate helper ChatGPT hands a focused job to, then gets back just the result.
 ---
 
-Sometimes the best way to stay focused is to delegate. This lesson covers what a subagent is, why Claude hands work to one, and how a subagent is defined in a single small file.
+Sometimes the best way to stay focused is to delegate. This lesson covers what a subagent is, why ChatGPT hands work to one, and how a subagent is defined in a single small file.
 
 <Concept title="What is a subagent?">
 
-A <Term name="subagent">subagent</Term> is a second copy of Claude that the main assistant can hand a specific task to, such as "review this code" or "search these files." It works on that task by itself and returns a tidy summary, so the main conversation is not cluttered with all the messy in-between steps.
+A <Term name="subagent">subagent</Term> is a second copy of ChatGPT that the main assistant can hand a specific task to, such as "review this code" or "search these files." It works on that task by itself and returns a tidy summary, so the main conversation is not cluttered with all the messy in-between steps.
 
 </Concept>
 
 <Concept title="Why hand work to a subagent?">
 
-Big jobs, like reading through twenty files, create a lot of back-and-forth. If Claude did it all in the main chat, that chat would fill up fast. A subagent does the noisy work separately and returns only the conclusion, keeping the main thread clean. Subagents can also be specialists, and can even run in parallel.
+Big jobs, like reading through twenty files, create a lot of back-and-forth. If ChatGPT did it all in the main chat, that chat would fill up fast. A subagent does the noisy work separately and returns only the conclusion, keeping the main thread clean. Subagents can also be specialists, and can even run in parallel.
 
 </Concept>
 
@@ -31,6 +31,6 @@ No. A subagent starts with a clean slate: it gets only the task the main agent h
 
 ## See a real subagent in the library
 
-The library includes a code-reviewer subagent. Open it to see the frontmatter (`tools: Read, Grep, Glob, Bash` and `model: sonnet`) and the detailed system prompt that tells it exactly how to review a change.
+The library includes a code-reviewer subagent. Open it to see the frontmatter (`tools: Read, Grep, Glob, Bash` and `model: gpt-5`) and the detailed system prompt that tells it exactly how to review a change.
 
 <Showcase asset="subagent/code-reviewer" />

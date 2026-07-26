@@ -6,7 +6,7 @@ library:
   tags: [changelog, git, release]
   category: "Engineering"
   visibility: public
-  targets: [claude-code]
+  targets: [codex]
   sourceProject: null
 ---
 

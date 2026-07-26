@@ -250,7 +250,7 @@ async function loadJson(): Promise<Asset[]> {
   return out;
 }
 
-// Plugins are containers: a .claude-plugin/plugin.json manifest plus a README.md
+// Plugins are containers: a .codex-plugin/plugin.json manifest plus a README.md
 // sidecar carrying library metadata and `components` (child asset id references).
 async function loadPlugins(): Promise<Asset[]> {
   const dir = path.join(ASSETS_ROOT, 'plugins');
@@ -258,7 +258,7 @@ async function loadPlugins(): Promise<Asset[]> {
   for (const entry of await readDirSafe(dir)) {
     if (!entry.isDirectory()) continue;
     const slug = entry.name;
-    const manifestPath = path.join(dir, slug, '.claude-plugin', 'plugin.json');
+    const manifestPath = path.join(dir, slug, '.codex-plugin', 'plugin.json');
     if (!(await exists(manifestPath))) continue;
 
     const raw = await fs.readFile(manifestPath, 'utf8');
@@ -309,7 +309,7 @@ async function loadPlugins(): Promise<Asset[]> {
       makeAsset({
         type: 'plugin',
         slug,
-        filePath: `content/assets/plugins/${slug}/.claude-plugin/plugin.json`,
+        filePath: `content/assets/plugins/${slug}/.codex-plugin/plugin.json`,
         raw,
         rawLanguage: 'json',
         fm,

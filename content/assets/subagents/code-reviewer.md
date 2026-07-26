@@ -2,12 +2,12 @@
 name: code-reviewer
 description: "Reviews a code diff for correctness, security vulnerabilities, and missed edge cases, returning prioritized, actionable findings. Use when a change is ready for review — before merging a PR or committing — to catch bugs, injection risks, and error-handling gaps."
 tools: Read, Grep, Glob, Bash
-model: sonnet
+model: gpt-5
 library:
   tags: [code-review, security, engineering]
   category: "Engineering"
   visibility: public
-  targets: [claude-code]
+  targets: [codex]
   sourceProject: null
 ---
 

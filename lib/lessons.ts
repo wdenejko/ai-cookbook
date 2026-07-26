@@ -20,8 +20,8 @@ export const LESSON_ORDER = [
 
 export interface LessonNav {
   slug: string;
-  title: string;
-  description: string;
+  title: { en: string; pl: string };
+  description: { en: string; pl: string };
 }
 
 function orderIndex(slug: string): number {
@@ -38,8 +38,17 @@ export function getOrderedLessons(): LessonNav[] {
   return enPages()
     .map((p) => ({
       slug: p.slugs[0] ?? '',
-      title: p.data.title,
-      description: p.data.description ?? '',
+      title: {
+        en: p.data.title,
+        pl: lessonSource.getPage(['pl', p.slugs[0] ?? ''])?.data.title ?? p.data.title,
+      },
+      description: {
+        en: p.data.description ?? '',
+        pl:
+          lessonSource.getPage(['pl', p.slugs[0] ?? ''])?.data.description ??
+          p.data.description ??
+          '',
+      },
     }))
     .sort((a, b) => orderIndex(a.slug) - orderIndex(b.slug) || a.slug.localeCompare(b.slug));
 }

@@ -2,10 +2,14 @@
 
 import { type ReactNode, useMemo, useState } from 'react';
 import { Search } from 'lucide-react';
-import { type AssetSummary, type AssetType, TYPE_META } from '@/lib/assets/types';
+import { type AssetSummary, type AssetType } from '@/lib/assets/types';
+import { getAssetCopy, translateAssetTag, TYPE_LABEL_KEYS } from '@/lib/assets/i18n';
+import { useLocale, useT } from '@/components/workshop/locale';
 import { AssetCard } from './asset-card';
 
 export function LibraryBrowser({ assets }: { assets: AssetSummary[] }) {
+  const t = useT();
+  const { locale } = useLocale();
   const [query, setQuery] = useState('');
   const [activeType, setActiveType] = useState<AssetType | 'all'>('all');
   const [activeTags, setActiveTags] = useState<string[]>([]);
@@ -28,13 +32,14 @@ export function LibraryBrowser({ assets }: { assets: AssetSummary[] }) {
       if (activeType !== 'all' && a.type !== activeType) return false;
       if (activeTags.length && !activeTags.every((t) => a.tags.includes(t))) return false;
       if (q) {
+        const copy = getAssetCopy(a, locale);
         const hay =
-          `${a.title} ${a.description} ${a.tags.join(' ')} ${a.category ?? ''}`.toLowerCase();
+          `${copy.title} ${copy.description} ${copy.tags.join(' ')} ${copy.category ?? ''}`.toLowerCase();
         if (!hay.includes(q)) return false;
       }
       return true;
     });
-  }, [assets, query, activeType, activeTags]);
+  }, [assets, query, activeType, activeTags, locale]);
 
   const toggleTag = (t: string) =>
     setActiveTags((cur) => (cur.includes(t) ? cur.filter((x) => x !== t) : [...cur, t]));
@@ -50,19 +55,19 @@ export function LibraryBrowser({ assets }: { assets: AssetSummary[] }) {
           type="search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search assets…"
-          aria-label="Search assets"
+          placeholder={t('library.search')}
+          aria-label={t('library.searchAria')}
           className="min-h-11 w-full rounded-md border border-divider bg-surface pl-9 pr-3 text-sm outline-none focus-visible:border-accent"
         />
       </div>
 
       <div className="flex flex-wrap gap-2">
         <FacetChip active={activeType === 'all'} onClick={() => setActiveType('all')}>
-          All ({assets.length})
+          {t('library.all')} ({assets.length})
         </FacetChip>
         {typesPresent.map(([type, n]) => (
           <FacetChip key={type} active={activeType === type} onClick={() => setActiveType(type)}>
-            {TYPE_META[type].plural} ({n})
+            {t(TYPE_LABEL_KEYS[type].plural)} ({n})
           </FacetChip>
         ))}
       </div>
@@ -81,20 +86,21 @@ export function LibraryBrowser({ assets }: { assets: AssetSummary[] }) {
                   : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200'
               }`}
             >
-              {t}
+              {translateAssetTag(t, locale)}
             </button>
           ))}
         </div>
       )}
 
       <p className="text-sm text-fd-muted-foreground">
-        {filtered.length} of {assets.length} {assets.length === 1 ? 'asset' : 'assets'}
+        {filtered.length} {t('library.of')} {assets.length}{' '}
+        {assets.length === 1 ? t('library.asset') : t('library.assets')}
       </p>
 
       {assets.length === 0 ? (
         <EmptyState />
       ) : filtered.length === 0 ? (
-        <p className="text-fd-muted-foreground">No assets match your filters.</p>
+        <p className="text-fd-muted-foreground">{t('library.noMatch')}</p>
       ) : (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((a) => (
@@ -130,12 +136,13 @@ function FacetChip({
 }
 
 function EmptyState() {
+  const t = useT();
   return (
     <div className="rounded-md border border-dashed border-divider p-8 text-center text-fd-muted-foreground">
-      <p className="mb-1 font-heading text-lg text-fd-foreground">No assets yet</p>
+      <p className="mb-1 font-heading text-lg text-fd-foreground">{t('library.emptyTitle')}</p>
       <p className="text-sm">
-        Add files under <code className="font-mono">content/assets/</code> and they&rsquo;ll appear
-        here.
+        {t('library.emptyDescription.before')}{' '}
+        <code className="font-mono">content/assets/</code> {t('library.emptyDescription.after')}
       </p>
     </div>
   );

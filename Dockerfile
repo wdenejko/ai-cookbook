@@ -19,7 +19,6 @@ COPY . .
 
 ARG NEXT_PUBLIC_SITE_URL=https://cookbook.denejko.pl
 ENV NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL
-ENV DEMO_MODE=replay
 
 RUN npm run postinstall && npm run build
 

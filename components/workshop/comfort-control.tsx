@@ -81,7 +81,7 @@ export function ComfortControl() {
       {open && (
         <div
           role="dialog"
-          aria-label="Comfort settings"
+          aria-label={t('comfort.dialogAria')}
           className="mb-2 w-64 rounded-md border border-divider bg-surface p-4 shadow-lg"
         >
           <div className="mb-3 flex items-center justify-between">

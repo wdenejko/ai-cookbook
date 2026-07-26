@@ -76,8 +76,11 @@ export default async function LessonPage(props: PageProps<'/learn/[slug]'>) {
 
       <nav
         className="mt-12 flex items-stretch justify-between gap-4 border-t border-divider pt-6"
-        aria-label="Lesson navigation"
+        aria-labelledby="lesson-nav-label"
       >
+        <span id="lesson-nav-label" className="sr-only">
+          <T k="lesson.navAria" />
+        </span>
         {prev ? (
           <Link
             href={`/learn/${prev.slug}`}
@@ -86,7 +89,14 @@ export default async function LessonPage(props: PageProps<'/learn/[slug]'>) {
             <span className="text-xs text-fd-muted-foreground">
               ← <T k="lesson.prev" />
             </span>
-            <span className="font-heading">{prev.title}</span>
+            <span className="font-heading">
+              <span data-lang="en" lang="en">
+                {prev.title.en}
+              </span>
+              <span data-lang="pl" lang="pl">
+                {prev.title.pl}
+              </span>
+            </span>
           </Link>
         ) : (
           <span className="flex-1" />
@@ -99,7 +109,14 @@ export default async function LessonPage(props: PageProps<'/learn/[slug]'>) {
             <span className="text-xs text-fd-muted-foreground">
               <T k="lesson.next" /> →
             </span>
-            <span className="font-heading">{next.title}</span>
+            <span className="font-heading">
+              <span data-lang="en" lang="en">
+                {next.title.en}
+              </span>
+              <span data-lang="pl" lang="pl">
+                {next.title.pl}
+              </span>
+            </span>
           </Link>
         ) : (
           <span className="flex-1" />

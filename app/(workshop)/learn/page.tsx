@@ -49,8 +49,22 @@ export default function LearnPage() {
                   {i + 1}
                 </span>
                 <span className="flex-1">
-                  <span className="block font-heading text-lg">{l.title}</span>
-                  <span className="block text-sm text-fd-muted-foreground">{l.description}</span>
+                  <span className="block font-heading text-lg">
+                    <span data-lang="en" lang="en">
+                      {l.title.en}
+                    </span>
+                    <span data-lang="pl" lang="pl">
+                      {l.title.pl}
+                    </span>
+                  </span>
+                  <span className="block text-sm text-fd-muted-foreground">
+                    <span data-lang="en" lang="en">
+                      {l.description.en}
+                    </span>
+                    <span data-lang="pl" lang="pl">
+                      {l.description.pl}
+                    </span>
+                  </span>
                 </span>
                 <ArrowRight className="mt-1 size-5 shrink-0 text-fd-muted-foreground" aria-hidden />
               </Link>

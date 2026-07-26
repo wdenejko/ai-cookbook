@@ -376,10 +376,10 @@ class Component extends DCLogic {
       description:{en:'Pull clean text, tables and metadata out of any PDF — including scanned pages, via OCR.',
         pl:'Wyciągnij czysty tekst, tabele i metadane z dowolnego PDF — także ze skanów, dzięki OCR.'},
       tags:['documents','parsing','ocr'], favorite:true, trustRequired:false, containsSecrets:false,
-      targets:['Claude Code','Claude API'], lesson:'what-is-a-skill',
+      targets:['Codex','OpenAI API'], lesson:'what-is-a-skill',
       install:{en:'A folder bundle — drop it whole into your project so the SKILL.md and its scripts travel together.',
         pl:'Paczka-folder — skopiuj ją w całości do projektu, aby SKILL.md i skrypty podróżowały razem.'},
-      installPath:'.claude/skills/pdf-extractor/',
+      installPath:'.agents/skills/pdf-extractor/',
       files:[{path:'SKILL.md',kind:'entrypoint'},{path:'reference/tables.md',kind:'reference'},{path:'scripts/extract.py',kind:'script · exec'}],
       body:`---
 name: pdf-extractor
@@ -402,10 +402,10 @@ Turn any PDF into clean, structured text.
       description:{en:'Generate and refine images from a written brief, with reusable style presets.',
         pl:'Twórz i dopracowuj obrazy na podstawie opisu, z gotowymi presetami stylów.'},
       tags:['images','generation','media'], favorite:true, trustRequired:false, containsSecrets:false,
-      targets:['Claude Code','Claude API'], lesson:null,
+      targets:['Codex','OpenAI API'], lesson:null,
       install:{en:'A folder bundle. Copy it into your skills directory; the presets live alongside SKILL.md.',
         pl:'Paczka-folder. Skopiuj do katalogu umiejętności; presety leżą obok SKILL.md.'},
-      installPath:'.claude/skills/picture-generator/',
+      installPath:'.agents/skills/picture-generator/',
       files:[{path:'SKILL.md',kind:'entrypoint'},{path:'reference/presets.md',kind:'reference'}],
       body:`---
 name: picture-generator
@@ -427,15 +427,15 @@ Take a brief, propose a composition, then render.
       description:{en:'A focused agent that reads a diff and flags bugs, risky patterns and style drift before you merge.',
         pl:'Skupiony agent, który czyta diff i wychwytuje błędy, ryzykowne wzorce i odstępstwa od stylu przed scaleniem.'},
       tags:['code','review','security'], favorite:true, trustRequired:false, containsSecrets:false,
-      targets:['Claude Code'], lesson:'what-is-an-agent',
+      targets:['Codex'], lesson:'what-is-an-agent',
       install:{en:'A single Markdown file — its frontmatter defines the tools and model, the body is the system prompt.',
         pl:'Pojedynczy plik Markdown — frontmatter definiuje narzędzia i model, treść to prompt systemowy.'},
-      installPath:'.claude/agents/code-reviewer.md',
+      installPath:'.codex/agents/code-reviewer.md',
       body:`---
 name: code-reviewer
 description: Reviews a diff for correctness, security and style.
 tools: [Read, Grep, Bash]
-model: claude-sonnet
+model: gpt-5
 ---
 
 You are a meticulous senior reviewer. Given a diff:
@@ -451,10 +451,10 @@ formatting a linter already owns.` },
       description:{en:'Draft a Conventional Commit from your staged changes, subject and body, in one step.',
         pl:'Napisz Conventional Commit na podstawie zmian w staging — temat i treść w jednym kroku.'},
       tags:['git','workflow'], favorite:false, trustRequired:false, containsSecrets:false,
-      targets:['Claude Code'], lesson:null,
+      targets:['Codex'], lesson:null,
       install:{en:'A flat command — one Markdown file invoked by its slash name.',
         pl:'Płaska komenda — jeden plik Markdown wywoływany po nazwie slash.'},
-      installPath:'.claude/commands/commit-message.md',
+      installPath:'.codex/prompts/commit-message.md',
       body:`---
 name: commit-message
 argument-hint: "[--scope <area>]"
@@ -469,10 +469,10 @@ explaining *why*. Never invent changes that aren't in the diff.` },
       description:{en:'Researches a question across the live web and returns findings with inline citations.',
         pl:'Bada pytanie w sieci na żywo i zwraca ustalenia z przypisami.'},
       tags:['research','web','citations'], favorite:false, trustRequired:false, containsSecrets:false,
-      targets:['Claude Code','Claude API'], lesson:null,
+      targets:['Codex','OpenAI API'], lesson:null,
       install:{en:'A single Markdown subagent file. Its frontmatter preloads the web tools it may call.',
         pl:'Pojedynczy plik subagenta. Frontmatter wczytuje z góry narzędzia sieciowe.'},
-      installPath:'.claude/agents/web-researcher.md',
+      installPath:'.codex/agents/web-researcher.md',
       body:`---
 name: web-researcher
 description: Answers a question from live web sources, with citations.
@@ -485,10 +485,10 @@ Every claim carries a citation. Note where sources disagree rather
 than papering over it. End with a two-line synthesis, not a wall.` },
 
     { type:'mcp_server', slug:'linear', title:'Linear', category:'Integrations', visibility:'private',
-      description:{en:'Connect Claude to your Linear issues, cycles and projects over an authenticated HTTP connector.',
-        pl:'Połącz Claude z zadaniami, cyklami i projektami w Linear przez uwierzytelniony konektor HTTP.'},
+      description:{en:'Connect ChatGPT to your Linear issues, cycles and projects over an authenticated HTTP connector.',
+        pl:'Połącz ChatGPT z zadaniami, cyklami i projektami w Linear przez uwierzytelniony konektor HTTP.'},
       tags:['mcp','project-mgmt','connector'], favorite:false, trustRequired:true, containsSecrets:true,
-      targets:['Claude Code','Claude Desktop'], lesson:'what-is-an-mcp',
+      targets:['Codex','ChatGPT desktop app'], lesson:'what-is-an-mcp',
       install:{en:'A JSON entry inside your .mcp.json. Store the token as a reference — never paste the secret in plaintext.',
         pl:'Wpis JSON w .mcp.json. Token przechowuj przez referencję — nigdy nie wklejaj sekretu jawnie.'},
       installPath:'.mcp.json → mcpServers.linear',
@@ -512,7 +512,7 @@ resolved from your environment at run time — never committed.`,
       description:{en:'Read repositories, pull requests and issues directly from inside a conversation.',
         pl:'Czytaj repozytoria, pull requesty i zgłoszenia bezpośrednio z rozmowy.'},
       tags:['mcp','git','connector'], favorite:false, trustRequired:true, containsSecrets:true,
-      targets:['Claude Code','Claude Desktop'], lesson:null,
+      targets:['Codex','ChatGPT desktop app'], lesson:null,
       install:{en:'A JSON entry inside .mcp.json launched over stdio. Keep the PAT in your environment.',
         pl:'Wpis JSON w .mcp.json uruchamiany przez stdio. Trzymaj PAT w środowisku.'},
       installPath:'.mcp.json → mcpServers.github',
@@ -535,10 +535,10 @@ access token. Grant it the narrowest scopes the workflow needs.`,
       description:{en:'Run your formatter after every file write, so nothing lands unformatted.',
         pl:'Uruchom formatter po każdym zapisie pliku, aby nic nie trafiło niesformatowane.'},
       tags:['hooks','workflow','automation'], favorite:false, trustRequired:true, containsSecrets:false,
-      targets:['Claude Code'], lesson:null,
+      targets:['Codex'], lesson:null,
       install:{en:'A JSON block inside settings.json. It runs a shell command, so review it before enabling.',
         pl:'Blok JSON w settings.json. Uruchamia polecenie powłoki, więc sprawdź go przed włączeniem.'},
-      installPath:'.claude/settings.json → hooks',
+      installPath:'.codex/hooks.json → hooks',
       body:`# Format on Save
 
 A PostToolUse hook matched to file writes. Runs your formatter on the
@@ -547,7 +547,7 @@ touched path with a short timeout, then lets the turn continue.`,
   "hooks": {
     "PostToolUse": [{
       "matcher": "Write|Edit",
-      "hooks": [{ "type": "command", "command": "prettier --write $CLAUDE_FILE", "timeout": 15 }]
+      "hooks": [{ "type": "command", "command": "prettier --write $CODEX_FILE", "timeout": 15 }]
     }]
   }
 }` },
@@ -556,7 +556,7 @@ touched path with a short timeout, then lets the turn continue.`,
       description:{en:'Turn a raw transcript into decisions, owners and dated action items.',
         pl:'Zamień surową transkrypcję w decyzje, właścicieli i zadania z terminami.'},
       tags:['prompt','productivity','writing'], favorite:false, trustRequired:false, containsSecrets:false,
-      targets:['Claude API','Claude.ai'], lesson:'what-is-a-prompt',
+      targets:['OpenAI API','ChatGPT'], lesson:'what-is-a-prompt',
       install:{en:'A reusable prompt with a {{transcript}} variable — fill it in and send.',
         pl:'Prompt wielokrotnego użytku ze zmienną {{transcript}} — uzupełnij i wyślij.'},
       installPath:'content/assets/prompts/meeting-summary.mdx',
@@ -573,13 +573,13 @@ Transcript:
 {{transcript}}` },
 
     { type:'memory', slug:'coding-standards', title:'Coding Standards', category:'Engineering', visibility:'project',
-      description:{en:'The house rules Claude keeps in mind across this repo — style, testing and review conventions.',
-        pl:'Zasady domowe, które Claude ma na uwadze w tym repozytorium — styl, testy i konwencje przeglądu.'},
+      description:{en:'The house rules ChatGPT keeps in mind across this repo — style, testing and review conventions.',
+        pl:'Zasady domowe, które ChatGPT ma na uwadze w tym repozytorium — styl, testy i konwencje przeglądu.'},
       tags:['memory','rules','conventions'], favorite:false, trustRequired:false, containsSecrets:false,
-      targets:['Claude Code'], lesson:null,
-      install:{en:'A CLAUDE.md at the repo root — loaded automatically for every conversation in the project.',
-        pl:'CLAUDE.md w katalogu głównym repo — wczytywany automatycznie w każdej rozmowie w projekcie.'},
-      installPath:'CLAUDE.md',
+      targets:['Codex'], lesson:null,
+      install:{en:'A AGENTS.md at the repo root — loaded automatically for every conversation in the project.',
+        pl:'AGENTS.md w katalogu głównym repo — wczytywany automatycznie w każdej rozmowie w projekcie.'},
+      installPath:'AGENTS.md',
       body:`# Coding standards
 
 - TypeScript strict; no \`any\` without a written reason.
@@ -592,10 +592,10 @@ Transcript:
       description:{en:'Turn an outline into a clean, on-brand slide deck with consistent layouts.',
         pl:'Zamień konspekt w schludną, spójną prezentację z jednolitymi układami.'},
       tags:['slides','design','media'], favorite:false, trustRequired:false, containsSecrets:false,
-      targets:['Claude Code','Claude API'], lesson:null,
+      targets:['Codex','OpenAI API'], lesson:null,
       install:{en:'A folder bundle with layout references. Copy it into your skills directory.',
         pl:'Paczka-folder z referencjami układów. Skopiuj do katalogu umiejętności.'},
-      installPath:'.claude/skills/slide-designer/',
+      installPath:'.agents/skills/slide-designer/',
       files:[{path:'SKILL.md',kind:'entrypoint'},{path:'reference/layouts.md',kind:'reference'}],
       body:`---
 name: slide-designer
@@ -635,14 +635,14 @@ fill it. Vary rhythm; never let two content slides look identical.` },
       ] },
     { slug:'what-is-a-skill', est:8, asset:'pdf-extractor',
       title:{en:'What is a skill?',pl:'Czym jest umiejętność (skill)?'},
-      description:{en:'A folder of instructions Claude picks up on its own, exactly when it is useful.',
-        pl:'Folder z instrukcjami, po który Claude sięga sam, dokładnie wtedy, gdy jest przydatny.'},
+      description:{en:'A folder of instructions ChatGPT picks up on its own, exactly when it is useful.',
+        pl:'Folder z instrukcjami, po który ChatGPT sięga sam, dokładnie wtedy, gdy jest przydatny.'},
       concepts:[
         { id:'idea', icon:'ph-duotone ph-lightbulb', title:{en:'The idea',pl:'Pomysł'},
           terms:[{term:{en:'skill',pl:'umiejętność'},def:{en:'A packaged capability — a folder with instructions (and sometimes scripts) that the AI reaches for automatically when the moment fits.',pl:'Spakowana zdolność — folder z instrukcjami (a czasem skryptami), po który AI sięga automatycznie, gdy pasuje chwila.'}}],
           levels:{
             simple:{en:'A skill is a little how-to the AI keeps on a shelf. When a job matches, it grabs the how-to and follows it — no reminder needed.',pl:'Umiejętność to mały poradnik, który AI trzyma na półce. Gdy zadanie pasuje, chwyta poradnik i go wykonuje — bez przypominania.'},
-            normal:{en:'A skill is a folder of instructions Claude loads on its own when a task matches its description. You write the recipe once; Claude decides when to use it.',pl:'Umiejętność to folder instrukcji, który Claude wczytuje sam, gdy zadanie pasuje do jego opisu. Piszesz przepis raz; Claude decyduje, kiedy go użyć.'},
+            normal:{en:'A skill is a folder of instructions ChatGPT loads on its own when a task matches its description. You write the recipe once; ChatGPT decides when to use it.',pl:'Umiejętność to folder instrukcji, który ChatGPT wczytuje sam, gdy zadanie pasuje do jego opisu. Piszesz przepis raz; ChatGPT decyduje, kiedy go użyć.'},
             technical:{en:'A skill is a folder-bundle: a SKILL.md with frontmatter (name, description, when_to_use, allowed-tools) plus optional references and scripts, matched by description and progressively disclosed into context.',pl:'Umiejętność to paczka-folder: SKILL.md z frontmatterem (name, description, when_to_use, allowed-tools) plus opcjonalne referencje i skrypty, dopasowywana po opisie i stopniowo ujawniana do kontekstu.'}} },
         { id:'inside', icon:'ph-duotone ph-package', title:{en:'What is inside one',pl:'Co jest w środku'}, asset:'pdf-extractor',
           terms:[
@@ -653,11 +653,11 @@ fill it. Vary rhythm; never let two content slides look identical.` },
             normal:{en:'Inside is a SKILL.md: frontmatter naming the skill and describing when to use it, then the instructions. Bundled skills also carry reference files and scripts.',pl:'W środku jest SKILL.md: frontmatter nadający nazwę i opisujący, kiedy użyć, potem instrukcje. Spakowane umiejętności niosą też pliki referencyjne i skrypty.'},
             technical:{en:'The frontmatter drives invocation (description, when_to_use, allowed-tools); the body is the procedure. files[] manifests reference material and executables, with the entrypoint held for preview and search.',pl:'Frontmatter steruje wywołaniem (description, when_to_use, allowed-tools); treść to procedura. Manifest files[] wskazuje materiały i pliki wykonywalne, a plik wejściowy jest trzymany do podglądu i wyszukiwania.'}} },
         { id:'reach', icon:'ph-duotone ph-target', title:{en:'Where it works',pl:'Gdzie działa'},
-          terms:[{term:{en:'target',pl:'cel'},def:{en:'Where an asset can actually run — Claude Code, the API, or the desktop app. A skill only reaches a place you have installed it.',pl:'Miejsce, w którym zasób faktycznie działa — Claude Code, API lub aplikacja desktopowa. Umiejętność sięga tylko tam, gdzie ją zainstalujesz.'}}],
+          terms:[{term:{en:'target',pl:'cel'},def:{en:'Where an asset can actually run — Codex, the API, or the desktop app. A skill only reaches a place you have installed it.',pl:'Miejsce, w którym zasób faktycznie działa — Codex, API lub aplikacja desktopowa. Umiejętność sięga tylko tam, gdzie ją zainstalujesz.'}}],
           levels:{
             simple:{en:'A skill only works where you put it. Drop it in your project and it helps there; it will not magically appear everywhere.',pl:'Umiejętność działa tylko tam, gdzie ją umieścisz. Wrzuć ją do projektu, a pomaga tam; nie pojawi się magicznie wszędzie.'},
             normal:{en:'A skill reaches wherever you install it — your project, or the API if you ship it along. The library tells you which targets each asset covers.',pl:'Umiejętność sięga wszędzie, gdzie ją zainstalujesz — do projektu lub do API, jeśli ją dołączysz. Biblioteka pokazuje, które cele obejmuje każdy zasób.'},
-            technical:{en:'targets[] is explicit: a ~/.claude/skills asset does not reach cloud surfaces unless committed to a repo or shipped in a plugin. The detail view surfaces this so "where can I use this?" is answerable.',pl:'targets[] jest jawne: zasób z ~/.claude/skills nie sięga chmury, o ile nie zostanie zatwierdzony w repo lub dostarczony w pluginie. Widok szczegółów to pokazuje, więc na „gdzie mogę tego użyć?” da się odpowiedzieć.'}} },
+            technical:{en:'targets[] is explicit: a ~/.agents/skills asset does not reach cloud surfaces unless committed to a repo or shipped in a plugin. The detail view surfaces this so "where can I use this?" is answerable.',pl:'targets[] jest jawne: zasób z ~/.agents/skills nie sięga chmury, o ile nie zostanie zatwierdzony w repo lub dostarczony w pluginie. Widok szczegółów to pokazuje, więc na „gdzie mogę tego użyć?” da się odpowiedzieć.'}} },
       ] },
     { slug:'what-is-an-agent', est:7, asset:'code-reviewer',
       title:{en:'What is an agent?',pl:'Czym jest agent?'},
@@ -679,15 +679,15 @@ fill it. Vary rhythm; never let two content slides look identical.` },
       ] },
     { slug:'what-is-an-mcp', est:7, asset:'linear',
       title:{en:'What is an MCP server?',pl:'Czym jest serwer MCP?'},
-      description:{en:'How Claude plugs into the tools you already use — Linear, GitHub and the rest.',
-        pl:'Jak Claude podłącza się do narzędzi, których już używasz — Linear, GitHub i reszty.'},
+      description:{en:'How ChatGPT plugs into the tools you already use — Linear, GitHub and the rest.',
+        pl:'Jak ChatGPT podłącza się do narzędzi, których już używasz — Linear, GitHub i reszty.'},
       concepts:[
         { id:'idea', icon:'ph-duotone ph-lightbulb', title:{en:'The idea',pl:'Pomysł'},
-          terms:[{term:{en:'MCP',pl:'MCP'},def:{en:'Model Context Protocol — a shared standard that lets Claude connect to outside tools and data through small "server" adapters.',pl:'Model Context Protocol — wspólny standard pozwalający Claude łączyć się z zewnętrznymi narzędziami i danymi przez małe adaptery „serwery”.'}}],
+          terms:[{term:{en:'MCP',pl:'MCP'},def:{en:'Model Context Protocol — a shared standard that lets ChatGPT connect to outside tools and data through small "server" adapters.',pl:'Model Context Protocol — wspólny standard pozwalający ChatGPT łączyć się z zewnętrznymi narzędziami i danymi przez małe adaptery „serwery”.'}}],
           levels:{
             simple:{en:'An MCP server is a plug. It connects the AI to something you already use — your issues, your files — so it can look things up for you.',pl:'Serwer MCP to wtyczka. Łączy AI z czymś, czego już używasz — twoimi zgłoszeniami, plikami — aby mogło coś dla ciebie sprawdzić.'},
-            normal:{en:'An MCP server is an adapter that exposes an outside system (like Linear) to Claude through a shared protocol, so it can read and act there.',pl:'Serwer MCP to adapter, który udostępnia Claude zewnętrzny system (jak Linear) przez wspólny protokół, aby mogło tam czytać i działać.'},
-            technical:{en:'MCP is an open protocol; a server exposes tools/resources over stdio, HTTP or SSE. Claude discovers and calls them within the transport and scope you configure.',pl:'MCP to otwarty protokół; serwer udostępnia narzędzia/zasoby przez stdio, HTTP lub SSE. Claude wykrywa je i wywołuje w ramach skonfigurowanego transportu i zakresu.'}} },
+            normal:{en:'An MCP server is an adapter that exposes an outside system (like Linear) to ChatGPT through a shared protocol, so it can read and act there.',pl:'Serwer MCP to adapter, który udostępnia ChatGPT zewnętrzny system (jak Linear) przez wspólny protokół, aby mogło tam czytać i działać.'},
+            technical:{en:'MCP is an open protocol; a server exposes tools/resources over stdio, HTTP or SSE. ChatGPT discovers and calls them within the transport and scope you configure.',pl:'MCP to otwarty protokół; serwer udostępnia narzędzia/zasoby przez stdio, HTTP lub SSE. ChatGPT wykrywa je i wywołuje w ramach skonfigurowanego transportu i zakresu.'}} },
         { id:'trust', icon:'ph-duotone ph-shield-check', title:{en:'Trust and secrets',pl:'Zaufanie i sekrety'}, asset:'linear',
           terms:[
             {term:{en:'connector',pl:'konektor'},def:{en:'An MCP server that talks to a live service on your behalf, usually holding a login token to do it.',pl:'Serwer MCP, który rozmawia z żywą usługą w twoim imieniu, zwykle trzymając token logowania, by to robić.'}},

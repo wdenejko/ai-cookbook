@@ -1,119 +1,76 @@
 ---
-title: Karty promptów
-description: Krótkie, gotowe polecenia do demonstracji, ćwiczeń i wydrukowania dla uczestników.
+title: Prompt cards
+description: Short, ready-to-use instructions for demonstrations, exercises, and participant handouts.
 ---
 
-## 1. Uzupełnienie briefu
+## 1. Complete a brief
 
 ```text
-Chcę osiągnąć następujący cel:
-[CEL]
+My goal is:
+[GOAL]
 
-Kontekst:
-[KONTEKST]
+Context:
+[CONTEXT]
 
-Odbiorca:
-[ODBIORCA]
+Audience:
+[AUDIENCE]
 
-Oczekiwany format:
+Expected format:
 [FORMAT]
 
-Kryteria dobrej odpowiedzi:
-[KRYTERIA]
+Quality criteria:
+[CRITERIA]
 
-Jeżeli brakuje informacji potrzebnych do wykonania zadania, najpierw zadaj mi
-maksymalnie trzy pytania. Nie wymyślaj brakujących faktów.
+If essential information is missing, ask questions before completing the task.
 ```
 
-[Otwórz pełną wersję w Library](/library/prompt/prompt-brief-pl).
-
-## 2. Tryb wywiadu
+## 2. Interview me step by step
 
 ```text
-Zanim zaczniesz, zadaj mi maksymalnie pięć pytań.
-Zadawaj tylko jedno pytanie naraz i czekaj na moją odpowiedź.
-Pytaj o rzeczy, które realnie zmienią wynik.
-Na końcu podsumuj brief i poproś mnie o potwierdzenie.
-Dopiero wtedy wykonaj zadanie.
+Help me prepare [TASK]. Ask one short question at a time, no more than five in
+total. Do not draft the result yet. After the final question, summarize the
+brief and ask me to confirm it.
 ```
 
-[Otwórz pełną wersję w Library](/library/prompt/guided-interview-pl).
-
-## 3. Adwokat diabła
+## 3. Constructive devil’s advocate
 
 ```text
-Wciel się w konstruktywnego adwokata diabła.
-Podaj pięć najmocniejszych argumentów przeciw temu rozwiązaniu.
-Przy każdym opisz ryzyko i sposób jego ograniczenia.
-Następnie przedstaw najmocniejsze argumenty za.
-Na końcu wskaż informacje potrzebne do podjęcia decyzji.
-Nie wydawaj kategorycznego werdyktu bez danych.
+Review this decision: [DECISION].
+First present the strongest arguments against it, then the strongest arguments
+for it. List risks, assumptions, and missing information. Do not invent facts.
+Finish with questions I should answer before deciding.
 ```
 
-[Otwórz pełną wersję w Library](/library/prompt/devils-advocate-pl).
-
-## 4. Kilka perspektyw
+## 4. Bias and assumptions audit
 
 ```text
-Oceń propozycję z perspektywy:
-- klienta,
-- pracownika,
-- managera,
-- działu finansowego.
+Review the answer below. Separate facts from interpretation, identify hidden
+assumptions, missing perspectives, and possible stereotypes. Mark claims that
+need verification and propose a more balanced version.
 
-Dla każdej perspektywy podaj korzyści, obawy oraz pytania, na które nadal nie
-znamy odpowiedzi. Nie zakładaj, że wszystkie grupy mają takie same potrzeby.
+[ANSWER]
 ```
 
-## 5. Audyt biasu
+## 5. Improve a draft
 
 ```text
-Sprawdź tę odpowiedź pod kątem:
-- założeń przyjętych bez potwierdzenia,
-- pominiętych perspektyw,
-- możliwych stereotypów,
-- interpretacji przedstawionych jak fakty,
-- dowodów, które mogłyby zmienić wniosek,
-- brakujących informacji.
+Improve only [ONE ASPECT] of the draft below. Preserve its meaning, facts, and
+all other choices. Explain briefly what you changed and return the revised
+version.
 
-Oddziel fakty, interpretacje i braki danych. Następnie zaproponuj bardziej
-neutralną wersję.
+[DRAFT]
 ```
 
-[Otwórz pełną wersję w Library](/library/prompt/bias-audit-pl).
-
-## 6. Krytyka według kryteriów
+## 6. Visual brief
 
 ```text
-Oceń odpowiedź w skali 1–5 pod względem:
-- jasności,
-- kompletności,
-- dopasowania do odbiorcy,
-- zgodności z faktami z materiału.
-
-Uzasadnij każdą ocenę jednym zdaniem. Następnie popraw odpowiedź tak, aby w
-każdej kategorii osiągnęła co najmniej 4. Nie dodawaj nowych faktów.
+Create a [FORMAT] image for [PURPOSE].
+Main subject: [SUBJECT].
+Setting and composition: [SETTING / PLACEMENT].
+Style, colour, and lighting: [STYLE].
+Leave free space for: [TEXT OR UI].
+Do not include: [EXCLUSIONS].
 ```
 
-## 7. Przeniesienie zadania do nowego czatu
-
-```text
-Przygotuj krótką instrukcję startową do nowej rozmowy.
-Uwzględnij:
-- cel,
-- potwierdzone fakty,
-- podjęte decyzje,
-- ważne ograniczenia,
-- oczekiwany format wyniku,
-- kolejny krok.
-
-Pomiń nieaktualne pomysły i przebieg dyskusji.
-```
-
-## 8. Kontrolowana edycja obrazu
-
-```text
-Zmień wyłącznie [ELEMENT].
-Zachowaj bez zmian postacie, układ, kąt kamery, oświetlenie, proporcje i
-pozostałe elementy obrazu.
-```
+Replace bracketed fields before use. Treat model output as a draft and verify
+important facts against reliable sources.

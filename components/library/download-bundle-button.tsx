@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import JSZip from 'jszip';
 import { Download } from 'lucide-react';
+import { useT } from '@/components/workshop/locale';
 
 // Zips the bundle entirely client-side (no server route) so it works on any
 // static host — matches the project's static-first, portable stance.
@@ -14,6 +15,7 @@ export function DownloadBundleButton({
   files: { path: string; content: string }[];
 }) {
   const [busy, setBusy] = useState(false);
+  const t = useT();
 
   return (
     <button
@@ -41,7 +43,7 @@ export function DownloadBundleButton({
       className="inline-flex min-h-9 items-center gap-2 rounded-md border border-divider px-3 font-heading text-sm transition-colors hover:bg-neutral-200 disabled:opacity-45"
     >
       <Download className="size-4" aria-hidden />
-      {busy ? 'Zipping…' : 'Download bundle'}
+      {busy ? t('asset.zipping') : t('asset.downloadBundle')}
     </button>
   );
 }

@@ -1,19 +1,19 @@
 ---
 title: Czym jest subagent?
-description: Subagent to osobny pomocnik, któremu Claude powierza konkretne zadanie, a następnie otrzymuje z powrotem tylko wynik.
+description: Subagent to osobny pomocnik, któremu ChatGPT powierza konkretne zadanie, a następnie otrzymuje z powrotem tylko wynik.
 ---
 
-Czasem najlepszym sposobem na zachowanie skupienia jest delegowanie zadań. Ta lekcja wyjaśnia, czym jest subagent, dlaczego Claude powierza mu pracę i jak definiuje się subagenta w jednym niewielkim pliku.
+Czasem najlepszym sposobem na zachowanie skupienia jest delegowanie zadań. Ta lekcja wyjaśnia, czym jest subagent, dlaczego ChatGPT powierza mu pracę i jak definiuje się subagenta w jednym niewielkim pliku.
 
 <Concept title="Czym jest subagent?">
 
-<Term name="subagent">Subagent</Term> to druga kopia Claude'a, której główny asystent może powierzyć konkretne zadanie, na przykład „sprawdź ten kod” albo „przeszukaj te pliki”. Pracuje nad zadaniem samodzielnie i zwraca uporządkowane podsumowanie, dzięki czemu główna rozmowa nie jest zaśmiecona wszystkimi chaotycznymi krokami pośrednimi.
+<Term name="subagent">Subagent</Term> to druga kopia ChatGPT, której główny asystent może powierzyć konkretne zadanie, na przykład „sprawdź ten kod” albo „przeszukaj te pliki”. Pracuje nad zadaniem samodzielnie i zwraca uporządkowane podsumowanie, dzięki czemu główna rozmowa nie jest zaśmiecona wszystkimi chaotycznymi krokami pośrednimi.
 
 </Concept>
 
 <Concept title="Dlaczego warto powierzać pracę subagentowi?">
 
-Duże zadania, takie jak przejrzenie dwudziestu plików, wymagają mnóstwa wymiany informacji tam i z powrotem. Gdyby Claude robił to wszystko w głównej rozmowie, szybko by się ona zapełniła. Subagent wykonuje tę „głośną” pracę osobno i zwraca tylko wniosek, dzięki czemu główny wątek pozostaje przejrzysty. Subagenci mogą być też specjalistami, a nawet działać równolegle.
+Duże zadania, takie jak przejrzenie dwudziestu plików, wymagają mnóstwa wymiany informacji tam i z powrotem. Gdyby ChatGPT robił to wszystko w głównej rozmowie, szybko by się ona zapełniła. Subagent wykonuje tę „głośną” pracę osobno i zwraca tylko wniosek, dzięki czemu główny wątek pozostaje przejrzysty. Subagenci mogą być też specjalistami, a nawet działać równolegle.
 
 </Concept>
 
@@ -31,6 +31,6 @@ Nie. Subagent zaczyna z czystą kartą: dostaje tylko zadanie, które przekazuje
 
 ## Zobacz prawdziwego subagenta w bibliotece
 
-Biblioteka zawiera subagenta do przeglądu kodu (code-reviewer). Otwórz go, aby zobaczyć frontmatter (`tools: Read, Grep, Glob, Bash` oraz `model: sonnet`) i szczegółowy prompt systemowy, który dokładnie mówi mu, jak przeglądać zmianę.
+Biblioteka zawiera subagenta do przeglądu kodu (code-reviewer). Otwórz go, aby zobaczyć frontmatter (`tools: Read, Grep, Glob, Bash` oraz `model: gpt-5`) i szczegółowy prompt systemowy, który dokładnie mówi mu, jak przeglądać zmianę.
 
 <Showcase asset="subagent/code-reviewer" />

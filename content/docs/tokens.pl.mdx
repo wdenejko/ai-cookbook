@@ -1,0 +1,39 @@
+---
+title: Tokeny projektu
+description: Wizualna kontrola motywu Broadsheet połączonego z Tailwind v4.
+---
+
+Ta strona sprawdza poprawne renderowanie tokenów Broadsheet w Fumadocs. Całość
+korzysta z Source Serif 4, a podstawowym akcentem jest cyjan.
+
+# Nagłówek pierwszy — 42 px
+## Nagłówek drugi — 32 px
+### Nagłówek trzeci — 25 px
+
+Tekst ma wygodną szerokość. Wyróżnienia korzystają z *prawdziwej kursywy*
+kroju szeryfowego, a [odnośniki z cyjanowego akcentu](/docs). Cyjan i magenta
+mają skale tonalne 100–900 o wspólnej percepcyjnej jasności.
+
+## Odstępy i rytm
+
+Przestronność Broadsheet opiera się na gęstości 1,25× i bazie 5 px. Wartości
+`rem` sprawiają, że ustawienia wielkości tekstu i trybu wygodnego skalują cały
+interfejs, nie tylko treść.
+
+## Kod
+
+```ts
+export const asset = {
+  type: 'skill',
+  storageKind: 'folder_bundle',
+  visibility: 'private',
+  targets: ['codex', 'openai-api'],
+};
+```
+
+## Wyróżnienie
+
+<Callout title="Tymczasowy tryb ciemny">
+  Broadsheet został zaprojektowany jako jasny. Ciemna paleta jest punktem
+  wyjścia do podglądu i wymaga jeszcze osobnej decyzji projektowej.
+</Callout>

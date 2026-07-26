@@ -1,6 +1,6 @@
 # ai-cookbook — Project Plan & Architecture
 
-> A serverless Next.js app that (1) is your **personal, reusable store of AI assets** — Claude skills, subagents, commands, prompts, hooks, MCP configs, memories — and (2) doubles as an **adaptive workshop platform** for teaching AI to a mixed audience (IT folks, teenagers, non‑technical staff, seniors).
+> A serverless Next.js app that (1) is your **personal, reusable store of AI assets** — ChatGPT skills, subagents, commands, prompts, hooks, MCP configs, memories — and (2) doubles as an **adaptive workshop platform** for teaching AI to a mixed audience (IT folks, teenagers, non‑technical staff, seniors).
 >
 > Status: **greenfield** (empty repo). Target stack: **Next.js 16 (App Router) · React 19 · Tailwind v4**, deployed serverless. Plan authored 2026‑07‑23. Version numbers are "correct at time of writing — verify at `npm install`."
 
@@ -13,7 +13,7 @@
 **One product, two modes, one pipeline:**
 
 - **Library mode** — browse / search / filter / copy‑and‑reuse your assets. Content‑heavy, single‑writer, static‑first.
-- **Workshop mode** — guided, adaptive, interactive lessons for a mixed audience; can *showcase real assets from the library* as live teaching examples.
+- **Workshop mode** — guided, adaptive lessons for a mixed audience; can *showcase real assets from the library* as teaching examples.
 
 Both are just **content collections** (MDX + frontmatter) rendered by different UIs, sharing one design system, one deploy, one search index.
 
@@ -28,7 +28,6 @@ Both are just **content collections** (MDX + frontmatter) rendered by different 
 | Search | **Pagefind** (static) or **Orama** (free w/ Fumadocs) | No backend, no ops |
 | Images/blobs | small in-repo → larger to **Cloudflare R2** | Zero egress, S3-compatible |
 | i18n | **next-intl v4** (`app/[locale]/`) | App-Router-native; ~2KB; zero client bytes for server strings |
-| LLM demos | **Route Handler + `@anthropic-ai/sdk` + AI SDK 5**, Upstash rate-limit, **spend-capped Anthropic Workspace**, **Replay mode** default | Key never leaves server; a workshop room can't run up a bill; demo never dies on stage |
 | Hosting | **Vercel** (+ OpenNext/Cloudflare kept working as escape hatch) | Best DX; provably not locked in |
 | Auth / DB | **git-push editing, no auth/DB** — *confirmed for v1* | Single-writer reality; add Better Auth + Turso later only if an in-app editor is wanted |
 
@@ -43,10 +42,10 @@ Both are just **content collections** (MDX + frontmatter) rendered by different 
 | | **Job A — Asset Library** | **Job B — Workshop Platform** |
 |---|---|---|
 | Primary user | You (single writer) | Mixed audience (readers), you (facilitator) |
-| Content | Your real Claude assets | Teaching lessons about AI |
+| Content | Your real ChatGPT assets | Teaching lessons about AI |
 | Read/write ratio | Write via git, read often | Read-only for audience |
 | Success = | Find & reuse an asset in <30s | A senior *and* an IT pro both "get it" |
-| Shape | CRUD-ish catalog | Guided, adaptive, interactive |
+| Shape | CRUD-ish catalog | Guided and adaptive |
 
 Left alone, these pull in opposite directions (a catalog wants density; a lesson wants progressive simplicity). The plan resolves that tension instead of letting it sprawl.
 
@@ -65,8 +64,8 @@ They share: the MDX pipeline, the frontmatter→metadata parsing, the design sys
 
 | Persona | Knows | Needs | Design implication |
 |---|---|---|---|
-| **IT / some AI** | Code, concepts | Depth, precision, real examples | "Technical" detail level; free-explore; Sandpack code cells |
-| **Teenager, no AI** | Phones, games | Engagement, analogies, novelty | "Simple" level; guided mode; playful interactive demos |
+| **IT / some AI** | Code, concepts | Depth, precision, real examples | "Technical" detail level; free-explore; detailed examples |
+| **Teenager, no AI** | Phones, games | Engagement, analogies, novelty | "Simple" level; guided mode; playful exercises |
 | **Non-technical staff** | Office tools | Relevance to *their* work, plain language | "Normal" level; office-framed examples; no jargon |
 | **Seniors** | Life experience | Large type, calm pace, no surprises, clear nav | Comfort mode; linear guided flow; big targets; reduced motion |
 
@@ -75,7 +74,7 @@ They share: the MDX pipeline, the frontmatter→metadata parsing, the design sys
 ### 1.4 Success criteria
 
 - **Library:** any asset is findable in <30s; a found asset can be copied/exported into a real project in one action; adding a new asset is `git push` (no ceremony).
-- **Workshop:** the same lesson lands for a 14-year-old and a senior; a live demo can run on flaky venue Wi‑Fi without failing (and without a surprise bill); the whole thing is WCAG 2.2 AA.
+- **Workshop:** the same lesson lands for a 14-year-old and a senior; the whole thing is WCAG 2.2 AA.
 
 ---
 
@@ -92,9 +91,9 @@ Your assets are text you already version-control. Keeping them as files gives di
 
 A single Next.js app with two route groups — `(library)` and `(workshop)` — over one content pipeline and design system. Not two projects. This maximizes reuse and lets lessons showcase real assets.
 
-### D3 — Store assets in their **native Claude formats**, parse into a **unified model** ✅
+### D3 — Store assets in their **native ChatGPT formats**, parse into a **unified model** ✅
 
-Keep each asset in the exact shape Claude Code / the API consumes (a skill is a real `SKILL.md` folder bundle; a subagent is a real `.md`; an MCP config is real JSON). Reason: they stay **genuinely reusable** — you can symlink/copy `content/assets/skills/foo/` straight into any project's `.claude/skills/`, or offer a "download bundle" button. The app's content loader reads each asset's native frontmatter/manifest and normalizes it into the unified `Asset` model (§4) for browsing and search. Prompts are the one type with **no native on-disk format**, so we define our own convention (MDX + frontmatter).
+Keep each asset in the shape ChatGPT, Codex, or the OpenAI API consumes (a skill is a real `SKILL.md` folder bundle; a Codex custom agent is TOML; an MCP connection is structured config). Reason: they stay **genuinely reusable** — you can symlink/copy `content/assets/skills/foo/` straight into any project's `.agents/skills/`, or offer a "download bundle" button. The app's content loader reads each asset's frontmatter or manifest and normalizes it into the unified `Asset` model (§4) for browsing and search.
 
 ### D4 — Host on Vercel, keep Cloudflare/OpenNext as a working escape hatch ✅
 
@@ -108,11 +107,7 @@ If content is in git, editing is `git push`, so the app needs **no auth at all**
 
 Use **next-intl v4** with `app/[locale]/` routing so bilingual PL/EN is structurally free. Author UI strings and workshop lessons EN-first; add PL translations for the *workshop* content (the audience-facing part) as a distinct phase. The private *library* can stay EN-only. Note Next 16 renamed `middleware.ts` → **`proxy.ts`** (locale detection goes there).
 
-### D7 — LLM demos are server-proxied, hard-capped, and Replay-by-default ✅
-
-Never expose the API key; call Anthropic only from a Route Handler. Layer: **Upstash rate-limit** (per session cookie + IP) → small `max_tokens` on a **Haiku-class model** → a **dedicated Anthropic Workspace with a monthly USD spend cap** (the real guarantee) → a **Replay mode** of canned prompt→response pairs used as the *default* for scripted demos and as the *automatic fallback* when Wi‑Fi/API/limit fails. A `DEMO_MODE=replay|live` flag toggles the whole room.
-
-### D8 — Client-side search ✅
+### D7 — Client-side search ✅
 
 **Pagefind** (pure static index built at deploy) or **Orama** (free if you pick Fumadocs; also your on-ramp to semantic search over prompts). No search server, no cost, no ops until the corpus is large.
 
@@ -130,16 +125,12 @@ Never expose the API key; call Anthropic only from a Route Handler. Layer: **Ups
 | Search | **Pagefind** or **Orama** | Orama comes free with Fumadocs |
 | i18n | **next-intl `^4`** | Next 16 supported from 4.4+; ICU; RSC-native |
 | Presentation | **MDX scrollytelling** (+ optional **reveal.js `^5`** scroll-view) | No separate slide framework; add reveal.js only for projector mode. Scroll libs: `react-scrollama` or `motion` |
-| Code demos | **Sandpack** (`@codesandbox/sandpack-react`) | Client-side, no server; what react.dev uses. (One 2026 source flags reduced maintenance — verify) |
-| LLM SDK | **`@anthropic-ai/sdk`** + **Vercel AI SDK 5** (`@ai-sdk/anthropic`, `@ai-sdk/react`) | AI SDK 5 streams over native SSE; server-only |
-| Rate limit | **`@upstash/ratelimit`** + Upstash Redis | Connectionless HTTP; serverless/edge-friendly |
 | Blobs | **Cloudflare R2** | S3-compatible, zero egress |
 | Optional DB | **Turso/libSQL** | Use **libSQL** for production (the Rust "Turso Database" is still beta) |
 | Optional auth | **Better Auth** | Self-hosted, single identity |
 | Hosting | **Vercel** (+ **OpenNext/Cloudflare** hedge) | Hobby is non-commercial — Pro (~$20/mo) if paid workshops |
-| Model for demos | smallest **Haiku-class** model | Confirm the exact current model ID at build (e.g. `claude-haiku-4-5-*`); pick the smallest capable one to bound $/call |
 
-**Standing flags:** pin exact versions at install; confirm the React 19.2 patched version; confirm the current Haiku model ID; if you adopt `use cache`, check the next-intl interplay needs Next 16.2 root-params.
+**Standing flags:** pin exact versions at install; confirm the React 19.2 patched version; if you adopt `use cache`, check the next-intl interplay needs Next 16.2 root-params.
 
 ---
 
@@ -147,7 +138,7 @@ Never expose the API key; call Anthropic only from a Route Handler. Layer: **Ups
 
 ### 4.1 The unified `Asset` model
 
-Every asset normalizes into one entity with a `type` discriminator and a `storageKind` that drives how bytes are persisted. (Derived from the real 2026 Claude asset schemas.)
+Every asset normalizes into one entity with a `type` discriminator and a `storageKind` that drives how bytes are persisted. (Derived from the real 2026 ChatGPT asset schemas.)
 
 ```ts
 type AssetType =
@@ -173,7 +164,7 @@ interface Asset {
   version: string | null;           // semver; else fall back to contentHash
   contentHash: string;
   visibility: 'private' | 'local' | 'project' | 'org_shared' | 'public'; // 5-tier ladder
-  targets: string[];                // ['claude-code','claude-api','claude-ai','cowork']
+  targets: string[];                // ['codex','openai-api','chatgpt','chatgpt-work']
   compatibility?: { minVersion?: string; standard?: 'agent-skills@1' };
   license: string | null;           // SPDX
   trustRequired: boolean;           // runs code / needs workspace trust
@@ -191,12 +182,12 @@ interface Asset {
 |---|---|---|
 | **Skill** | `folder_bundle` | `SKILL.md` + reference files + `scripts/` |
 | **Plugin** | `container` | whole tree + `plugin.json`; **references** child assets |
-| **Subagent** | `single_file` | one `.md` (frontmatter + system prompt) |
-| **Command** | `single_file` | one `.md` (now a flat skill variant) |
-| **Memory / Rule** | `single_file` | one `.md` (CLAUDE.md, `.claude/rules/*.md`, auto-memory) |
+| **Subagent** | `single_file` | one instruction source, adaptable to a Codex custom-agent TOML file |
+| **Command** | `single_file` | one reusable prompt, preferably packaged as a skill |
+| **Memory / Rule** | `single_file` | one `.md` (`AGENTS.md` or saved guidance) |
 | **Prompt** | `single_file` | text/MDX (our own convention) |
 | **Hook** | `json_entry` | a JSON block inside `settings.json`/`hooks.json` |
-| **MCP server** | `json_entry` | a JSON object inside `.mcp.json` |
+| **MCP server** | `json_entry` | connection details adaptable to ChatGPT Plugins or Codex MCP config |
 
 Bundles/containers persist a `files[]` manifest (path + blob ref + executable flag) with `body` holding the entrypoint (`SKILL.md`) for preview/search. **Plugins are containers** — store the manifest + *references* to child asset ids (a `plugin ⇄ child` membership relation), so a bundled skill is also independently browsable.
 
@@ -208,7 +199,7 @@ Bundles/containers persist a `files[]` manifest (path + blob ref + executable fl
 - **command:** `argument-hint`, `allowed-tools[]`, `model`, `arguments[]`, `disable-model-invocation`.
 - **hook:** `event`, `matcher`, `if?`, `hookType(command|http|mcp_tool|prompt|agent)`, target, `timeout`, control keys.
 - **mcp_server:** `transport(stdio|http|sse|ws)`, `command/args/env` or `url/headers`, `scope`, `isConnector`, `oauth`.
-- **memory:** `memoryKind(claude_md|rule|auto_memory)`, optional `memoryType(user|feedback|project|reference)` *(community convention — treat as optional; not guaranteed in the core spec)*, `paths[]`, `scope`, `modified`.
+- **memory:** `memoryKind(agents_md|rule|auto_memory)`, optional `memoryType(user|feedback|project|reference)` *(community convention — treat as optional; not guaranteed in the core spec)*, `paths[]`, `scope`, `modified`.
 - **prompt:** `promptText`, `variables[]{name,hint}` (`{{double_brace}}`), `role(system|user|null)`, `source`, `xmlStructured`.
 
 ### 4.4 Design notes carried into implementation
@@ -216,7 +207,7 @@ Bundles/containers persist a `files[]` manifest (path + blob ref + executable fl
 1. **Visibility is a 5-tier ladder**, not a boolean (private → local → project → org‑shared view‑only → public). It gates what export/publish emits.
 2. **Security flags are first-class:** hooks/MCP/plugins run code or hold credentials. Surface a trust warning on import; store secret **references**, never plaintext; render a "runs code" badge.
 3. **Versioning:** use semver when present, else `contentHash`; keep a small history so a pinned state can be re-exported (mirrors marketplace `sha` pinning).
-4. **`targets[]` matters:** a `~/.claude/skills` asset does **not** reach cloud/Cowork unless committed to a repo or shipped in a plugin — surface this so "where can I use this?" is answerable.
+4. **`targets[]` matters:** a `~/.agents/skills` asset does **not** reach cloud/ChatGPT Work unless committed to a repo or shipped in a plugin — surface this so "where can I use this?" is answerable.
 
 ### 4.5 Proposed repo structure
 
@@ -227,10 +218,9 @@ ai-cookbook/
 │   │   ├── (library)/                # asset browser: index, filters, /asset/[type]/[slug]
 │   │   ├── (workshop)/               # teaching mode: /learn, /learn/[lesson]
 │   │   └── layout.tsx                # design system, theme + comfort-mode providers
-│   ├── api/demo/route.ts             # capped, server-side LLM proxy
 │   └── proxy.ts                      # next-intl locale detection (Next 16 name)
 ├── content/
-│   ├── assets/                       # ← THE STORE: native, reusable Claude assets
+│   ├── assets/                       # ← THE STORE: native, reusable ChatGPT assets
 │   │   ├── skills/<name>/SKILL.md (+ references, scripts/)
 │   │   ├── subagents/<name>.md
 │   │   ├── commands/<name>.md
@@ -243,20 +233,17 @@ ai-cookbook/
 │       └── pl/*.mdx                  # workshop content, PL
 ├── lib/
 │   ├── content/                      # loaders: native asset → unified Asset model
-│   ├── search/                       # Pagefind/Orama index build
-│   └── ai/                           # Anthropic client, rate limit, replay store
+│   └── search/                       # Pagefind/Orama index build
 ├── components/
 │   ├── ui/                           # design system (buttons, cards, badges)
 │   ├── mdx/                          # MDX component map
-│   ├── learn/                        # LevelSwitcher, Glossary, GuidedNav, ComfortToggle
-│   └── playground/                   # PromptPlayground, Sandpack cells
+│   └── learn/                        # LevelSwitcher, Glossary, GuidedNav, ComfortToggle
 ├── messages/                         # next-intl UI strings: en.json, pl.json
-├── replay/                           # canned prompt→response pairs for demo mode
 ├── docs/PROJECT-PLAN.md              # this file
 └── next.config.ts / globals.css / package.json
 ```
 
-> Bonus: because `content/assets/` holds *native* assets, the repo doubles as a dotfiles-style store — symlink or copy subsets straight into any project's `.claude/`, or add a "download as bundle" action later.
+> Bonus: because `content/assets/` holds *native* assets, the repo doubles as a dotfiles-style store — symlink or copy subsets straight into any project's `.codex/`, or add a "download as bundle" action later.
 
 ---
 
@@ -266,7 +253,7 @@ ai-cookbook/
 
 - **Index:** grid/list of asset cards (type badge, title, description, tags, visibility + "runs code" badges). Facet filters: **type**, **tag**, **category**, **visibility**, **target**, **favorite**.
 - **Search:** instant client-side (Pagefind/Orama) across title/description/body/tags.
-- **Detail view (`/asset/[type]/[slug]`):** rendered body/frontmatter, syntax-highlighted config, "copy", "download bundle", and a **"How to use this"** block (where it goes: `~/.claude/…` vs `.claude/…`, and which `targets` it reaches).
+- **Detail view (`/asset/[type]/[slug]`):** rendered body/frontmatter, syntax-highlighted config, "copy", "download bundle", and a **"How to use this"** block (where it goes: `~/.codex/…` vs `.codex/…`, and which `targets` it reaches).
 - **Add asset:** drop a file/folder into `content/assets/…`, `git push` → it appears. (Optional later: in-app editor behind Better Auth.)
 
 ### 5.2 Workshop mode
@@ -275,7 +262,6 @@ ai-cookbook/
 - **Detail-level switcher:** global **Simple / Normal / Technical** control (persisted in `localStorage`), swapping the body of each concept. Authored as level variants per concept; default **Normal**.
 - **Accessible glossary:** click/focus popovers (not hover-only) with plain-language definitions + a full glossary page; terms spelled out on first use.
 - **"Go deeper" expanders:** layered disclosure inside every concept so a Technical reader can still collapse noise.
-- **Live demos:** the prompt playground and "what is a skill" interactive (see §6).
 - **Comfort / Senior mode:** one-tap on the landing screen — larger type (100/125/150%), high-contrast theme, reduced motion, guided linear nav, 44px targets.
 - **Language toggle:** PL/EN, as visible as the text-size and detail-level controls.
 
@@ -286,7 +272,7 @@ ai-cookbook/
 - **Targets:** `min-h-11 min-w-11` (44px) with generous spacing (WCAG 2.5.8 minimum is 24px; go bigger for seniors).
 - **Focus:** `focus-visible:ring-2 ring-offset-2` on every interactive element; never bare `outline-none`; keep focus unobscured under sticky headers.
 - **Motion:** wrap animations in `motion-safe:`, provide `motion-reduce:` fallbacks; no autoplay attention-grabbers.
-- **Structure:** semantic landmarks, one `<h1>`/view, skip link, `aria-live="polite"` on the streaming demo region.
+- **Structure:** semantic landmarks, one `<h1>`/view, skip link, and a logical reading order.
 - **Dark mode:** Tailwind v4 `@custom-variant dark`; theme + comfort settings in a context provider, persisted.
 
 ---
@@ -307,22 +293,9 @@ Each lesson is an MDX file with frontmatter (`title`, `order`, `audienceTags`, `
 
 Lead every concept with an **analogy**, then a **"Go deeper"** expander. Reuse an **analogy library** and keep **per-audience example sets** (office framing vs. teen framing).
 
-### 6.2 Live-demo safety spine (the part that must not fail on stage)
+### 6.2 Facilitator controls
 
-1. **Key server-side only** — `app/api/demo/route.ts` with `@anthropic-ai/sdk`; stream tokens via AI SDK 5. Never use `anthropic-dangerous-direct-browser-access` (that's for users' own keys).
-2. **Per-session rate limit** — `@upstash/ratelimit` sliding window keyed by an httpOnly session cookie + IP fallback (e.g. 15 req / 10 min / session), enforced in `proxy.ts` or the route.
-3. **Hard cost cap (belt & braces):** small `max_tokens` (300–500) on the smallest Haiku-class model; a **dedicated Anthropic Workspace with a monthly USD spend limit** + a scoped key (the real guarantee, enforced by Anthropic); a Redis daily-counter circuit breaker that flips the room into Replay mode when tripped.
-4. **Replay mode** — a `replay/` library of canned prompt→response pairs. Used as the **default** for scripted walkthroughs ($0, deterministic) and as the **automatic fallback** when rate-limit/spend/network fails. `DEMO_MODE=replay|live` toggles everything.
-
-> Note: Anthropic has **no client-side ephemeral demo token** — the server-proxy pattern above *is* the answer; don't design around a token that doesn't exist.
-
-### 6.3 Code demos
-
-**Sandpack** for runnable React/JS snippets (client-side, no server), shown to the IT audience and collapsed for others. Avoid WebContainers (overkill + commercial-license + cross-origin-isolation headers).
-
-### 6.4 Facilitator controls
-
-Global `DEMO_MODE` (replay/live), a "reset room" that clears session state, a usage/spend indicator, and a prominent Comfort-mode + language + detail-level bar.
+A prominent Comfort-mode + language + detail-level bar keeps the workshop adaptable for the whole group.
 
 ---
 
@@ -351,23 +324,20 @@ Effort sizing is relative (S ≈ hours, M ≈ 1–2 days, L ≈ 3–5 days part-
 - Handle `folder_bundle` (skills) and `container` (plugins) with `files[]` manifests + bundle preview.
 - Type-specific detail renderers (hook JSON, MCP JSON, skill bundle tree, prompt with `{{variables}}`).
 - Visibility ladder + security badges (`trustRequired`, `containsSecrets`); public build emits only allowed visibilities.
-- "Download bundle" / copy-to-`.claude` guidance per type.
+- "Download bundle" / copy-to-ChatGPT-or-Codex guidance per type.
 - **Acceptance:** a plugin shows its child assets; a private asset is excluded from the public build; a skill bundle downloads cleanly.
 
 ### Phase 3 — Workshop core *(L)*
-**Goal:** guided, adaptive lessons (no live LLM yet).
+**Goal:** guided, adaptive lessons.
 - `(workshop)` route group; lesson loader; Guided nav (Next/Back) + Explore index.
 - **Detail-level switcher** + `<Concept>/<Level>` MDX components; **glossary** popovers + page; "Go deeper" expanders.
 - 2–3 real lessons authored EN (e.g. "What is a prompt?", "What is a skill?", "What is an agent?") — each showcasing a **real library asset**.
 - **Acceptance:** one lesson reads coherently at all three levels; glossary is keyboard+screen-reader reachable.
 
-### Phase 4 — Interactivity, live demos & full a11y *(L)*
-**Goal:** safe interactive demos + comfort mode.
-- Prompt playground UI + `api/demo` route with the full safety spine (Upstash limit, capped Workspace key, `max_tokens`, streaming) + **Replay mode** + `DEMO_MODE` flag + `replay/` seed data.
-- "What is a skill" interactive driven by Replay (zero-cost, deterministic) with an optional "try your own" that flips to live within caps.
-- Sandpack code cells (collapsed by default).
+### Phase 4 — Accessibility & comfort *(M)*
+**Goal:** complete the comfort mode and accessibility baseline.
 - **Comfort/Senior mode** toggle (type scale, high contrast, reduced motion, big targets) + facilitator controls.
-- **Acceptance:** pulling the Wi‑Fi mid-demo silently falls back to Replay; rate limit blocks a hammering client; comfort mode passes a manual senior-usability pass + WCAG 2.2 AA audit.
+- **Acceptance:** comfort mode passes a manual senior-usability pass + WCAG 2.2 AA audit.
 
 ### Phase 5 — i18n (Polish), sharing & optional dynamics *(M–L)*
 **Goal:** bilingual workshop + optional runtime features.
@@ -377,11 +347,11 @@ Effort sizing is relative (S ≈ hours, M ≈ 1–2 days, L ≈ 3–5 days part-
 
 ### Phase 6 — Hardening & launch *(M)*
 **Goal:** production-ready.
-- Version-pin audit (React 19.2 patch, model ID, next-intl/Next interplay); error boundaries; empty/loading states; OG images; sitemap.
+- Version-pin audit (React 19.2 patch, next-intl/Next interplay); error boundaries; empty/loading states; OG images; sitemap.
 - Perf pass (Cache Components / `use cache` where it helps); a11y regression check; README + contribution/authoring guide.
 - **Acceptance:** green CI, Lighthouse a11y/perf ≥95, a dry-run workshop rehearsal completed.
 
-**Parallelizable:** content authoring (assets, lessons, translations, replay data) can proceed alongside any phase once Phase 0 lands.
+**Parallelizable:** content authoring (assets, lessons, translations) can proceed alongside any phase once Phase 0 lands.
 
 ---
 
@@ -393,9 +363,7 @@ Effort sizing is relative (S ≈ hours, M ≈ 1–2 days, L ≈ 3–5 days part-
 | **Vercel Hobby is non-commercial** | If workshops are paid/promotional, move to Pro (~$20/mo) or host static on Cloudflare Workers |
 | **Turso "Database" (Rust) is beta** | Use **libSQL** in production if/when you add a DB |
 | **Contentlayer abandoned** | Use Fumadocs or Velite (never Contentlayer) |
-| **Sandpack maintenance** flagged by one 2026 source | Verify before adopting; it still works and is what react.dev uses; fallback = static code + copy button |
-| **Memory `type:` taxonomy** is a community convention, not core spec | Store as an *optional* `memoryType`; don't assume Claude Code reads it |
-| **LLM demo bill blowout** | Capped Workspace + Upstash limit + Replay default/fallback + daily circuit breaker |
+| **Memory `type:` taxonomy** is a community convention, not core spec | Store as an *optional* `memoryType`; don't assume Codex reads it |
 | **Version drift** (SaaS pricing, npm versions from 2026 snapshots) | Pin at install; re-check vendor pricing pages; treat all numbers here as "verify" |
 | **Next 16 caching model shift** (`use cache`) | Static-first; adopt `use cache` deliberately; check next-intl root-params interplay on 16.2 |
 | **Secrets in assets** (hooks/MCP hold creds) | Store references only; trust warning on import; never round-trip plaintext |
@@ -408,7 +376,6 @@ Effort sizing is relative (S ≈ hours, M ≈ 1–2 days, L ≈ 3–5 days part-
 | Personal, static-first, Vercel Hobby / Cloudflare | **$0** |
 | Commercial workshops (Vercel Pro) | **~$20** |
 | + R2 blobs, Turso, Better Auth at this scale | **$0** (free tiers) |
-| LLM demos | **bounded by the Workspace spend cap you set** (Replay default = $0) |
 
 ## 10. Decisions
 
@@ -425,4 +392,4 @@ Effort sizing is relative (S ≈ hours, M ≈ 1–2 days, L ≈ 3–5 days part-
 
 ---
 
-*This plan is intentionally staged so each phase ships something usable and nothing is built before it's needed. Content (assets, lessons, translations, replay data) is the long pole — start collecting it early and in parallel.*
+*This plan is intentionally staged so each phase ships something usable and nothing is built before it's needed. Content (assets, lessons, translations) is the long pole — start collecting it early and in parallel.*

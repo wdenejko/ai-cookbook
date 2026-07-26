@@ -1,13 +1,13 @@
 ---
 title: What is a skill?
-description: A skill is a reusable folder of instructions that Claude opens only when a task actually needs it.
+description: A skill is a reusable folder of instructions that ChatGPT opens only when a task actually needs it.
 ---
 
-A skill is how you teach Claude to do one job well and reuse that know-how everywhere. This lesson covers what a skill is, what lives inside a skill's folder, and the clever trick that keeps Claude from reading everything at once.
+A skill is how you teach ChatGPT to do one job well and reuse that know-how everywhere. This lesson covers what a skill is, what lives inside a skill's folder, and the clever trick that keeps ChatGPT from reading everything at once.
 
 <Concept title="What is a skill?">
 
-A <Term name="skill">skill</Term> is a saved bundle of instructions for one kind of task, like filling in a PDF form or tidying up a spreadsheet. Once it exists, Claude can follow those steps whenever a matching job comes up, instead of you re-explaining. Think of it as a reusable how-to that Claude can pick up on its own.
+A <Term name="skill">skill</Term> is a saved bundle of instructions for one kind of task, like filling in a PDF form or tidying up a spreadsheet. Once it exists, ChatGPT can follow those steps whenever a matching job comes up, instead of you re-explaining. Think of it as a reusable how-to that ChatGPT can pick up on its own.
 
 </Concept>
 
@@ -17,15 +17,15 @@ Every skill has a main file called `SKILL.md`. The top of it lists the skill's n
 
 </Concept>
 
-<Concept title="Why doesn't Claude read everything at once?">
+<Concept title="Why doesn't ChatGPT read everything at once?">
 
-Claude could have dozens of skills available, and reading all of them every time would be slow and confusing. So it only keeps the short names and descriptions in mind, then opens a skill's full instructions when a task matches. This "open it only when needed" habit is called progressive disclosure.
+ChatGPT could have dozens of skills available, and reading all of them every time would be slow and confusing. So it only keeps the short names and descriptions in mind, then opens a skill's full instructions when a task matches. This "open it only when needed" habit is called progressive disclosure.
 
 </Concept>
 
 <GoDeeper title="Can a skill actually run code?">
 
-Some skills are pure instructions, but others ship helper scripts and declare `allowed-tools` so Claude may run them. The PDF skill below lists `Read, Write, Bash` and uses the `pypdf` library to fill form fields. Declaring tools is also a safety boundary: a skill can only use the tools it has been granted.
+Some skills are pure instructions, but others ship helper scripts and declare `allowed-tools` so ChatGPT may run them. The PDF skill below lists `Read, Write, Bash` and uses the `pypdf` library to fill form fields. Declaring tools is also a safety boundary: a skill can only use the tools it has been granted.
 
 </GoDeeper>
 

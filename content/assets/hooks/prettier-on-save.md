@@ -1,11 +1,11 @@
 ---
 title: "Prettier on Save"
-description: "A PostToolUse hook that automatically runs Prettier to format any JavaScript or TypeScript file right after Claude writes or edits it. Use to keep AI-generated code consistently formatted to your project's Prettier config without manual cleanup."
+description: "A PostToolUse hook that automatically runs Prettier to format any JavaScript or TypeScript file right after ChatGPT writes or edits it. Use to keep AI-generated code consistently formatted to your project's Prettier config without manual cleanup."
 library:
   tags: [hook, formatting]
   category: "Automation"
   visibility: project
-  targets: [claude-code]
+  targets: [codex]
   sourceProject: null
   trustRequired: true
   containsSecrets: false
@@ -17,8 +17,8 @@ it is JS/TS (`.js .jsx .ts .tsx .mjs .cjs`), runs Prettier on just that file. Ot
 file types are ignored.
 
 ## Install
-Merge the `hooks` block into `.claude/settings.json` (this project) or
-`~/.claude/settings.json` (all projects). Run `/hooks` or restart Claude Code so it
+Merge the `hooks` block into `.codex/hooks.json` (this project) or
+`~/.codex/hooks.json` (all projects). Run `/hooks` or restart Codex so it
 picks up the change.
 
 ## Requirements
@@ -28,7 +28,7 @@ picks up the change.
 - **jq** installed — used to read the tool's `file_path` from the hook's JSON stdin.
 
 ## How it works
-Claude Code passes each hook event as JSON on stdin. The command extracts
+Codex passes each hook event as JSON on stdin. The command extracts
 `.tool_input.file_path`, matches the extension with a POSIX `case`, and runs
 `prettier --write` on that single file. It always exits 0 (`|| true`) so a formatting
 hiccup never blocks the edit.

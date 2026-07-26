@@ -1,101 +1,51 @@
 ---
-title: Generowanie obrazów — najlepsze praktyki
-description: Schemat briefu wizualnego, iteracyjna edycja, spójność serii oraz kontrola tekstu i stereotypów.
+title: Image generation — best practices
+description: A visual-brief framework, iterative editing, series consistency, and checks for text and stereotypes.
 ---
 
-## Osiem elementów briefu wizualnego
+## Eight parts of a visual brief
 
-1. **Zastosowanie** — slajd, post, baner, ilustracja czy zdjęcie produktowe?
-2. **Główny obiekt** — co ma być najważniejsze?
-3. **Otoczenie** — gdzie rozgrywa się scena?
-4. **Kompozycja** — co jest po lewej, prawej i w centrum?
-5. **Styl** — fotografia, płaska ilustracja, akwarela, grafika redakcyjna?
-6. **Światło i kolory** — jaki nastrój i paleta?
-7. **Format** — pionowy, poziomy, kwadratowy, 16:9?
-8. **Ograniczenia** — czego nie umieszczać?
+1. **Purpose** — slide, post, banner, illustration, or product image?
+2. **Main subject** — what should attract attention first?
+3. **Setting** — where does the scene take place?
+4. **Composition** — what belongs on the left, right, and centre?
+5. **Style** — photography, flat illustration, watercolour, or editorial art?
+6. **Light and colour** — what mood and palette should it have?
+7. **Format** — portrait, landscape, square, or 16:9?
+8. **Exclusions** — what must not appear?
 
-[Otwórz gotowy brief w Library](/library/prompt/image-brief-pl).
+[Open the ready-made image brief in the Library](/library/prompt/image-brief-pl).
 
-## Przykład
-
-```text
-Stwórz poziomą ilustrację 16:9 do prezentacji biznesowej o współpracy człowieka
-z AI. Pokaż zespół osób w wieku 40–50 lat pracujących wspólnie przy stole.
-Scena ma być naturalna i współczesna. Użyj jasnej niebiesko-zielonej palety.
-Umieść postacie po lewej stronie, a po prawej pozostaw około 40% pustej
-przestrzeni na tytuł. Bez tekstu, logotypów i futurystycznych robotów.
-```
-
-## Pracuj iteracyjnie
-
-1. Wygeneruj kilka kierunków.
-2. Wybierz najlepszą kompozycję.
-3. Zmieniaj jeden element naraz.
-4. Powiedz wyraźnie, co ma pozostać bez zmian.
-5. Po każdej iteracji sprawdź zgodność z zastosowaniem.
-
-Przykład edycji:
+## Example
 
 ```text
-Zachowaj kompozycję, postacie, ich pozycje i oświetlenie.
-Zmień wyłącznie kolorystykę na cieplejszą i uprość tło.
+Create a horizontal 16:9 illustration for a business presentation about
+human–AI collaboration. Show a diverse team aged 40–50 working together at a
+table. Use a bright blue-green palette and leave clean negative space on the
+right for a heading. Do not include logos, watermarks, or text in the image.
 ```
 
-## Projektuj miejsce na treść
+## Improve one thing at a time
 
-Przy slajdzie lub reklamie wskaż:
+Keep the subject and composition stable while changing a single variable:
+lighting, palette, camera distance, expression, or empty space. This makes it
+clear which instruction caused the improvement and helps maintain consistency
+across a series.
 
-- po której stronie będzie nagłówek;
-- ile pustej przestrzeni potrzebujesz;
-- gdzie nie mogą znaleźć się twarze i ważne obiekty;
-- czy obraz będzie przycinany na urządzeniach mobilnych.
+## Check before publishing
 
-Jeżeli napis jest dłuższy niż kilka słów, najbezpieczniej wygenerować obraz bez
-tekstu i dodać treść później w PowerPoint, Canvie lub innym narzędziu.
+- Does the image match its intended use and aspect ratio?
+- Are hands, faces, reflections, and object relationships plausible?
+- Is any generated text correct and legible? Prefer adding important text later
+  in a design tool.
+- Are brands, private data, or copyrighted characters present?
+- Does the image reproduce stereotypes about age, gender, profession, or
+  disability?
+- For a series, are palette, viewpoint, lighting, and character details stable?
 
-## Zachowaj spójność serii
+## A practical iteration loop
 
-Przygotuj krótką „biblię stylu”:
-
-```text
-Wszystkie obrazy w serii:
-- płaska ilustracja redakcyjna,
-- granatowe kontury,
-- jasne błękitne tło,
-- jeden pomarańczowy akcent,
-- kamera na wysokości wzroku,
-- mało elementów w tle,
-- proporcje 16:9,
-- bez tekstu i logotypów.
-```
-
-W kolejnych promptach powtarzaj te reguły i zmieniaj tylko temat sceny.
-
-## Kontrola biasu wizualnego
-
-Sprawdź:
-
-- kto został pokazany jako ekspert, lider lub osoba podejmująca decyzję;
-- czy wiek, płeć, wygląd albo zawód nie zostały przedstawione stereotypowo;
-- czy role osób wynikają z briefu, czy zostały dopowiedziane przez model;
-- czy obraz nie pokazuje „pracy z AI” wyłącznie jako programowania albo robotów;
-- czy reprezentacja pasuje do rzeczywistych odbiorców.
-
-Pomocnicze polecenie:
-
-```text
-Opisz założenia dotyczące wieku, płci, kompetencji i ról, które można odczytać z
-tego obrazu. Wskaż możliwe stereotypy i zaproponuj jedną bardziej naturalną
-wersję kompozycji.
-```
-
-## Kontrola końcowa
-
-- Czy format pasuje do kanału?
-- Czy główny obiekt jest czytelny?
-- Czy jest miejsce na tekst?
-- Czy nie pojawiły się przypadkowe napisy lub logotypy?
-- Czy dłonie, twarze, proporcje i ważne detale wyglądają naturalnie?
-- Czy obraz nie ujawnia danych osobowych ani poufnych materiałów?
-- Czy grafika wymaga oznaczenia lub dodatkowej weryfikacji zgodnie z zasadami
-  organizacji?
+Start with a complete brief, generate one draft, name the largest mismatch,
+request one focused edit, and compare the result with the brief. Repeat only
+until the image is fit for purpose; do not replace a precise correction with
+“make it better”.
