@@ -6,7 +6,7 @@ import { T } from '@/components/workshop/t';
 
 export const metadata: Metadata = {
   title: 'Library',
-  description: 'Browse and reuse ChatGPT skills, subagents, prompts, and configs.',
+  description: 'Ready-to-use prompts and simple AI helpers for everyday tasks.',
 };
 
 export default async function LibraryPage() {

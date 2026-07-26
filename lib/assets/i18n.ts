@@ -10,6 +10,22 @@ interface AssetTranslation {
 // remains byte-for-byte unchanged. This map localizes the catalogue copy around
 // that source without changing what users copy or download.
 const PL_COPY: Record<string, AssetTranslation> = {
+  'prompt/document-summary': {
+    title: 'Podsumowanie dokumentu',
+    description: 'Zamienia PDF, plik Word lub wklejony tekst w krótkie i rzetelne podsumowanie z faktami oraz pytaniami pomocniczymi.',
+  },
+  'prompt/research-with-sources': {
+    title: 'Research z wiarygodnymi źródłami',
+    description: 'Pomaga przygotować prostą odpowiedź na podstawie aktualnych i możliwych do sprawdzenia źródeł, bez zgadywania.',
+  },
+  'prompt/safe-email-review': {
+    title: 'Bezpieczny przegląd e-maila',
+    description: 'Wyciąga z wiadomości najważniejsze informacje, ale niczego nie wysyła i nie ufa ryzykownym instrukcjom ukrytym w treści.',
+  },
+  'prompt/compare-options': {
+    title: 'Porównanie opcji przed decyzją',
+    description: 'Tworzy proste i uczciwe porównanie produktów, usług lub planów oraz pokazuje, kiedy każda opcja ma sens.',
+  },
   'command/changelog': {
     title: 'Generator changelogu',
     description:
@@ -68,6 +84,22 @@ const PL_COPY: Record<string, AssetTranslation> = {
 };
 
 const EN_COPY: Record<string, AssetTranslation> = {
+  'prompt/document-summary-pl': {
+    title: 'Document summary (PL)',
+    description: 'Turns a PDF, Word file, or pasted text into a short, reliable summary with key facts and follow-up questions.',
+  },
+  'prompt/research-with-sources-pl': {
+    title: 'Research with trustworthy sources (PL)',
+    description: 'Helps prepare a plain-language answer from current, checkable sources without guessing.',
+  },
+  'prompt/safe-email-review-pl': {
+    title: 'Safe email review (PL)',
+    description: 'Extracts useful information from an email without sending anything or trusting risky instructions hidden in the message.',
+  },
+  'prompt/compare-options-pl': {
+    title: 'Compare options before deciding (PL)',
+    description: 'Creates a fair, easy-to-read comparison of products, services, or plans and shows when each option makes sense.',
+  },
   'prompt/bias-audit-pl': {
     title: 'Bias and assumptions audit (PL)',
     description:
@@ -140,6 +172,7 @@ const TAG_PL: Record<string, string> = {
   'unit-tests': 'testy-jednostkowe',
   verification: 'weryfikacja',
   workflow: 'proces',
+  research: 'research',
 };
 
 const TAG_EN: Record<string, string> = {
@@ -180,6 +213,20 @@ const VARIABLE_HINTS: Partial<Record<Locale, Record<string, Record<string, strin
     },
   },
   pl: {
+    'prompt/document-summary': {
+      document: 'Plik lub tekst do podsumowania',
+    },
+    'prompt/research-with-sources': {
+      question: 'Pytanie lub temat do sprawdzenia',
+      audience: 'Osoba lub grupa, dla której powstaje odpowiedź',
+    },
+    'prompt/safe-email-review': {
+      email: 'E-mail razem z tematem i nadawcą',
+    },
+    'prompt/compare-options': {
+      options: 'Opcje do porównania',
+      criteria: 'Najważniejsze priorytety i ograniczenia',
+    },
     'prompt/eli5-explainer': {
       topic: 'Pojęcie lub temat do wyjaśnienia',
       audience: 'Osoba lub grupa, dla której powstaje wyjaśnienie',
@@ -260,44 +307,44 @@ export function getInstallNote(asset: Pick<Asset, 'type' | 'slug' | 'targets'>, 
     switch (asset.type) {
       case 'skill':
         return asset.targets.includes('chatgpt')
-          ? 'Create a Skill with chat or upload this folder in the Skills area. Availability can depend on your plan and workspace settings.'
-          : "Copy the whole folder into a project's .agents/skills/ (or ~/.agents/skills/ for personal use).";
+          ? 'If your AI app supports Skills, upload this folder in its Skills area. Otherwise, copy the instructions into a new conversation or ask a technical teammate for help.'
+          : 'This is intended for a technical setup. Ask a technical teammate to install it, then use the instructions in your AI workspace.';
       case 'plugin':
-        return 'Install it from the shared ChatGPT and Codex plugin directory, or add its local marketplace source while developing it.';
+        return 'Install it from the official plugin or app directory. Review what access it requests before connecting anything.';
       case 'subagent':
-        return `Use these instructions in .codex/agents/${asset.slug}.toml or ask ChatGPT Work to delegate the task to a subagent.`;
+        return 'Use this as a specialist role in an AI workspace that supports subagents, or paste the instructions into a separate conversation.';
       case 'command':
-        return 'Paste it into ChatGPT as a reusable prompt. In Codex, package reusable instructions as a skill.';
+        return 'Paste it into a new AI conversation and follow the instructions. Save it as a reusable prompt if your app offers that option.';
       case 'prompt':
-        return 'Use it as a system or user prompt; prompts have no fixed on-disk location.';
+        return 'Copy it into a new AI conversation and replace the words in {{braces}} with your own information.';
       case 'mcp_server':
-        return 'Connect the MCP server from ChatGPT Plugins or add it to the Codex MCP configuration.';
+        return 'Only use this when you understand the connection. Start with read-only access, check the permissions, and ask a technical teammate to set it up if needed.';
       case 'hook':
-        return 'Merge the hook into .codex/hooks.json for the project or user. Review it first — hooks run code.';
+        return 'This is an automatic technical helper. Ask a technical teammate to install it and review what it runs first.';
       case 'memory':
-        return 'Add project guidance to AGENTS.md or cross-chat preferences to ChatGPT custom instructions.';
+        return 'Add the preference to your AI app’s memory or custom instructions. Remove anything sensitive that you do not want stored.';
     }
   }
 
   switch (asset.type) {
     case 'skill':
       return asset.targets.includes('chatgpt')
-        ? 'Utwórz umiejętność na czacie albo prześlij ten folder w sekcji Umiejętności. Dostępność może zależeć od planu i ustawień obszaru roboczego.'
-        : 'Skopiuj cały folder do .agents/skills/ w projekcie albo do ~/.agents/skills/ do użytku osobistego.';
+        ? 'Jeśli aplikacja AI obsługuje umiejętności, prześlij ten folder w sekcji Umiejętności. W innym przypadku wklej instrukcje do nowej rozmowy albo poproś o pomoc techniczną.'
+        : 'To materiał do konfiguracji technicznej. Poproś osobę techniczną o instalację, a potem używaj instrukcji w swoim środowisku AI.';
     case 'plugin':
-      return 'Zainstaluj ją ze wspólnego katalogu wtyczek ChatGPT i Codex albo dodaj jej lokalne źródło marketplace podczas tworzenia.';
+      return 'Zainstaluj ją z oficjalnego katalogu wtyczek lub aplikacji. Przed połączeniem sprawdź, jakiego dostępu wymaga.';
     case 'subagent':
-      return `Użyj tych instrukcji w pliku .codex/agents/${asset.slug}.toml albo poproś ChatGPT Work o przekazanie zadania subagentowi.`;
+      return 'Użyj tego jako roli specjalisty w środowisku AI obsługującym subagentów albo wklej instrukcje do osobnej rozmowy.';
     case 'command':
-      return 'Wklej go do ChatGPT jako prompt wielokrotnego użytku. W Codex zapakuj powtarzalne instrukcje jako umiejętność.';
+      return 'Wklej go do nowej rozmowy z AI i wykonaj instrukcje. Jeśli aplikacja to umożliwia, zapisz go jako prompt wielokrotnego użytku.';
     case 'prompt':
-      return 'Użyj go jako promptu systemowego lub użytkownika; prompty nie mają stałego miejsca na dysku.';
+      return 'Skopiuj go do nowej rozmowy z AI i zastąp słowa w {{nawiasach}} własnymi informacjami.';
     case 'mcp_server':
-      return 'Połącz serwer MCP przez ChatGPT Plugins albo dodaj go do konfiguracji MCP w Codex.';
+      return 'Używaj tylko wtedy, gdy rozumiesz to połączenie. Zacznij od dostępu tylko do odczytu, sprawdź uprawnienia i w razie potrzeby poproś o konfigurację osobę techniczną.';
     case 'hook':
-      return 'Scal hook z plikiem .codex/hooks.json projektu lub użytkownika. Najpierw go sprawdź — hooki uruchamiają kod.';
+      return 'To automatyczny pomocnik techniczny. Poproś osobę techniczną o instalację i najpierw sprawdź, co dokładnie uruchamia.';
     case 'memory':
-      return 'Dodaj instrukcje projektu do AGENTS.md, a preferencje między czatami do instrukcji niestandardowych ChatGPT.';
+      return 'Dodaj preferencję do pamięci lub instrukcji niestandardowych aplikacji AI. Nie zapisuj tam wrażliwych informacji.';
   }
 }
 
