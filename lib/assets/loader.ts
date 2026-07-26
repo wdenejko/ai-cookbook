@@ -117,7 +117,7 @@ function makeAsset(input: {
     filePath: input.filePath,
     files: input.files,
     componentRefs: lib.components,
-    install: installFor(input.type, input.slug),
+    install: installFor(input.type, input.slug, lib.targets),
     contentHash: hash(input.raw),
   };
 }
