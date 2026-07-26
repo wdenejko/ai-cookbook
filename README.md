@@ -153,7 +153,34 @@ Copy [`.env.example`](.env.example) to `.env.local`. Every variable is optional.
 
 ## Deployment
 
-Static-first and serverless-friendly (Vercel or any Node host). Build with `npm run build`. Set `NEXT_PUBLIC_SITE_URL` to the deployed origin so OG images resolve. Leave `DEMO_MODE=replay` unless you deliberately want live Claude calls (and have set a workspace spend cap). Scope the public build with `LIBRARY_VISIBILITY` if it shouldn’t expose personal assets.
+Production runs at `https://cookbook.denejko.pl` as a standalone Next.js container
+behind its own Caddy container on Mikrus. The app listens only on
+`127.0.0.1:3200`; its Caddy listens on origin port `8443` and provides TLS and
+HTTP Basic Authentication. The separate `starship` stack and its Caddy on ports
+80/443 are not modified or restarted.
+
+The proxied Cloudflare hostname has an Origin Rule matching
+`http.host eq "cookbook.denejko.pl"` and overriding the destination port to
+`8443`. The `denejko.pl` SSL mode is `Full`, which accepts Caddy's internal
+origin certificate.
+
+Deployments are manual and immutable:
+
+1. Open **Actions → Deploy to Mikrus** in GitHub.
+2. Select **Run workflow** on `main`.
+3. The workflow checks types, builds a `linux/amd64` image, publishes it to GHCR
+   with the commit SHA, and asks a restricted SSH command on the VPS to deploy it.
+
+The workflow requires repository variables `MIKRUS_HOST` and `MIKRUS_PORT`, plus
+secrets `MIKRUS_DEPLOY_SSH_KEY` and `MIKRUS_KNOWN_HOSTS`. The deployment key is
+restricted server-side to the fixed deploy script and cannot open an interactive
+root shell.
+
+For another host, build with `npm run build` and run the standalone output as a
+Node server. Set `NEXT_PUBLIC_SITE_URL` at build time so OG image URLs resolve.
+Leave `DEMO_MODE=replay` unless you deliberately want live Claude calls and have
+set a workspace spend cap. Scope builds with `LIBRARY_VISIBILITY` if they should
+exclude personal assets.
 
 **Editing model:** there is no in-app editor and no auth — you change content by editing files and pushing to git. This keeps the whole thing static, reviewable, and free to host.
 

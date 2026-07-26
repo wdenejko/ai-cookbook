@@ -37,6 +37,7 @@ yarn-error.log*
 .env.development
 .env.production
 !.env.example
+/deploy/Caddyfile
 
 # vercel
 .vercel
