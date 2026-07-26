@@ -1,0 +1,4 @@
+{
+  "title": "Wtyczki i połączenia",
+  "pages": ["index", "chatgpt-plugin", "google-workspace", "other-email", "mcp-server", "permissions", "custom-assistant"]
+}

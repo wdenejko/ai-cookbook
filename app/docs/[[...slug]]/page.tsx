@@ -20,11 +20,11 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
 
   return (
     <>
-      <div data-lang="en" lang="en">
+      <div data-lang="en" lang="en" className="docs-locale-contents">
         <LocalizedDocsPage page={en} />
       </div>
       {pl && (
-        <div data-lang="pl" lang="pl">
+        <div data-lang="pl" lang="pl" className="docs-locale-contents">
           <LocalizedDocsPage page={pl} />
         </div>
       )}

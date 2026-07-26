@@ -1,0 +1,60 @@
+---
+title: Improve a Word document with AI
+description: Edit, shorten, translate, or change the tone of a document while keeping meaning and formatting decisions under control.
+---
+
+<BeforeYouStart>
+Save a copy with a new filename, for example `proposal-AI-draft.docx`. Remove
+tracked comments and hidden personal data if the file should not contain them.
+</BeforeYouStart>
+
+<TutorialVisual
+  title="Document revision"
+  caption="Ask for a proposed revision first; keep the original until you have accepted every meaningful change."
+  steps={[
+    { label: "Set the goal", detail: "Choose clarity, length, tone, or translation.", icon: "file" },
+    { label: "Request changes", detail: "Protect facts and mark uncertainties.", icon: "chat" },
+    { label: "Compare versions", detail: "Review names, numbers, and commitments.", icon: "search" },
+  ]}
+/>
+
+## Step by step
+
+1. Attach the `.docx` file to a new conversation.
+2. Describe the reader and the single most important improvement.
+3. Ask for a change list before requesting a rewritten file:
+
+```text
+Review this document for a customer who does not know our internal terminology.
+First list the five changes you recommend. Do not alter names, dates, prices,
+legal meaning, or commitments. Mark anything ambiguous instead of guessing.
+```
+
+4. Approve or correct the plan, then continue:
+
+```text
+Prepare a revised version using the approved changes. Keep the headings and
+bullet structure. After the document, list every sentence where meaning may
+have changed.
+```
+
+5. Download the result if the assistant provides a file. Open it in Word and use
+   **Compare** or review it side by side with the original.
+6. Check headings, tables, footnotes, dates, currencies, names, and links.
+
+## Translation
+
+For translation, state the target country and what must remain untranslated.
+Never assume that an AI translation is suitable for a contract, medical
+instruction, or certified document.
+
+```text
+Translate into Polish for a general business reader. Keep product names and
+links unchanged. Put uncertain specialist terms in a final review list.
+```
+
+## Finished when
+
+- [ ] The original file remains untouched.
+- [ ] Important facts and commitments were compared.
+- [ ] The final document opens correctly in Word.

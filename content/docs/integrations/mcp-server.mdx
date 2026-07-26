@@ -1,0 +1,65 @@
+---
+title: Add an MCP server in the ChatGPT desktop app
+description: Connect a trusted local or remote MCP server, authenticate it, inspect its tools, and keep approvals enabled.
+---
+
+MCP lets ChatGPT or Codex use tools and context supplied by another service. A
+server can expose powerful actions, so obtain its exact command or URL from its
+official publisher before you begin.
+
+<TutorialVisual
+  title="MCP connection"
+  caption="The server address establishes the connection; the tool list and approval policy determine what it can do."
+  steps={[
+    { label: "Verify the server", detail: "Confirm publisher, command or URL, and purpose.", icon: "search" },
+    { label: "Add and restart", detail: "Use Settings → MCP servers.", icon: "settings" },
+    { label: "Inspect tools", detail: "Authenticate and test read-only first.", icon: "connect" },
+  ]}
+/>
+
+## Before adding anything
+
+Collect:
+
+- the official server name and documentation;
+- either a **Streamable HTTP URL** or an **STDIO command and arguments**;
+- its authentication method;
+- the list of tools and whether they read or change external data.
+
+Do not copy an unknown command from a forum. A local STDIO server runs a program
+on your computer.
+
+## Add the server
+
+1. Open the ChatGPT desktop app.
+2. Open **Settings**, then **MCP servers**.
+3. Select **Add server**.
+4. Enter a short recognizable name.
+5. Choose the type supplied by the publisher:
+   - **Streamable HTTP** — paste the exact HTTPS URL;
+   - **STDIO** — enter the exact command and arguments.
+6. Save, then select **Restart**.
+7. If the server shows **Authenticate**, select it and complete sign-in on the
+   expected provider domain.
+8. In the prompt area, type `/mcp` to view connected servers.
+
+## Test safely
+
+Read the tool names before use. Keep approval prompts enabled for tools that
+write, send, create, or delete. Start with:
+
+```text
+Using [server name], list the available tools and mark each as read-only or
+capable of changing external data. Do not call any tool yet.
+```
+
+Then run one harmless read operation and compare the result with the source.
+Disable or remove the server if unexpected tools appear.
+
+See the [official MCP configuration guide](https://learn.chatgpt.com/docs/extend/mcp).
+
+## Finished when
+
+- [ ] The URL or command came from the official publisher.
+- [ ] Authentication occurred on the expected domain.
+- [ ] You reviewed tools and retained approval for write actions.

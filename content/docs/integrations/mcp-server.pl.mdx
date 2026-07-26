@@ -1,0 +1,65 @@
+---
+title: Dodawanie serwera MCP w aplikacji ChatGPT
+description: Połącz zaufany lokalny lub zdalny serwer MCP, zaloguj się, sprawdź narzędzia i zachowaj zatwierdzanie działań.
+---
+
+MCP pozwala ChatGPT lub Codexowi używać narzędzi i informacji udostępnianych
+przez inną usługę. Serwer może wykonywać silne działania, dlatego dokładną
+komendę lub adres pobierz z oficjalnej dokumentacji wydawcy.
+
+<TutorialVisual
+  title="Połączenie MCP"
+  caption="Adres serwera tworzy połączenie, a lista narzędzi i zasady zatwierdzania określają jego możliwości."
+  steps={[
+    { label: "Sprawdź serwer", detail: "Potwierdź wydawcę, komendę lub URL i cel.", icon: "search" },
+    { label: "Dodaj i uruchom ponownie", detail: "Użyj Ustawienia → Serwery MCP.", icon: "settings" },
+    { label: "Przejrzyj narzędzia", detail: "Zaloguj się i zacznij od odczytu.", icon: "connect" },
+  ]}
+/>
+
+## Zanim cokolwiek dodasz
+
+Zbierz:
+
+- oficjalną nazwę serwera i dokumentację;
+- **adres Streamable HTTP** albo **komendę STDIO z argumentami**;
+- sposób logowania;
+- listę narzędzi i informację, czy tylko czytają, czy zmieniają dane.
+
+Nie kopiuj nieznanej komendy z forum. Lokalny serwer STDIO uruchamia program na
+twoim komputerze.
+
+## Dodaj serwer
+
+1. Otwórz aplikację desktopową ChatGPT.
+2. Otwórz **Ustawienia**, a następnie **Serwery MCP**.
+3. Wybierz **Dodaj serwer**.
+4. Wpisz krótką, rozpoznawalną nazwę.
+5. Wybierz typ wskazany przez wydawcę:
+   - **Streamable HTTP** — wklej dokładny adres HTTPS;
+   - **STDIO** — wpisz dokładną komendę i argumenty.
+6. Zapisz i wybierz **Uruchom ponownie**.
+7. Jeśli widzisz **Uwierzytelnij**, wybierz tę opcję i zaloguj się na oczekiwanej domenie.
+8. W polu wiadomości wpisz `/mcp`, aby zobaczyć połączone serwery.
+
+## Bezpieczny test
+
+Przeczytaj nazwy narzędzi. Zachowaj pytanie o zgodę dla funkcji, które zapisują,
+wysyłają, tworzą lub usuwają. Zacznij od:
+
+```text
+Korzystając z [nazwa serwera], wypisz dostępne narzędzia i oznacz każde jako
+tylko do odczytu albo zdolne do zmiany danych zewnętrznych. Jeszcze nie
+uruchamiaj żadnego narzędzia.
+```
+
+Potem wykonaj jeden nieszkodliwy odczyt i porównaj wynik ze źródłem. Wyłącz lub
+usuń serwer, jeśli pojawią się nieoczekiwane narzędzia.
+
+Zobacz [oficjalną instrukcję MCP](https://learn.chatgpt.com/docs/extend/mcp).
+
+## Gotowe, jeśli
+
+- [ ] Adres lub komenda pochodzi od oficjalnego wydawcy.
+- [ ] Logowanie odbyło się na oczekiwanej domenie.
+- [ ] Sprawdzono narzędzia i pozostawiono zatwierdzanie zapisu.

@@ -1,0 +1,53 @@
+---
+title: Schedule a reminder or recurring task in ChatGPT
+description: Create a small automated task, confirm its schedule and notifications, and keep a safe way to pause or delete it.
+---
+
+<BeforeYouStart>
+Begin with a harmless reminder. Scheduled work may run when you are offline, so
+do not let the first test send messages, spend money, or change external data.
+</BeforeYouStart>
+
+<TutorialVisual
+  title="Safe scheduling"
+  caption="A scheduled task needs an instruction, exact timing, a notification route, and a review point."
+  steps={[
+    { label: "Describe", detail: "State output, schedule, timezone, and sources.", icon: "chat" },
+    { label: "Confirm", detail: "Read the task card and next run time.", icon: "settings" },
+    { label: "Review", detail: "Inspect the first result; pause if needed.", icon: "search" },
+  ]}
+/>
+
+## Create a harmless first task
+
+On ChatGPT web, ask:
+
+```text
+Every Monday at 08:30 Europe/Warsaw, remind me to review my priorities. Send a
+short notification containing these three questions:
+1. What must be finished this week?
+2. What can be postponed?
+3. Who needs an update?
+Do not search the web or use connected apps.
+```
+
+1. Read the confirmation carefully: title, instructions, timezone, and next run.
+2. Enable browser, push, or email notifications only where you want to receive them.
+3. Open the task list or Scheduled page and confirm that the task appears.
+4. After the first run, decide whether the output is useful. Edit, pause, or delete it.
+
+## A recurring briefing
+
+Once the reminder works, try a read-only briefing. Name allowed sources and ask
+for “no update” when nothing material changed. Avoid vague commands such as
+“watch everything” or “handle my inbox”.
+
+Scheduled-task availability and limits vary by plan and surface. Manage tasks
+from ChatGPT web when another app does not show the controls. See the
+[official Tasks guide](https://help.openai.com/en/articles/10291617-tasks-inchatgpt).
+
+## Finished when
+
+- [ ] Schedule and timezone are explicit.
+- [ ] The first run caused no external action.
+- [ ] You know where to edit, pause, and delete the task.

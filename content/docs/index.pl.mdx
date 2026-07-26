@@ -1,27 +1,40 @@
 ---
-title: AI Cookbook
-description: Biblioteka materiałów AI wielokrotnego użytku i spokojne, praktyczne przewodniki.
+title: Praktyczne tutoriale AI
+description: Jasne, ilustrowane instrukcje wykonywania codziennych zadań z AI — bez wiedzy technicznej.
 ---
 
-Witaj w **AI Cookbook** — osobistej bibliotece materiałów AI wielokrotnego
-użytku: umiejętności ChatGPT, subagentów, promptów, konfiguracji MCP i hooków
-oraz pamięci. Obok biblioteki znajdziesz praktyczne przewodniki dla osób o
-różnym poziomie doświadczenia.
+Wybierz rzecz, którą chcesz zrobić. Każdy tutorial wyjaśnia, czego potrzebujesz,
+prowadzi przez dokładne kroki, zawiera polecenie do skopiowania i kończy się
+krótką kontrolą bezpieczeństwa.
 
-Strona korzysta z MDX i **Fumadocs** oraz systemu wizualnego **Broadsheet**:
-Source Serif 4 na papierowej bieli z niewielkimi akcentami cyjanu i magenty.
+<TutorialVisual
+  title="Prosta ścieżka"
+  caption="Zacznij od celu, wykonaj kolejne kroki i sprawdź wynik, zanim cokolwiek udostępnisz lub wyślesz."
+  steps={[
+    { label: "Wybierz zadanie", detail: "Znajdź efekt, którego potrzebujesz dzisiaj.", icon: "search" },
+    { label: "Wykonaj instrukcję", detail: "Przechodź spokojnie przez małe kroki.", icon: "settings" },
+    { label: "Sprawdź wynik", detail: "Skontroluj fakty, pliki i uprawnienia.", icon: "account" },
+  ]}
+/>
 
-## Co tu znajdziesz
+## Wybierz dział
 
 <Cards>
-  <Card title="ChatGPT krok po kroku" href="/docs/chatgpt" description="Spokojna ścieżka od bezpiecznych pierwszych zadań przez prompty i dialog po weryfikację, obrazy oraz powtarzalną pracę." />
-  <Card title="Plan projektu" href="https://github.com/wdenejko/ai-cookbook/blob/main/docs/PROJECT-PLAN.md" description="Architektura, wspólny model danych materiałów i etapowy plan rozwoju." />
-  <Card title="Brief projektowy" href="https://github.com/wdenejko/ai-cookbook/blob/main/docs/DESIGN-BRIEF.md" description="Ekrany, ustawienia globalne i wymagania WCAG 2.2 AA." />
-  <Card title="Tokeny projektu" href="/docs/tokens" description="Wizualna kontrola motywu Broadsheet połączonego z Tailwind v4." />
+  <Card title="Pierwsze kroki" href="/docs/getting-started" description="Instalacja i bezpieczna konfiguracja ChatGPT, Claude oraz Gemini na komputerze i telefonie." />
+  <Card title="Pliki i treści" href="/docs/files-content" description="Praca z PDF-ami, dokumentami Word, arkuszami, prezentacjami i obrazami." />
+  <Card title="Research i organizacja" href="/docs/research-organization" description="Głos, wyszukiwanie, głęboki research, projekty i zadania cykliczne." />
+  <Card title="Wtyczki i połączenia" href="/docs/integrations" description="Poczta i pliki, instalowanie wtyczek, serwery MCP oraz kontrola dostępu." />
 </Cards>
 
-## Stan projektu
+## Jak powstają te instrukcje
 
-Fundament wykorzystuje **Next.js 16**, **Tailwind v4** i **Fumadocs** z tokenami
-Broadsheet. Biblioteka materiałów i przewodniki korzystają z tego samego
-dwujęzycznego mechanizmu treści.
+Tutoriale unikają żargonu i nie zakładają, że każda funkcja jest dostępna na
+każdym koncie. Interfejsy i limity planów zmieniają się, dlatego przy każdym
+poradniku znajdziesz oficjalne źródła na wypadek przeniesienia przycisku lub
+braku danej opcji.
+
+<SafetyNote>
+Nie wklejaj do czatu AI haseł, kodów jednorazowych, danych płatniczych,
+dokumentacji medycznej ani poufnych informacji służbowych. Zaczynaj od
+nieszkodliwych przykładów i przyznawaj integracjom tylko niezbędny dostęp.
+</SafetyNote>

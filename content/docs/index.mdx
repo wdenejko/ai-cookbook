@@ -1,43 +1,55 @@
 ---
-title: AI Cookbook
-description: A reusable store of AI assets and calm, practical learning guides.
+title: Practical AI tutorials
+description: Clear, illustrated instructions that help you complete everyday tasks with AI — no technical background required.
 ---
 
-Welcome to **AI Cookbook** — a personal, reusable library of AI assets (ChatGPT
-skills, subagents, prompts, MCP and hook configs, memories) with practical
-learning guides for people with different levels of experience.
+Choose what you want to accomplish. Every tutorial tells you what you need,
+shows the exact sequence of steps, gives you a prompt to copy, and ends with a
+short safety check.
 
-This page is rendered from MDX through **Fumadocs**, styled with the
-**Broadsheet** design system: Source Serif 4 on paper white, with cyan and
-magenta process accents used small like spot color.
+<TutorialVisual
+  title="A simple path"
+  caption="Start with a goal, follow the steps, and check the result before you share or send anything."
+  steps={[
+    { label: "Choose a task", detail: "Pick the outcome you need today.", icon: "search" },
+    { label: "Follow the guide", detail: "Complete one small step at a time.", icon: "settings" },
+    { label: "Check the result", detail: "Review facts, files, and permissions.", icon: "account" },
+  ]}
+/>
 
-## What lives here
+## Browse the tutorials
 
 <Cards>
   <Card
-    title="ChatGPT, step by step"
-    href="/docs/chatgpt"
-    description="A calm path from safe first tasks to prompts, dialogue, verification, images, and reusable work."
+    title="Getting started"
+    href="/docs/getting-started"
+    description="Install and safely configure ChatGPT, Claude, and Gemini on your computer or phone."
   />
   <Card
-    title="Project plan"
-    href="https://github.com/wdenejko/ai-cookbook/blob/main/docs/PROJECT-PLAN.md"
-    description="Architecture, the unified asset data model, and the phased roadmap."
+    title="Files and content"
+    href="/docs/files-content"
+    description="Work with PDFs, Word documents, spreadsheets, presentations, and images."
   />
   <Card
-    title="Design brief"
-    href="https://github.com/wdenejko/ai-cookbook/blob/main/docs/DESIGN-BRIEF.md"
-    description="Screens, global controls, and the WCAG 2.2 AA constraints."
+    title="Research and organization"
+    href="/docs/research-organization"
+    description="Use voice, web search, deep research, projects, and scheduled tasks."
   />
   <Card
-    title="Design tokens"
-    href="/docs/tokens"
-    description="A visual check of the Broadsheet theme wired into Tailwind v4."
+    title="Plugins and connections"
+    href="/docs/integrations"
+    description="Connect email and files, install plugins, add MCP servers, and manage access."
   />
 </Cards>
 
-## Where this is
+## How these guides are written
 
-The foundation (Phase 0) is in place: **Next.js 16**, **Tailwind v4**, and
-**Fumadocs**, themed with Broadsheet tokens. The asset library and learning
-guides use the same bilingual content pipeline.
+The guides avoid jargon and do not assume that every feature is available on
+every account. Product interfaces and plan limits change, so use the official
+links in each tutorial if a button has moved or an option is missing.
+
+<SafetyNote>
+Never paste passwords, one-time codes, payment details, medical records, or
+confidential work information into an AI chat. Begin with harmless examples and
+grant integrations the smallest access they need.
+</SafetyNote>

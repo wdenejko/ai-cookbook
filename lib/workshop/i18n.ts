@@ -13,14 +13,14 @@ const en = {
 
   'nav.library': 'Library',
   'nav.learn': 'Learn',
-  'nav.docs': 'Docs',
+  'nav.docs': 'Tutorials',
   'nav.glossary': 'Glossary',
 
   'home.kicker': 'Reusable AI assets · Workshop platform',
   'home.description':
     'A personal, reusable library of ChatGPT skills, subagents, prompts, and configs — that also doubles as an adaptive workshop platform for mixed audiences.',
   'home.design': 'Set in the Broadsheet design system.',
-  'home.openDocs': 'Open the docs',
+  'home.openDocs': 'Open tutorials',
 
   'lesson.all': 'All lessons',
   'lesson.prev': 'Previous',
@@ -128,14 +128,14 @@ const pl: Record<MsgKey, string> = {
 
   'nav.library': 'Biblioteka',
   'nav.learn': 'Nauka',
-  'nav.docs': 'Dokumentacja',
+  'nav.docs': 'Tutoriale',
   'nav.glossary': 'Słownik',
 
   'home.kicker': 'Materiały AI wielokrotnego użytku · Platforma warsztatowa',
   'home.description':
     'Osobista biblioteka umiejętności, subagentów, promptów i konfiguracji ChatGPT, która jest również adaptacyjną platformą warsztatową dla zróżnicowanych grup.',
   'home.design': 'Zaprojektowana w systemie Broadsheet.',
-  'home.openDocs': 'Otwórz dokumentację',
+  'home.openDocs': 'Otwórz tutoriale',
 
   'lesson.all': 'Wszystkie lekcje',
   'lesson.prev': 'Poprzednia',

@@ -1,0 +1,64 @@
+---
+title: Connect Gmail and Google Drive to ChatGPT
+description: Authorize the correct Google account, understand the requested scopes, and test email and file access without taking external actions.
+---
+
+<BeforeYouStart>
+Use a personal account only for personal data. For a work or school account,
+your administrator may need to enable the apps. Never connect the wrong Google
+account just because it is already open in the browser.
+</BeforeYouStart>
+
+<TutorialVisual
+  title="Google connection"
+  caption="Choose the account deliberately, read the Google consent screen, and test one known item."
+  steps={[
+    { label: "Choose the app", detail: "Open Settings → Apps in ChatGPT.", icon: "settings" },
+    { label: "Authorize", detail: "Select the right Google account and scopes.", icon: "account" },
+    { label: "Verify", detail: "Find one known email or file read-only.", icon: "search" },
+  ]}
+/>
+
+## Connect
+
+1. In ChatGPT, open your profile, **Settings**, then **Apps**.
+2. Find **Gmail** or **Google Drive** and select **Connect**.
+3. On Google's sign-in screen, choose the intended account. Check the full email address.
+4. Read every requested permission. If the access is broader than you accept,
+   cancel and ask your workspace administrator.
+5. Complete the authorization and return to ChatGPT. A synchronized connection
+   may need time before all permitted content is searchable.
+
+## Run a narrow test
+
+For Gmail:
+
+```text
+Search Gmail for the message from [known sender] with subject [exact subject].
+Show its date and a three-bullet summary. Do not draft, send, label, archive, or
+delete anything.
+```
+
+For Drive:
+
+```text
+Find the Google Drive file named [exact filename]. Tell me its owner, modified
+date, and main headings. Do not change or share the file.
+```
+
+Compare the result with Google directly. If more than one account is connected,
+name the account or workspace in the prompt.
+
+## Disconnect
+
+Remove the app in ChatGPT **Settings → Apps**, then review third-party access in
+your Google Account security settings. OpenAI states that an indexed copy from
+a disconnected Google app is deleted within 30 days.
+
+See [Google app data controls](https://help.openai.com/en/articles/10408842-google-app-for-chatgpt-data-controls-faq).
+
+## Finished when
+
+- [ ] The correct Google identity is connected.
+- [ ] You understand the allowed read and write scopes.
+- [ ] A known email or file was found without modification.

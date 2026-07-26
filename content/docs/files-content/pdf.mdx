@@ -1,0 +1,63 @@
+---
+title: Summarize a PDF without losing important details
+description: Upload a PDF, define the kind of summary you need, and verify every important claim against the source.
+---
+
+<BeforeYouStart>
+Make a copy of the PDF and check whether you are allowed to upload it. Remove
+names, account numbers, medical information, and confidential pages when possible.
+</BeforeYouStart>
+
+<TutorialVisual
+  title="PDF to checked summary"
+  caption="A useful summary remains connected to the document through page references and an uncertainty check."
+  steps={[
+    { label: "Upload", detail: "Add a readable, permitted PDF.", icon: "file" },
+    { label: "Ask precisely", detail: "Define reader, length, and page references.", icon: "chat" },
+    { label: "Verify", detail: "Open the cited pages and compare.", icon: "search" },
+  ]}
+/>
+
+## Step by step
+
+1. Open a new conversation and attach the PDF with the paperclip or **Add files** button.
+2. Wait until the filename appears in the conversation.
+3. Ask the assistant to identify the document before summarizing:
+
+```text
+Read this PDF. Tell me its title, date, author or organization, number of
+pages, and main purpose. If any of those details are missing, say so.
+```
+
+4. If the identification is correct, request the summary:
+
+```text
+Summarize this document for a person who has five minutes. Use:
+- five key points,
+- three decisions or actions,
+- important dates and numbers,
+- page references for every important claim,
+- a final section called "Unclear or missing information".
+Do not use knowledge from outside the attached PDF.
+```
+
+5. Open every cited page that contains a decision, date, amount, or warning.
+6. Correct the prompt if the assistant confused printed page numbers with PDF viewer numbers.
+
+## Scanned PDFs
+
+If you cannot select text in the PDF, it may be a scan. Ask the assistant
+whether all pages were readable. For a poor scan, use OCR in a trusted document
+tool first and manually check names and numbers.
+
+## Common problems
+
+- **No page references:** ask for a table with claim, page, and a short supporting passage.
+- **A missing appendix:** ask which pages were actually available to the assistant.
+- **A confident interpretation:** request separate columns for direct facts and interpretation.
+
+## Finished when
+
+- [ ] The document was correctly identified.
+- [ ] Key claims include page references.
+- [ ] Dates, amounts, and decisions match the original.

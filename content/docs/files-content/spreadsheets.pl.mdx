@@ -1,0 +1,61 @@
+---
+title: Analiza pliku Excel lub CSV
+description: Zrozum tabelę, sprawdź jakość danych, policz przydatne wskaźniki i utwórz wykres bez ukrytych założeń.
+---
+
+<BeforeYouStart>
+Pracuj na kopii. Usuń dane osobowe i zbędne kolumny. Arkusz może zawierać
+ukryte karty, komentarze, formuły i metadane, więc sprawdź go przed przesłaniem.
+</BeforeYouStart>
+
+<TutorialVisual
+  title="Od tabeli do decyzji"
+  caption="Najpierw zrozum kolumny, a dopiero potem licz. Każdą sumę porównaj z plikiem źródłowym."
+  steps={[
+    { label: "Sprawdź", detail: "Rozpoznaj arkusze, kolumny, jednostki i braki.", icon: "file" },
+    { label: "Przeanalizuj", detail: "Ustal jedno pytanie i potrzebne obliczenie.", icon: "chat" },
+    { label: "Uzgodnij", detail: "Porównaj sumy i przykładowe wiersze.", icon: "search" },
+  ]}
+/>
+
+## Krok po kroku
+
+1. Dodaj plik `.xlsx` lub `.csv`.
+2. Najpierw poproś o spis danych:
+
+```text
+Jeszcze niczego nie obliczaj. Wypisz arkusze i kolumny, wyjaśnij ich
+prawdopodobne znaczenie i jednostkę, policz puste wartości oraz wskaż daty,
+waluty, duplikaty i problemy jakościowe. Zapytaj o każdą niejasność.
+```
+
+3. Popraw interpretację kolumn i filtrów.
+4. Zadaj jedno precyzyjne pytanie:
+
+```text
+Korzystając tylko z potwierdzonych definicji, policz miesięczną sprzedaż i
+procentową zmianę miesiąc do miesiąca. Pomiń anulowane zamówienia. Pokaż wzór,
+liczbę uwzględnionych wierszy i uzgodnienie z sumą źródłową.
+```
+
+5. Poproś o prosty wykres dopiero po potwierdzeniu sum.
+6. Wygenerowany skoroszyt zapisz pod nową nazwą i sprawdź w Excelu formuły,
+   filtry, formaty liczb oraz etykiety wykresu.
+
+## Weryfikacja
+
+Ręcznie przelicz małą próbkę, np. jeden miesiąc albo dziesięć wierszy. Sprawdź,
+czy procent ma właściwy mianownik i czy pustych wartości nie uznano za zero.
+
+## Typowe pułapki
+
+- Daty odczytane w amerykańskiej zamiast europejskiej kolejności.
+- Przecinki dziesiętne potraktowane jak tekst.
+- Sumy powielone przez nagłówki lub złączone wiersze.
+- Przekonujący wykres z nieprawidłowym filtrem.
+
+## Gotowe, jeśli
+
+- [ ] Znaczenie kolumn i wykluczenia są jawne.
+- [ ] Suma źródłowa zgadza się z wynikiem.
+- [ ] Jedno obliczenie próbne zostało sprawdzone ręcznie.

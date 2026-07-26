@@ -1,0 +1,56 @@
+---
+title: Install a plugin in ChatGPT
+description: Find a plugin in the official directory, inspect its owner and permissions, install it, and test it in a new chat.
+---
+
+<BeforeYouStart>
+Plugins are available only on supported ChatGPT surfaces and plans. If you do
+not see the directory, use ChatGPT on the web with Work enabled or the ChatGPT
+desktop app, and check your workspace policy.
+</BeforeYouStart>
+
+<TutorialVisual
+  title="Plugin installation"
+  caption="Treat installation as a trust decision: inspect the owner and requested connections before the first use."
+  steps={[
+    { label: "Inspect", detail: "Check owner, purpose, data, and actions.", icon: "search" },
+    { label: "Install", detail: "Use the official Plugins directory.", icon: "connect" },
+    { label: "Test", detail: "Start a new chat with harmless data.", icon: "chat" },
+  ]}
+/>
+
+## Step by step
+
+1. On the web, choose ChatGPT **Work** and open **Plugins**. In the desktop app,
+   select ChatGPT with Work enabled or Codex, then open **Plugins**.
+2. Search for the plugin by its exact name.
+3. Open its details and check:
+   - who publishes it;
+   - which skills, connectors, or MCP tools it adds;
+   - whether it can only read or can also create, edit, send, or delete;
+   - which external privacy policy applies.
+4. Select the **plus** button to install.
+5. If a connection is requested, read the authorization screen before continuing.
+6. Start a **new chat** so the installed capabilities are loaded.
+7. Test with a read-only request:
+
+```text
+Use the installed plugin only to list what information it can access. Do not
+create, edit, send, or delete anything. Ask before every external action.
+```
+
+8. To invoke a particular plugin explicitly, type `@` and select it when supported.
+
+## Remove it
+
+Open the plugin from the Installed list and choose **Uninstall plugin**. A
+bundled external connection may remain authorized, so also review connected
+apps in ChatGPT and at the external provider.
+
+See the [current official plugin guide](https://learn.chatgpt.com/docs/plugins).
+
+## Finished when
+
+- [ ] The publisher and requested access are understood.
+- [ ] A read-only test worked in a new chat.
+- [ ] You know how to uninstall and revoke the connection.

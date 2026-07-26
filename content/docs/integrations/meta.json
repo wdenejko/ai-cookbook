@@ -1,0 +1,4 @@
+{
+  "title": "Plugins and connections",
+  "pages": ["index", "chatgpt-plugin", "google-workspace", "other-email", "mcp-server", "permissions", "custom-assistant"]
+}

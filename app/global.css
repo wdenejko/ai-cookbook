@@ -235,6 +235,15 @@ html > body[data-scroll-locked] {
   display: revert;
 }
 
+/* DocsPage renders its article, mobile TOC and desktop TOC as separate grid
+   items. Keep the active locale wrapper out of that grid so the desktop
+   "On this page" rail stays in Fumadocs' right-hand TOC area. */
+:root[data-locale='en'] [data-lang='en'].docs-locale-contents,
+:root[data-locale='pl'] [data-lang='pl'].docs-locale-contents,
+:root:not([data-locale]) [data-lang='en'].docs-locale-contents {
+  display: contents;
+}
+
 /* ---- Lesson prose ---- */
 .cook-lesson {
   line-height: 1.6;

@@ -1,0 +1,64 @@
+---
+title: Review and remove integration permissions
+description: Audit plugins, apps, and MCP servers across ChatGPT and the connected provider, then remove access completely.
+---
+
+<TutorialVisual
+  title="Permission audit"
+  caption="Installation, connection, and source-system authorization are separate layers and may need separate removal."
+  steps={[
+    { label: "Inventory", detail: "List plugins, apps, MCP servers, and accounts.", icon: "search" },
+    { label: "Reduce", detail: "Disable writes and remove unused connections.", icon: "settings" },
+    { label: "Revoke", detail: "Also remove access at the source provider.", icon: "account" },
+  ]}
+/>
+
+## Make an inventory
+
+Open ChatGPT settings and the Plugins directory. Record:
+
+| Item | Account | Data it can read | Actions it can take | Last used |
+| --- | --- | --- | --- | --- |
+| Example: Google Drive | work account | permitted files | search/download | date |
+
+Also open **MCP servers** in the desktop app. A server may exist even when you
+are not actively using one of its tools.
+
+In a fresh chat, ask for a second inventory and compare it with the settings:
+
+```text
+List the plugins, apps, and MCP tools available in this chat. For each one,
+state whether it can read data or change external data. Do not use any tool.
+```
+
+## Reduce access
+
+1. Remove plugins and apps unused for 30–90 days.
+2. Prefer read-only actions. Require approval for sending, editing, buying,
+   publishing, or deleting.
+3. Disable tools that do not match the reason you installed the integration.
+4. Separate personal and work accounts.
+
+## Remove access completely
+
+Uninstalling a plugin may not disconnect its bundled app. Complete all relevant steps:
+
+1. Uninstall the plugin in ChatGPT.
+2. Disconnect the app in ChatGPT **Settings → Apps**.
+3. Disable or remove its MCP server in **Settings → MCP servers**.
+4. Open the external provider's account security page and revoke OpenAI,
+   ChatGPT, the plugin, or its app password.
+5. Start a new chat and confirm that the old tool is no longer available.
+
+## Treat these as warning signs
+
+- Unknown publisher or domain during sign-in.
+- A reading tool requests send, delete, admin, or all-files access.
+- No privacy policy or revocation instructions.
+- A plugin asks you to paste a password or one-time code into chat.
+
+## Finished when
+
+- [ ] Every active connection has an owner and purpose.
+- [ ] Write actions require deliberate approval.
+- [ ] Removed access is revoked in ChatGPT and at the provider.

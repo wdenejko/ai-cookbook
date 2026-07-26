@@ -1,0 +1,62 @@
+---
+title: Analyze an Excel or CSV file
+description: Understand a table, check data quality, calculate useful measures, and create a chart without trusting hidden assumptions.
+---
+
+<BeforeYouStart>
+Work on a copy. Remove personal rows and unnecessary columns. A spreadsheet can
+contain hidden sheets, comments, formulas, and metadata, so inspect it before upload.
+</BeforeYouStart>
+
+<TutorialVisual
+  title="Table to decision"
+  caption="Understand the columns before calculating anything, and reconcile every total with the source file."
+  steps={[
+    { label: "Inspect", detail: "Identify sheets, columns, units, and missing data.", icon: "file" },
+    { label: "Analyze", detail: "Define one question and the required calculation.", icon: "chat" },
+    { label: "Reconcile", detail: "Compare totals and sample rows.", icon: "search" },
+  ]}
+/>
+
+## Step by step
+
+1. Attach the `.xlsx` or `.csv` file.
+2. Ask for a data inventory:
+
+```text
+Do not calculate yet. List every sheet and column, explain the likely meaning
+and unit, count empty values, and identify dates, currencies, duplicates, and
+possible data-quality problems. Ask me about anything ambiguous.
+```
+
+3. Correct the interpretation of columns and filters.
+4. Ask one focused question:
+
+```text
+Using only the confirmed definitions, calculate monthly sales totals and the
+month-to-month percentage change. Exclude cancelled orders. Show the formula,
+the number of included rows, and a reconciliation to the source total.
+```
+
+5. Request a simple chart only after the totals are correct.
+6. Download any generated workbook under a new name and inspect formulas,
+   filters, number formats, and chart labels in Excel.
+
+## Verification
+
+Manually calculate one small sample, such as one month or ten rows. Confirm that
+percentages use the correct denominator and that blank values were not silently
+treated as zero.
+
+## Common traps
+
+- Dates interpreted in US rather than European order.
+- Decimal commas read as text.
+- Totals duplicated by merged rows or repeated headers.
+- A visually convincing chart with the wrong filter.
+
+## Finished when
+
+- [ ] Column meanings and exclusions are explicit.
+- [ ] Source and result totals reconcile.
+- [ ] One sample calculation was checked manually.

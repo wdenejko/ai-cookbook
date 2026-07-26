@@ -1,0 +1,64 @@
+---
+title: Kontrola i usuwanie uprawnień integracji
+description: Sprawdź wtyczki, aplikacje i serwery MCP w ChatGPT oraz u dostawcy, a następnie całkowicie usuń dostęp.
+---
+
+<TutorialVisual
+  title="Przegląd uprawnień"
+  caption="Instalacja, połączenie i zgoda w usłudze źródłowej to osobne warstwy, które usuwa się oddzielnie."
+  steps={[
+    { label: "Zrób spis", detail: "Wypisz wtyczki, aplikacje, MCP i konta.", icon: "search" },
+    { label: "Ogranicz", detail: "Wyłącz zapis i usuń nieużywane połączenia.", icon: "settings" },
+    { label: "Cofnij", detail: "Usuń dostęp również u dostawcy źródłowego.", icon: "account" },
+  ]}
+/>
+
+## Zrób spis
+
+Otwórz ustawienia ChatGPT i katalog Plugins. Zapisz:
+
+| Element | Konto | Czytane dane | Możliwe działania | Ostatnie użycie |
+| --- | --- | --- | --- | --- |
+| Przykład: Dysk Google | konto służbowe | dozwolone pliki | wyszukiwanie/pobieranie | data |
+
+W aplikacji desktopowej otwórz też **Serwery MCP**. Serwer może istnieć, nawet
+jeśli obecnie nie korzystasz z jego narzędzi.
+
+W nowym czacie poproś o drugi spis i porównaj go z ustawieniami:
+
+```text
+Wypisz wtyczki, aplikacje i narzędzia MCP dostępne w tej rozmowie. Przy każdym
+napisz, czy może czytać dane, czy zmieniać dane zewnętrzne. Nie używaj żadnego
+narzędzia.
+```
+
+## Ogranicz dostęp
+
+1. Usuń wtyczki i aplikacje nieużywane przez 30–90 dni.
+2. Preferuj odczyt. Wymagaj zatwierdzenia wysyłania, edycji, zakupów, publikacji i usuwania.
+3. Wyłącz narzędzia niezwiązane z celem integracji.
+4. Nie mieszaj kont prywatnych i służbowych.
+
+## Usuń dostęp całkowicie
+
+Odinstalowanie wtyczki może nie odłączyć aplikacji. Wykonaj potrzebne kroki:
+
+1. Odinstaluj wtyczkę w ChatGPT.
+2. Odłącz aplikację w **Ustawienia → Aplikacje**.
+3. Wyłącz lub usuń MCP w **Ustawienia → Serwery MCP**.
+4. W zabezpieczeniach zewnętrznego konta cofnij dostęp OpenAI, ChatGPT, wtyczki
+   albo usuń jej hasło aplikacji.
+5. Otwórz nowy czat i sprawdź, czy stare narzędzie zniknęło.
+
+## Sygnały ostrzegawcze
+
+- Nieznany wydawca lub domena logowania.
+- Narzędzie do odczytu wymaga wysyłania, usuwania, administratora lub wszystkich plików.
+- Brak polityki prywatności lub instrukcji cofania dostępu.
+- Prośba o wklejenie hasła lub kodu jednorazowego do czatu.
+
+## Gotowe, jeśli
+
+- [ ] Każde aktywne połączenie ma właściciela i cel.
+- [ ] Działania zapisujące wymagają świadomej zgody.
+- [ ] Usunięty dostęp cofnięto w ChatGPT i u dostawcy.

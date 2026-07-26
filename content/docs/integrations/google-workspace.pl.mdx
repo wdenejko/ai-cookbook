@@ -1,0 +1,63 @@
+---
+title: Połączenie Gmaila i Dysku Google z ChatGPT
+description: Zatwierdź właściwe konto Google, zrozum wymagany dostęp i przetestuj pocztę oraz pliki bez wykonywania działań.
+---
+
+<BeforeYouStart>
+Konto prywatne łącz tylko z prywatnymi danymi. Konto służbowe lub szkolne może
+wymagać zgody administratora. Nie wybieraj niewłaściwego konta tylko dlatego,
+że jest już otwarte w przeglądarce.
+</BeforeYouStart>
+
+<TutorialVisual
+  title="Połączenie z Google"
+  caption="Świadomie wybierz konto, przeczytaj ekran zgody Google i przetestuj jeden znany element."
+  steps={[
+    { label: "Wybierz aplikację", detail: "Otwórz Ustawienia → Aplikacje w ChatGPT.", icon: "settings" },
+    { label: "Zatwierdź", detail: "Wybierz właściwe konto i zakresy Google.", icon: "account" },
+    { label: "Zweryfikuj", detail: "Odszukaj jedną znaną wiadomość lub plik.", icon: "search" },
+  ]}
+/>
+
+## Połącz
+
+1. W ChatGPT otwórz profil, **Ustawienia**, a następnie **Aplikacje**.
+2. Znajdź **Gmail** lub **Google Drive** i wybierz **Połącz**.
+3. Na ekranie Google wybierz właściwe konto. Sprawdź pełny adres e-mail.
+4. Przeczytaj każde wymagane uprawnienie. Jeśli dostęp jest zbyt szeroki,
+   anuluj i skonsultuj się z administratorem.
+5. Zakończ autoryzację i wróć do ChatGPT. Synchronizacja może potrwać.
+
+## Wykonaj wąski test
+
+Dla Gmaila:
+
+```text
+Znajdź w Gmailu wiadomość od [znany nadawca] o temacie [dokładny temat].
+Podaj datę i trzy punkty podsumowania. Niczego nie pisz, nie wysyłaj, nie
+oznaczaj, nie archiwizuj ani nie usuwaj.
+```
+
+Dla Dysku:
+
+```text
+Znajdź na Dysku Google plik [dokładna nazwa]. Podaj właściciela, datę
+modyfikacji i główne nagłówki. Nie zmieniaj ani nie udostępniaj pliku.
+```
+
+Porównaj wynik bezpośrednio w Google. Jeśli połączono kilka kont, nazwij konto
+lub workspace w poleceniu.
+
+## Odłącz
+
+Usuń aplikację w **Ustawienia → Aplikacje** ChatGPT, a następnie sprawdź dostęp
+firm trzecich w zabezpieczeniach konta Google. OpenAI podaje, że indeksowana
+kopia odłączonych danych Google jest usuwana w ciągu 30 dni.
+
+Zobacz [kontrolę danych aplikacji Google](https://help.openai.com/en/articles/10408842-google-app-for-chatgpt-data-controls-faq).
+
+## Gotowe, jeśli
+
+- [ ] Połączono właściwą tożsamość Google.
+- [ ] Rozumiesz uprawnienia do odczytu i zapisu.
+- [ ] Znana wiadomość lub plik zostały znalezione bez modyfikacji.
